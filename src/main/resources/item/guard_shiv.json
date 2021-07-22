@@ -1,0 +1,13 @@
+{
+  "ITEM": {
+    "file_name": "guard_shiv",
+    "name": "Shiv",
+    "material": "GOLDEN_SWORD",
+    "model": 1,
+    "lore": [],
+    "requires": "",
+    "attributes": {
+      "POISON": ["PLAYER"]
+    }
+  }
+}

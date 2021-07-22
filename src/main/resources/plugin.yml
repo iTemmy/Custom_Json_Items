@@ -1,0 +1,10 @@
+name: Json_items_test_1
+version: ${project.version}
+main: com.temmy.json_items_test_1.Main
+api-version: 1.16
+authors: [ iTemmy ]
+commands:
+  giveitem:
+    description: Spawn a custom item for the given player, or to the executor if none is provided.
+  triedump:
+    description: Dumps trie node into console for testing purposes.

@@ -1,0 +1,10 @@
+{
+  "ITEM": {
+    "file_name": "corinthium",
+    "name": "Corinthium",
+    "material": "GOLD_INGOT",
+    "model": 1,
+    "lore": [""],
+    "attributes": {}
+  }
+}

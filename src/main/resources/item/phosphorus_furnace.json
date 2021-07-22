@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "phosphorus_furnace",
+    "name": "Phosphorus Furnace",
+    "material": "FURNACE",
+    "model": 0,
+    "lore": [],
+    "attributes": {
+      "": ["PLAYER"]
+    },
+    "ingredients": {
+      "B": "BEDROCK",
+      "D": "BARRIER"
+    },
+    "recipe": [
+      "DBD",
+      "BBD",
+      "DDB"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "ITEM": {
+    "file_name": "drugarth_hunter",
+    "name": "Drugarth Hunters Sword",
+    "material": "GOLDEN_SWORD",
+    "model": 0,
+    "lore": [],
+    "attributes": {
+      "POISON": ["ZOMBIE","PLAYER"]
+    }
+  }
+}
