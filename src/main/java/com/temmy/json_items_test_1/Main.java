@@ -46,6 +46,9 @@ public final class Main extends JavaPlugin {
             registerItemRecipes(item);
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("trieDump").setExecutor(new trieDump());
+        getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
+        getCommand("reloadores").setExecutor(new Reload());
+        ores();
     }
 
     public void onDisable(){
