@@ -45,7 +45,7 @@ public class BlockBreakListener implements Listener {
             default: break;
         }
         if (ItemUtils.isOre(e.getBlock().getType()))
-            if (CustomOre.customOre(e.getBlock(), e.getPlayer().getActiveItem(), e.getPlayer()))
+            if (CustomOre.customOre(e.getBlock(), e.getPlayer()))
                 e.setDropItems(false);
             else return;
     }

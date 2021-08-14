@@ -1,22 +1,23 @@
 package com.temmy.json_items_test_1.attribute;
 
 import com.temmy.json_items_test_1.Main;
-import com.temmy.json_items_test_1.attribute.effects.Poison;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public final class Attribute {
     public static final NamespacedKey namespacedKey = new NamespacedKey(Main.getPlugin(), "attributes");
     private static final Map<String, AttributeMethod> attributeMethods = new HashMap<>();
 
+    //TODO: Create Attribute for bows
+    //TODO: Create Attribute for hoes that when used to break crops they will auto replant and
+    // possibly have a chance to drop extra crops from harvest
+
     static {
         attributeMethods.put("AUTO_SMELT", AutoSmelt::trigger);
-        attributeMethods.put("POISON", Poison::trigger);
         attributeMethods.put("ARMOREFFECTS", ArmorEffects::trigger);
         attributeMethods.put("EFFECT", AttackEffect::trigger);
         attributeMethods.put("SPEEDFURNACE", SpeedFurnace::trigger);
