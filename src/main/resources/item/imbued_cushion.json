@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "imbued_cushion",
+    "name": "&f&lImbued Cushion",
+    "material": "WHITE_WOOL",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "cushion_essence",
+    "ingredients": {
+      "F": "CUSHION_ESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

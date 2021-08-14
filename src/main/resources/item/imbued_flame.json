@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "imbued_flame",
+    "name": "&4&lImbued Flame",
+    "material": "MAGMA_BLOCK",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "flame_scraps",
+    "ingredients": {
+      "F": "FLAME_SCRAPS"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}
