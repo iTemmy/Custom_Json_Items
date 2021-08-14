@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "blaze_essence",
+    "name": "&4&lBlaze Essence",
+    "material": "BLAZE_POWDER",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "B": "BLAZE_POWDER",
+      "I": "IRON_INGOT"
+    },
+    "recipe": [
+      "BBB",
+      "BIB",
+      "BBB"
+    ]
+  }
+}

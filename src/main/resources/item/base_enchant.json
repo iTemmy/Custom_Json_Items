@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "base_enchant",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "G": "GOLD_NUGGET",
+      "B": "BOOK"
+    },
+    "recipe": [
+      "GGG",
+      "GBG",
+      "GGG"
+    ]
+  }
+}

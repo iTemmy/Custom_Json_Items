@@ -1,18 +1,22 @@
 {
   "ITEM": {
     "file_name": "phosphorus_furnace",
-    "name": "Phosphorus Furnace",
+    "name": "&7Phosphorus Furnace",
     "material": "FURNACE",
     "model": 0,
     "lore": [],
     "attributes": {
-      "": ["PLAYER"]
+      "SPEEDFURNACE": {
+        "Multiplier": 200
+      },
+      "CRAFT": {"CRAFT": false}
     },
+    "requires": "phosphorus",
     "ingredients": {
-      "B": "BEDROCK",
+      "B": "PHOSPHORUS",
       "D": "BARRIER"
     },
-    "recipe": [
+    "craftRecipe": [
       "DBD",
       "BBD",
       "DDB"

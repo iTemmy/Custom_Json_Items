@@ -4,14 +4,15 @@
     "name": "Shiv",
     "material": "GOLDEN_SWORD",
     "model": 1,
+    "enchants": [""],
     "lore": [],
+    "requires": "",
     "attributes": {
-      "POISON": ["WITHER_SKELETON","ELDER_GUARDIAN","STRAY","HUSK",
-      "ZOMBIE_VILLAGER","EVOKER","VEX","VINDICATOR","ILLUSIONER","CREEPER",
-      "SKELETON","SPIDER","GIANT","ZOMBIE","SLIME","GHAST","ENDERMAN",
-      "SILVERFISH","CAVE_SPIDER","BLAZE","MAGMA_CUBE","ENDER_DRAGON",
-      "WITHER","WITCH","ENDERMITE","GUARDIAN","SHULKER","PHANTOM","DROWNED",
-      "PILLAGER","RAVAGER","HOGLIN","PIGLIN_BRUTE"]
+      "EFFECT": {
+        "type": "POISON",
+        "power": 1,
+        "time": 1000
+      }
     }
   }
 }

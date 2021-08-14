@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "flame_scraps",
+    "name": "&c&lFlame Scraps",
+    "material": "RED_DYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "I": "IRON_INGOT",
+      "B": "BLAZE_POWDER"
+    },
+    "recipe": [
+      "III",
+      "IBI",
+      "III"
+    ]
+  }
+}

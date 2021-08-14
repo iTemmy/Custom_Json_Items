@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "testplate",
-    "name": "Chestplate",
-    "material": "DIAMOND_CHESTPLATE",
+    "file_name": "testleggings",
+    "name": "Leggings",
+    "material": "DIAMOND_LEGGINGS",
     "model": 0,
     "lore": [],
     "attributes": {
@@ -15,9 +15,6 @@
         "setName": "test",
         "JUMP": 3,
         "GLOWING": 1
-      },
-      "ARMORATTRIBUTEEFFECTS": {
-        "health": 5
       }
     },
     "comment": "The 'requires' needs the 'file_name' of the required item.",
@@ -27,7 +24,7 @@
       "D": "BARRIER"
     },
     "recipe": [
-      "DBD",
+      "BBD",
       "BBD",
       "DDB"
     ]

@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "projectile_scraps",
+    "name": "&7&lProjectile Scraps",
+    "material": "LIGHT_GRAY_DYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "I": "IRON_INGOT",
+      "A": "ARROW"
+    },
+    "recipe": [
+      "III",
+      "IAI",
+      "III"
+    ]
+  }
+}

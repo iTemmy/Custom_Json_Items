@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "strider_essence",
+    "name": "&f&lStrider Essence",
+    "material": "SUGAR",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "S": "SUGAR",
+      "B": "WATER_BUCKET"
+    },
+    "recipe": [
+      "SSS",
+      "SBS",
+      "SSS"
+    ]
+  }
+}

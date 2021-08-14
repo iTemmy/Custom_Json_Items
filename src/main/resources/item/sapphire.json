@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "corinthium",
-    "name": "&6&lCorinthium",
-    "material": "GOLD_INGOT",
+    "file_name": "sapphire",
+    "name": "&1&lSapphire",
+    "material": "LAPIS_LAZULI",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],

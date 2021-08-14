@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "splicing_essence",
+    "name": "&7&lSplicing Essence",
+    "material": "GRAY_DYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "A": "ARROW",
+      "R": "REDSTONE",
+      "E": "ENDER_PEARL"
+    },
+    "recipe": [
+      "GLG",
+      "LPL",
+      "GLG"
+    ]
+  }
+}
