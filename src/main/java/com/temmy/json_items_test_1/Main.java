@@ -34,6 +34,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        registerGlow();
         getServer().getPluginManager().registerEvents(new onBlockDropItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerArmorChangeListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
