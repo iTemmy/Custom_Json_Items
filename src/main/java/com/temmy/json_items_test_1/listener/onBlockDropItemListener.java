@@ -18,7 +18,7 @@ public class onBlockDropItemListener implements Listener {
         String attributes = itemMeta.getPersistentDataContainer().get(Attribute.namespacedKey, PersistentDataType.STRING);
         if (attributes == null) return;
 
-        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(e.getPlayer().getInventory().getItemInMainHand());
+        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer());
         for (String attribute : attributeMap.keySet()){
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
         }

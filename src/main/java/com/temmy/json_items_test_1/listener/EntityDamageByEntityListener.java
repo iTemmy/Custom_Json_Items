@@ -21,8 +21,8 @@ public class EntityDamageByEntityListener implements Listener {
         ItemMeta itemMeta = ((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getItemMeta();
         if (itemMeta == null) return;
 
-        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand());
-        for (String attribute : attributeMap.keySet())
+        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getItemMeta().getPersistentDataContainer());
+        for (String attribute : attributeMap.keySet()) {
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
     }
 }

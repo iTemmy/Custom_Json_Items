@@ -15,8 +15,10 @@ public class PlayerArmorChangeListener implements Listener {
     @EventHandler
     public void onPlayerArmorChange(PlayerArmorChangeEvent e){
         removeArmorEffects(e.getPlayer(), e.getOldItem());
-
-        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(e.getNewItem());
+        removeArmorAttributes(e.getPlayer(), e.getOldItem());
+        ArmorEffects.checkPlayerArmor(e.getPlayer().getInventory().getArmorContents(),e.getPlayer());
+        if (e.getNewItem() == null || e.getNewItem().getItemMeta() == null) return;
+        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(e.getNewItem().getItemMeta().getPersistentDataContainer());
         for (String attribute : attributeMap.keySet())
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
     }
@@ -24,11 +26,40 @@ public class PlayerArmorChangeListener implements Listener {
     private void removeArmorEffects(Player player, ItemStack armorItem){
         String[] effects = ItemUtils.getItemAttributeMap(armorItem).get("ARMOREFFECTS");
         if (effects == null) return;
-        PotionEffectType potionEffectType;
-        for (String s : effects){
-            potionEffectType = PotionEffectType.getByName(s.split("\s*;")[0]);
-            if (potionEffectType == null) continue;
-            player.removePotionEffect(potionEffectType);
+        for (String s : effects) {
+            String[] shit = s.split("\"");
+            for (String ss : shit)
+                if (PotionEffectType.getByName(ss) != null)
+                    player.removePotionEffect(PotionEffectType.getByName(ss));
+        }
+        String[] fullSetEffects = ItemUtils.getItemAttributeMap(armorItem.getItemMeta().getPersistentDataContainer()).get("FULLSETARMOREFFECTS");
+        if (fullSetEffects == null) return;
+        for (String s : fullSetEffects) {
+            String[] shit = s.split("\"");
+            for (String ss : shit)
+                if (PotionEffectType.getByName(ss) != null)
+                    player.removePotionEffect(PotionEffectType.getByName(ss));
+        }
+    }
+
+    private void removeArmorAttributes(Player player, ItemStack armorItem){
+        if (armorItem.getItemMeta() == null) return;
+        String[] attributes = ItemUtils.getItemAttributeMap(armorItem.getItemMeta().getPersistentDataContainer()).get("ARMORATTRIBUTEEFFECTS");
+        if (attributes == null) return;
+        for (String s : attributes){
+            String[] attribute = s.split(":");
+            for (int i = 0; i < attribute.length; i++){
+                if (attribute[i].contains("health")){
+                    attribute[i+1] = attribute[i+1].replace("}", "");
+                    player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).setBaseValue(
+                            player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getBaseValue() - Integer.parseInt(attribute[i+1]));
+                }else if (attribute[i].contains("speed")){
+                    attribute[i+1] = attribute[i+1].replace("}", "");
+                    player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(
+                            player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()- Double.valueOf(attribute[i+1]));
+                }
+            }
+
         }
     }
 }
