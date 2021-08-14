@@ -8,3 +8,5 @@ commands:
     description: Spawn a custom item for the given player, or to the executor if none is provided.
   triedump:
     description: Dumps trie node into console for testing purposes.
+  reloadores:
+    description: reloads the ore drop chances from the config file.
