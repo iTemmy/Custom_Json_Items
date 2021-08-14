@@ -38,10 +38,17 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerArmorChangeListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         PluginFiles.init();
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+        loadConfig();
         for (File item : PluginFiles.getItemFiles())
             registerItemRecipes(item);
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("trieDump").setExecutor(new trieDump());
+    }
+
+    public void onDisable(){
+        saveLocalConfig();
     }
 
     public static Trie<ItemStack> getTest(){return test;}
@@ -100,4 +107,71 @@ public final class Main extends JavaPlugin {
             e.printStackTrace();
         }
     }
+
+    public void registerGlow(){
+        try {
+            Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            f.setAccessible(true);
+            f.set(null, true);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        try {
+            NamespacedKey key = new NamespacedKey(Main.getPlugin(), getDescription().getName());
+
+            Glow glow = new Glow(key);
+            //Enchantment.registerEnchantment(glow);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static Map<String, Integer> chances = new HashMap<>();
+
+    public static void loadConfig(){
+        chances.put("Phosphorus".toLowerCase(), plugin.getConfig().getInt("Phosphorus"));
+        chances.put("Janelite".toLowerCase(), plugin.getConfig().getInt("Janelite"));
+        chances.put("Ellendyte".toLowerCase(), plugin.getConfig().getInt("Ellendyte"));
+        chances.put("Sapphire".toLowerCase(), plugin.getConfig().getInt("Sapphire"));
+        chances.put("Tungsten".toLowerCase(), plugin.getConfig().getInt("Tungsten"));
+        chances.put("Jolixanine".toLowerCase(), plugin.getConfig().getInt("Jolixanine"));
+        chances.put("Corinthium".toLowerCase(), plugin.getConfig().getInt("Corinthium"));
+        chances.put("Zinc".toLowerCase(), plugin.getConfig().getInt("Zinc"));
+    }
+
+    private static void saveLocalConfig(){
+        for (String s : chances.keySet()) {
+            plugin.getConfig().set(s, chances.get(s));
+        }
+    }
+
+    public static Map<String, Integer> getChances(){
+        return chances;
+    }
+
+
+    static Map<String, NamespacedKey> ores = new HashMap<String, NamespacedKey>();
+
+    void ores() {
+        NamespacedKey phosphorusKey = new NamespacedKey(plugin, "Phosphorus");
+        NamespacedKey janeliteKey = new NamespacedKey(plugin, "Janelite");
+        NamespacedKey ellendyteKey = new NamespacedKey(plugin, "Ellendyte");
+        NamespacedKey sapphireKey = new NamespacedKey(plugin, "Sapphire");
+        NamespacedKey tungstenKey = new NamespacedKey(plugin, "Tungsten");
+        NamespacedKey jolixanineKey = new NamespacedKey(plugin, "Jolixanine");
+        NamespacedKey corinthiumKey = new NamespacedKey(plugin, "Corinthium");
+        NamespacedKey zincKey = new NamespacedKey(plugin, "Zinc");
+        ores.put("Phosphorus", phosphorusKey);
+        ores.put("Janelite", janeliteKey);
+        ores.put("Ellendyte", ellendyteKey);
+        ores.put("Sapphire", sapphireKey);
+        ores.put("Tungsten", tungstenKey);
+        ores.put("Jolixanine", jolixanineKey);
+        ores.put("Corinthium", corinthiumKey);
+        ores.put("Zinc", zincKey);
+    }
+    public static Map<String, NamespacedKey> getOres(){return ores;}
+
 }
