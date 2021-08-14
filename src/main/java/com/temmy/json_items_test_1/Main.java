@@ -2,16 +2,18 @@ package com.temmy.json_items_test_1;
 
 import com.temmy.json_items_test_1.Parser.ItemParser;
 import com.temmy.json_items_test_1.command.GiveItem;
+import com.temmy.json_items_test_1.command.GiveItemTabCompleter;
+import com.temmy.json_items_test_1.command.Reload;
 import com.temmy.json_items_test_1.command.trieDump;
 import com.temmy.json_items_test_1.file.PluginFiles;
-import com.temmy.json_items_test_1.listener.EntityDamageByEntityListener;
-import com.temmy.json_items_test_1.listener.onBlockDropItemListener;
-import com.temmy.json_items_test_1.listener.PlayerArmorChangeListener;
+import com.temmy.json_items_test_1.listener.*;
+import com.temmy.json_items_test_1.util.Glow;
 import com.temmy.json_items_test_1.util.Queue;
 import com.temmy.json_items_test_1.util.trie.Trie;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +25,7 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 
 public final class Main extends JavaPlugin {
@@ -38,6 +41,10 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onBlockDropItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerArmorChangeListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        getServer().getPluginManager().registerEvents(new onBlockPlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+        getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         PluginFiles.init();
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -70,42 +77,58 @@ public final class Main extends JavaPlugin {
             Map itemSection = (Map) itemJson.get("ITEM");
             if (itemSection == null) return;
 
-            if (itemSection.get("requires") != null){
-                files.enqueue(itemFile);
-                getLogger().info((String) itemSection.get("requires"));
-                registerItemRecipes(PluginFiles.getItemFile((String) itemSection.get("requires")));
-            }
-
             Map<String, String> ingredients = (Map) itemSection.get("ingredients");
             JSONArray recipe = (JSONArray) itemSection.get("recipe");
 
             String fileName = ((String) itemSection.get("file_name")).trim().toLowerCase().replaceAll("\\s", "_");
+
+
+            if (itemSection.get("requires") != "" || itemSection.get("requires") != null){
+                String requires = (String) itemSection.get("requires");
+                if (requires != null) {
+                    String[] require = requires.split(",");
+                    for (String req : require)
+                        if (!(Main.getTest().contains(req)))
+                            files.enqueue(itemFile);
+                    if (Bukkit.getRecipe(new NamespacedKey(plugin, fileName)) == null) {
+                        files.enqueue(itemFile);
+                    }
+                }
+            }
+
 
             ItemStack item = ItemParser.parseItem(fileName);
             if (item == null) return;
 
             String itemName = ((String) itemSection.get("name")).trim().toLowerCase().replaceAll("\\s", "_");
             if (ingredients != null && recipe != null){
-                ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(Main.getPlugin(), itemName), item);
+                ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(Main.getPlugin(), fileName), item);
 
                 List<String> recipeLine = new ArrayList<String>(recipe);
                 shapedRecipe.shape(recipeLine.toArray(new String[0]));
 
                 for (String key : ingredients.keySet())
-                    if (Material.valueOf(ingredients.get(key)) != null)
+                    if (Material.matchMaterial(ingredients.get(key)) != null)
                         shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key)));
                     else if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), ingredients.get(key))) != null)
                         shapedRecipe.setIngredient(key.charAt(0), Bukkit.getRecipe(new NamespacedKey(getPlugin(), ingredients.get(key))).getResult());
-                    else
-                        shapedRecipe.setIngredient(key.charAt(0), test.get(key));
+                    else {
+                        shapedRecipe.setIngredient(key.charAt(0), test.get(ingredients.get(key).toLowerCase()));
+                    }
 
                 Bukkit.addRecipe(shapedRecipe);
             }else{
-                   test.put(fileName, item);
+                test.put(fileName.toLowerCase(), item);
             }
             if (!(files.isEmpty())) {
-                registerItemRecipes(files.peek());
-                files.dequeue();
+                if (files.peek().getName().equalsIgnoreCase(itemFile.getName())) {
+                    files.dequeue();
+                    return;
+                }
+                if (files.peek() != null || !(files.peek().getName().equalsIgnoreCase("null"))) {
+                    registerItemRecipes(files.peek());
+                    files.dequeue();
+                }
             }
         }catch (IOException | ParseException e){
             e.printStackTrace();
