@@ -18,11 +18,17 @@ public final class Attribute {
         attributeMethods.put("AUTO_SMELT", AutoSmelt::trigger);
         attributeMethods.put("POISON", Poison::trigger);
         attributeMethods.put("ARMOREFFECTS", ArmorEffects::trigger);
+        attributeMethods.put("EFFECT", AttackEffect::trigger);
+        attributeMethods.put("SPEEDFURNACE", SpeedFurnace::trigger);
+        attributeMethods.put("PLACE", DenyCustomItemPlace::trigger);
+        attributeMethods.put("CRAFT", DenyCustomItemCraft::trigger);
+        attributeMethods.put("FULLSETARMOREFFECTS", FullSetArmorEffects::trigger);
+        attributeMethods.put("ARMORATTRIBUTEEFFECTS", ArmorAttributeEffects::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
         AttributeMethod attributeMethod = attributeMethods.get(attribute);
         if (attributeMethod != null) attributeMethod.trigger(event, args);
-        else Bukkit.getLogger().log(Level.SEVERE, String.format("Unrecognized attribute '%s'.", attribute));
+        else Bukkit.getLogger().severe(String.format("Unrecognized attribute '%s'.", attribute));
     }
 }
