@@ -21,9 +21,6 @@ public class GiveItem implements CommandExecutor {
             Bukkit.getLogger().log(Level.INFO,"You must provide a player to give the item to.");
             return false;
         }
-        for (String arg : args) {
-            Bukkit.getLogger().log(Level.INFO, arg);
-        }
         if (args.length == 2) giveItem(Bukkit.getPlayer(args[0]), args[1]);
         else if (args.length == 1){
             giveItem((Player) sender, args[0]);
