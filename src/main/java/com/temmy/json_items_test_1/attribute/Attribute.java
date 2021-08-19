@@ -24,7 +24,8 @@ public final class Attribute {
         attributeMethods.put("PLACE", DenyCustomItemPlace::trigger);
         attributeMethods.put("CRAFT", DenyCustomItemCraft::trigger);
         attributeMethods.put("FULLSETARMOREFFECTS", FullSetArmorEffects::trigger);
-        attributeMethods.put("ARMORATTRIBUTEEFFECTS", ArmorAttributeEffects::trigger);
+        attributeMethods.put("ARMORATTRIBUTES", ArmorAttributeEffects::trigger);
+        attributeMethods.put("FULLSETARMORATTRIBUTES", FullSetArmorAttributeEffects::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
