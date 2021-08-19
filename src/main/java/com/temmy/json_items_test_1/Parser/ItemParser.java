@@ -73,6 +73,13 @@ public final class ItemParser {
             else
                 meta.setCustomModelData(customModelData);
 
+            int attackDamage = 0;
+            if (itemSection.get("attackDamage") != null) {
+                attackDamage = Integer.parseInt(String.valueOf((Long) itemSection.get("attackDamage")));
+                meta.addAttributeModifier(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
+                        "generic.attack.damage", attackDamage, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
+            }
+
             JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
             if (JSONEnchants != null){
                 List<String> enchantsList = new ArrayList<>(JSONEnchants);
@@ -109,7 +116,7 @@ public final class ItemParser {
                 }else {
                     meta.setUnbreakable(true);
                 }
-            
+
             JSONArray lore = (JSONArray) itemSection.get("lore");
             List<Component> loreList1 = new ArrayList<>(lore);
             List<String> loreList = new ArrayList<>(lore);
