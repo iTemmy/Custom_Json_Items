@@ -31,7 +31,7 @@ import java.util.*;
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
-    private static Trie<ItemStack> test = new Trie();
+    private static Trie<ItemStack> customItems = new Trie();
 
 
     @Override
@@ -51,6 +51,22 @@ public final class Main extends JavaPlugin {
         loadConfig();
         for (File item : PluginFiles.getItemFiles())
             registerItemRecipes(item);
+        for (File file : PluginFiles.getItemFiles())
+            if (!(files.isEmpty())) {
+                if (files.peek() != null && !(files.peek().getName().equalsIgnoreCase("null"))) {
+                    if (file == files.peek()) {
+                        registerItemRecipes(files.peek());
+                        files.dequeue();
+                    }
+                }
+            }else if (!(files2.isEmpty())){
+                if (files2.peek() != null && !(files2.peek().getName().equalsIgnoreCase("null"))){
+                    if (file == files2.peek()){
+                        registerItemRecipes(files2.peek());
+                        files2.dequeue();
+                    }
+                }
+            }
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("trieDump").setExecutor(new trieDump());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
@@ -62,11 +78,10 @@ public final class Main extends JavaPlugin {
         saveLocalConfig();
     }
 
-    public static Trie<ItemStack> getTest(){return test;}
-
-    //TODO: Use Queue system to store items that require another custom item like custom ores such as Corinthium
+    public static Trie<ItemStack> getCustomItems(){return customItems;}
 
     Queue<File> files = new Queue<>();
+    Queue<File> files2 = new Queue<>();
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void registerItemRecipes(File itemFile){
@@ -81,21 +96,25 @@ public final class Main extends JavaPlugin {
             JSONArray recipe = (JSONArray) itemSection.get("recipe");
 
             String fileName = ((String) itemSection.get("file_name")).trim().toLowerCase().replaceAll("\\s", "_");
+            if (customItems.contains(fileName)) return;
 
-
-            if (itemSection.get("requires") != "" || itemSection.get("requires") != null){
-                String requires = (String) itemSection.get("requires");
+            String requires = (String) itemSection.get("requires");
+            if (itemSection.get("requires") != null){
                 if (requires != null) {
                     String[] require = requires.split(",");
-                    for (String req : require)
-                        if (!(Main.getTest().contains(req)))
-                            files.enqueue(itemFile);
-                    if (Bukkit.getRecipe(new NamespacedKey(plugin, fileName)) == null) {
-                        files.enqueue(itemFile);
+                    for (String req : require) {
+
+                        for (File file : PluginFiles.getItemFiles())
+                            if (req.equalsIgnoreCase(file.getName().trim().replace(".json", "")))
+                                registerItemRecipes(file);
+                        getLogger().info("req: --> "+req);
+                        if (!(customItems.contains(req)) && Bukkit.getRecipe(new NamespacedKey(plugin, req.toLowerCase())) == null) {
+                            files2.enqueue(itemFile);
+                            return;
+                        }
                     }
                 }
             }
-
 
             ItemStack item = ItemParser.parseItem(fileName);
             if (item == null) return;
@@ -107,30 +126,26 @@ public final class Main extends JavaPlugin {
                 List<String> recipeLine = new ArrayList<String>(recipe);
                 shapedRecipe.shape(recipeLine.toArray(new String[0]));
 
-                for (String key : ingredients.keySet())
+                for (String key : ingredients.keySet()) {
                     if (Material.matchMaterial(ingredients.get(key)) != null)
-                        shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key)));
+                        shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key).toUpperCase()));
                     else if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), ingredients.get(key))) != null)
                         shapedRecipe.setIngredient(key.charAt(0), Bukkit.getRecipe(new NamespacedKey(getPlugin(), ingredients.get(key))).getResult());
-                    else {
-                        shapedRecipe.setIngredient(key.charAt(0), test.get(ingredients.get(key).toLowerCase()));
+                    else if (customItems.contains(ingredients.get(key).toLowerCase())){
+                        shapedRecipe.setIngredient(key.charAt(0), customItems.get(ingredients.get(key).toLowerCase()));
                     }
-
-                Bukkit.addRecipe(shapedRecipe);
-            }else{
-                test.put(fileName.toLowerCase(), item);
-            }
-            if (!(files.isEmpty())) {
-                if (files.peek().getName().equalsIgnoreCase(itemFile.getName())) {
-                    files.dequeue();
-                    return;
                 }
-                if (files.peek() != null || !(files.peek().getName().equalsIgnoreCase("null"))) {
+                Bukkit.addRecipe(shapedRecipe);
+            }
+            customItems.put(fileName.toLowerCase(), item);
+
+            if (!(files.isEmpty())) {
+                if (files.peek() != null && !(files.peek().getName().equalsIgnoreCase("null"))) {
                     registerItemRecipes(files.peek());
                     files.dequeue();
                 }
             }
-        }catch (IOException | ParseException e){
+        }catch (IOException | ParseException | IllegalArgumentException e){
             e.printStackTrace();
         }
     }
@@ -140,16 +155,13 @@ public final class Main extends JavaPlugin {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         try {
             NamespacedKey key = new NamespacedKey(Main.getPlugin(), getDescription().getName());
 
             Glow glow = new Glow(key);
-            //Enchantment.registerEnchantment(glow);
         } catch (Exception e) {
             e.printStackTrace();
         }
