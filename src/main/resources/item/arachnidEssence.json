@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "arachnidEssence",
+    "name": "&9&lArachnid Essence",
+    "material": "SPIDER_EYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "T": "STRING",
+      "S": "SPIDER_EYE"
+    },
+    "recipe": [
+      "SSS",
+      "STS",
+      "SSS"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "imbuedProtection",
+    "name": "&f&lImbued Protection",
+    "material": "IRON_BLOCK",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "protectionScraps",
+    "ingredients": {
+      "F": "PROTECTIONSCRAPS"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

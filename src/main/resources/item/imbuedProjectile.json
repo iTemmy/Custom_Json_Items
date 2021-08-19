@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "imbuedProjectile",
+    "name": "&7&lImbued Projectile",
+    "material": "SPECTRAL_ARROW",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "projectileScraps",
+    "ingredients": {
+      "F": "PROJECTILESCRAPS"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

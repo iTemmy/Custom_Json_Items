@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "imbuedBlasts",
+    "name": "&5&lImbued Blasts",
+    "material": "CRYING_OBSIDIAN",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "combustibleScraps",
+    "ingredients": {
+      "F": "COMBUSTIBLESCRAPS"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

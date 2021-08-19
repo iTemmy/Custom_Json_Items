@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "imbuedHardening",
+    "name": "&f&lImbued Hardening",
+    "material": "OBSIDIAN",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "hardeningEssence",
+    "ingredients": {
+      "F": "HARDENINGESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

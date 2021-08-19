@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "frostEssence",
+    "name": "&9&lFrost Essence",
+    "material": "PACKED_ICE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "I": "ICE",
+      "R": "REDSTONE_BLOCK"
+    },
+    "recipe": [
+      "III",
+      "IRI",
+      "III"
+    ]
+  }
+}

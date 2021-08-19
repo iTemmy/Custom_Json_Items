@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "protectionScraps",
+    "name": "&f&lProtection Scraps",
+    "material": "BONE_MEAL",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "I": "IRON_INGOT",
+      "L": "LAPIS_LAZULI"
+    },
+    "recipe": [
+      "III",
+      "ILI",
+      "III"
+    ]
+  }
+}

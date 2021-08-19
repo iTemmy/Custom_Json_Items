@@ -1,0 +1,17 @@
+{
+  "ITEM": {
+    "file_name": "playerShiv",
+    "name": "Shiv",
+    "material": "GOLDEN_SWORD",
+    "model": 1,
+    "enchants": [""],
+    "lore": [],
+    "attributes": {
+      "EFFECT": {
+        "type": "POISON",
+        "power": 1,
+        "time": 1000
+      }
+    }
+  }
+}

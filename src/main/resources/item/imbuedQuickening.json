@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "imbuedQuickening",
+    "name": "&c&lImbued Quickening",
+    "material": "REDSTONE_BLOCK",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "quickeningEssence",
+    "ingredients": {
+      "F": "QUICKENINGESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

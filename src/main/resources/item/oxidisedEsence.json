@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "oxidisedEssence",
+    "name": "&2&lOxidised Essence",
+    "material": "GREEN_DYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "S": "SEAGRASS"
+    },
+    "recipe": [
+      "SSS",
+      "SSS",
+      "SSS"
+    ]
+  }
+}

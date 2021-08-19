@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "lureEssence",
+    "name": "&6&lLure Essence",
+    "material": "ORANGE_DYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "S": "STRING",
+      "s": "STICK",
+      "G": "TROPICAL_FISH"
+    },
+    "recipe": [
+      "SSS",
+      "sGs",
+      "sss"
+    ]
+  }
+}

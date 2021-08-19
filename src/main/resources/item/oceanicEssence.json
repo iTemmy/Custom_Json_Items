@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "oceanicEssence",
+    "name": "&f&lOceanic Essence",
+    "material": "WHITE_CONCRETE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "striderEssence",
+    "ingredients": {
+      "F": "STRIDERESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "imbuedBlaze",
+    "name": "&4&lImbued Blaze",
+    "material": "BLAZE_ROD",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "blazeEssence",
+    "ingredients": {
+      "F": "BLAZEESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "imbuedUndead",
+    "name": "&7&lImbued Undead",
+    "material": "LEATHER",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "undeadEssence",
+    "ingredients": {
+      "F": "UNDEADESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

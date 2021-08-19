@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "imbuedMobEssence",
+    "name": "&8&lImbued Mob Essence",
+    "material": "INK_SAC",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "mobEssence",
+    "ingredients": {
+      "F": "MOBESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

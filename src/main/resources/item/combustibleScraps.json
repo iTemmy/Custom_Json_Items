@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "combustibleScraps",
+    "name": "&7&lCombustible Scraps",
+    "material": "GRAY_DYE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "I": "IRON_INGOT",
+      "G": "GUNPOWDER"
+    },
+    "recipe": [
+      "III",
+      "IGI",
+      "III"
+    ]
+  }
+}

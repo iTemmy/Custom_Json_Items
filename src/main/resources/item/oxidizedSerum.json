@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "oxidizedSerum",
+    "name": "&2&lOxidized Serum",
+    "material": "GREEN_WOOL",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false},
+      "PLACE": {"PLACE": false}
+    },
+    "requires": "oxidisedEssence",
+    "ingredients": {
+      "F": "OXIDISEDESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}

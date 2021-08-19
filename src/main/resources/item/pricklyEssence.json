@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "pricklyEssence",
+    "name": "&2&lPrickly Essence",
+    "material": "CACTUS",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "ingredients": {
+      "I": "IRON_BARS",
+      "C": "CACTUS"
+    },
+    "recipe": [
+      "ICI",
+      "C C",
+      "ICI"
+    ]
+  }
+}
