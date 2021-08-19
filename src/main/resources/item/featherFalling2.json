@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "featherFalling2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["FEATHER_FALLING;2"],
+    "lore": [],
+    "requires": "featherFalling1,cushionEssence",
+    "attributes": {},
+    "ingredients": {
+      "F": "CUSHIONESSENCE",
+      "B": "FEATHERFALLING1"
+    },
+    "recipe": [
+      " F ",
+      "FBF",
+      " F "
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "fireProtection1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["FIRE_PROTECTION;1"],
+    "lore": [],
+    "requires": "baseEnchant,flameScraps",
+    "attributes": {},
+    "ingredients": {
+      "F": "FLAMESCRAPS",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " F ",
+      " B ",
+      " F "
+    ]
+  }
+}

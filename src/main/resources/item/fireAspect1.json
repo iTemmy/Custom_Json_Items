@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "fireAspect1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["fireAspect;1"],
+    "lore": [],
+    "requires": "baseEnchant,imbuedFlame",
+    "attributes": {},
+    "ingredients": {
+      "F": "IMBUEDBLAZE",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      "  F",
+      " B ",
+      "F  "
+    ]
+  }
+}

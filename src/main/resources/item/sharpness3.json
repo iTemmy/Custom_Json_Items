@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "sharpness3",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["SHARPNESS;3"],
+    "lore": [],
+    "requires": "sharpness2,blazeEssence",
+    "attributes": {},
+    "ingredients": {
+      "O": "BLAZEESSENCE",
+      "S": "SHARPNESS2"
+    },
+    "recipe": [
+      " E ",
+      "ESE",
+      " E "
+    ]
+  }
+}

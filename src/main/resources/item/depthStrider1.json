@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "depthStrider1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["DEPTH_STRIDER;1"],
+    "lore": [],
+    "requires": "baseEnchant,StriderEssence",
+    "attributes": {},
+    "ingredients": {
+      "S": "STRIDERESSENCE",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " S ",
+      "SBS",
+      " S "
+    ]
+  }
+}

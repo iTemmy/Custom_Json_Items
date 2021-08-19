@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "mending",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["MENDING;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "E": "EMERALD",
+      "B": "BASEENCHANT",
+      "C": "END_CRYSTAL",
+      "P": "PHANTOM_MEMBRANE"
+    },
+    "recipe": [
+      "ECE",
+      "PBP",
+      "ECE"
+    ]
+  }
+}

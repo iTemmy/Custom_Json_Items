@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "efficiency4",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["EFFICIENCY;3"],
+    "lore": [],
+    "requires": "efficiency2,quickeningEssence",
+    "attributes": {},
+    "ingredients": {
+      "Q": "QUICKENINGESSENCE",
+      "E": "EFFICIENCY2"
+    },
+    "recipe": [
+      "QQQ",
+      " E ",
+      "QQQ"
+    ]
+  }
+}

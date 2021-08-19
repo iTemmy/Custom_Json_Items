@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "quickCharge2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["QUICK_CHARGE;2"],
+    "lore": [],
+    "requires": "quickCharge1,quickeningEssence",
+    "attributes": {},
+    "ingredients": {
+      "G": "GOLD_INGOT",
+      "R": "QUICKENINGESSENCE",
+      "B": "QUICKCHARGE1"
+    },
+    "recipe": [
+      " R ",
+      "GBG",
+      " R "
+    ]
+  }
+}

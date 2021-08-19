@@ -15,6 +15,10 @@
         "setName": "test",
         "JUMP": 3,
         "GLOWING": 1
+      },
+      "FULLSETARMORATTRIBUTES": {
+        "setName": "test",
+        "health": 5
       }
     },
     "comment": "The 'requires' needs the 'file_name' of the required item.",

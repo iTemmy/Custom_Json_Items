@@ -16,7 +16,8 @@
         "JUMP": 3,
         "GLOWING": 1
       },
-      "ARMORATTRIBUTEEFFECTS": {
+      "FULLSETARMORATTRIBUTES": {
+        "setName": "test",
         "health": 5
       }
     },

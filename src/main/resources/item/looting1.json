@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "looting1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["LOOTING;1"],
+    "lore": [],
+    "requires": "baseEnchant,mobEssence",
+    "attributes": {},
+    "ingredients": {
+      "M": "MOBESSENCE",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " M ",
+      " B ",
+      " M "
+    ]
+  }
+}

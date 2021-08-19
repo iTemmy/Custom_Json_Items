@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "smite4",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["SMITE;4"],
+    "lore": [],
+    "requires": "smite3,undeadEssence",
+    "attributes": {},
+    "ingredients": {
+      "O": "UNDEADESSENCE",
+      "B": "SMITE3"
+    },
+    "recipe": [
+      "UUU",
+      " B ",
+      "UUU"
+    ]
+  }
+}

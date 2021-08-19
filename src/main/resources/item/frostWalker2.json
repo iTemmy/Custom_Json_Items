@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "frostWalker2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["FROST_WALKER;2"],
+    "lore": [],
+    "requires": "frostWalker1,frostEssence",
+    "attributes": {},
+    "ingredients": {
+      "F": "FROSTESSENCE",
+      "B": "FROSTWALKER1"
+    },
+    "recipe": [
+      "III",
+      " B ",
+      "III"
+    ]
+  }
+}

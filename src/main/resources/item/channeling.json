@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "channeling",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["CHANNELING;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "H": "HEART_OF_THE_SEA",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " H ",
+      " B ",
+      " H "
+    ]
+  }
+}

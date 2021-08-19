@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "frostWalker1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["FROST_WALKER;1"],
+    "lore": [],
+    "requires": "baseEnchant,frostEssence",
+    "attributes": {},
+    "ingredients": {
+      "F": "FROSTESSENCE",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " I ",
+      "IBI",
+      " I "
+    ]
+  }
+}

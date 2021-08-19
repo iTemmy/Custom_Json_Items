@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "curseOfBinding",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["BINDING_CURSE;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "L": "SLIME_BALL",
+      "B": "BASEENCHANT",
+      "S": "STRING"
+    },
+    "recipe": [
+      "SLS",
+      "SBS",
+      "SLS"
+    ]
+  }
+}

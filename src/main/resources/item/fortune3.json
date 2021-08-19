@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "fortune3",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["FORTUNE;3"],
+    "lore": [],
+    "requires": "fortune2,luckEssence",
+    "attributes": {},
+    "ingredients": {
+      "L": "LUCKESSENCE",
+      "E": "FORTUNE2"
+    },
+    "recipe": [
+      " L ",
+      "LEL",
+      " L "
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "ITEM": {
+    "file_name": "drugarthHunter2",
+    "name": "&fDrugarth Hunters Sword [&aII&f]",
+    "material": "GOLDEN_SWORD",
+    "model": 0,
+    "enchants": ["BANE_OF_ARTHROPODS;2,LOOTING;2,SMITE;2,UNBREAKING;2"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "MOBESSENCE,BLAZEESSENCE,ARACHNIDESSENCE,UNDEADESSENCE,drugarthHunter1",
+    "ingredients": {
+      "M": "MOBESSENCE",
+      "B": "BLAZEESSENCE",
+      "A": "ARACHNIDESSENCE",
+      "U": "UNDEADESSENCE",
+      "G": "DRUGARTHHUNTER1"
+    },
+    "recipe": [
+      " M ",
+      "BGA",
+      " U "
+    ]
+  }
+}

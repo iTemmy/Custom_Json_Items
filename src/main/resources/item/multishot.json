@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "multishot",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["MULTISHOT;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "A": "ARROW",
+      "B": "BASEENCHANT",
+      "I": "IRON_INGOT",
+      "R": "REDSTONE"
+    },
+    "recipe": [
+      "AAA",
+      "IBI",
+      "RIR"
+    ]
+  }
+}

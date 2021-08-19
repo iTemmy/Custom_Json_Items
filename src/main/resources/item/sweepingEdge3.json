@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "sweepingEdge3",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["SWEEPING_EDGE;3"],
+    "lore": [],
+    "requires": "sweepingEdge2,splicingEssence",
+    "attributes": {},
+    "ingredients": {
+      "S": "SPLICINGESSENCE",
+      "B": "SWEEPINGEDGE2"
+    },
+    "recipe": [
+      " S ",
+      "SBE",
+      " S "
+    ]
+  }
+}

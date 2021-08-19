@@ -1,0 +1,24 @@
+{
+  "ITEM": {
+    "file_name": "obsidianMacuahuitl",
+    "name": "&0&kf&5&lMacuahuitl&0&kf",
+    "material": "NETHERITE_AXE",
+    "model": 0,
+    "attackDamage": 15,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "ShatteredObsidian",
+    "ingredients": {
+      "O": "SHATTEREDOBSIDIAN",
+      "S": "STICK"
+    },
+    "recipe": [
+      "OSO",
+      "OSO",
+      " S "
+    ]
+  }
+}

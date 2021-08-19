@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "projectileProtection4",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["PROJECTILE_PROTECTION;4"],
+    "lore": [],
+    "requires": "projectileProtection3,projectileScraps",
+    "attributes": {},
+    "ingredients": {
+      "P": "PROJECTILESCRAPS",
+      "B": "PROJECTILEPROTECTION3"
+    },
+    "recipe": [
+      "PPP",
+      "PBP",
+      "PPP"
+    ]
+  }
+}

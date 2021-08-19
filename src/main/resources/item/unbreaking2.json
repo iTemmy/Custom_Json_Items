@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "unbreaking2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["UNBREAKING;2"],
+    "lore": [],
+    "requires": "unbreaking1,hardeningEssence",
+    "attributes": {},
+    "ingredients": {
+      "H": "HARDENINGESSENCE",
+      "B": "UNBREAKING1"
+    },
+    "recipe": [
+      " H ",
+      " B ",
+      "H H"
+    ]
+  }
+}

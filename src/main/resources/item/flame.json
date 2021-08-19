@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "flame",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["FLAME;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "F": "BLAZE_POWDER",
+      "A": "ARROW",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      "FAF",
+      "ABA",
+      "FAF"
+    ]
+  }
+}

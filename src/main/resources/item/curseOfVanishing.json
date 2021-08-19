@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "curseOfVanishing",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["VANISHING_CURSE;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "E": "ENDER_EYE",
+      "B": "BASEENCHANT",
+      "G": "GOLD_NUGGET"
+    },
+    "recipe": [
+      "GGG",
+      "EBE",
+      "GGG"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "blastProtection2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["BLAST_PROTECTION;2"],
+    "lore": [],
+    "requires": "blastProtection1,combustibleScraps",
+    "attributes": {},
+    "ingredients": {
+      "A": "COMBUSTIBLE_SCRAPS",
+      "B": "BLASTPROTECTION1"
+    },
+    "recipe": [
+      " C ",
+      "CBC",
+      " C "
+    ]
+  }
+}

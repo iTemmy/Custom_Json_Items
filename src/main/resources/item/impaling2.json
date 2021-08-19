@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "impaling2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["IMPALING;2"],
+    "lore": [],
+    "requires": "impaling1,oxidisedEssence",
+    "attributes": {},
+    "ingredients": {
+      "O": "OXIDISEDESSENCE",
+      "I": "IMPALING1",
+      "A": "ARROW"
+    },
+    "recipe": [
+      "AOA",
+      "OIO",
+      "AAA"
+    ]
+  }
+}

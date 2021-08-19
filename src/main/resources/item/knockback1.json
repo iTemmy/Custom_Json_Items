@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "knockback1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["KNOCKBACK;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "I": "IRON_INGOT",
+      "B": "BASEENCHANT",
+      "P": "PISTON"
+    },
+    "recipe": [
+      "IPI",
+      "IBI",
+      "IPI"
+    ]
+  }
+}

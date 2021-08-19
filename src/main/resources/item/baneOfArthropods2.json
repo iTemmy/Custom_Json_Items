@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "baneOfArthropods2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["BANE_OF_ARTHROPODS;2"],
+    "lore": [],
+    "requires": "baneOfArthropods1,arachnid_essence",
+    "attributes": {},
+    "ingredients": {
+      "A": "ARACHNID_ESSENCE",
+      "B": "BANEOFARTHROPODS1"
+    },
+    "recipe": [
+      " A ",
+      " B ",
+      "A A"
+    ]
+  }
+}

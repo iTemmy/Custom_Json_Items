@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "soulSpeed2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["SOUL_SPEED;2"],
+    "lore": [],
+    "requires": "soulSpeed1,netherShard",
+    "attributes": {},
+    "ingredients": {
+      "N": "NETHERSHARD",
+      "B": "SOULSPEED1"
+    },
+    "recipe": [
+      " N ",
+      " B ",
+      "N N"
+    ]
+  }
+}

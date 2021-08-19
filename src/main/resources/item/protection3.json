@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "protection3",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["PROTECTION;3"],
+    "lore": [],
+    "requires": "protection2,protectionScraps",
+    "attributes": {},
+    "ingredients": {
+      "P": "PROTECTIONSCRAPS",
+      "B": "protection2"
+    },
+    "recipe": [
+      "PPP",
+      " B ",
+      "PPP"
+    ]
+  }
+}

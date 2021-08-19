@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "respiration1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["RESPIRATION;1"],
+    "lore": [],
+    "requires": "baseEnchant,oxidisedEssence",
+    "attributes": {},
+    "ingredients": {
+      "O": "OXIDISEDESSENCE",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " O ",
+      " B ",
+      " O "
+    ]
+  }
+}

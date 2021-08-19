@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "lure2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["LURE;2"],
+    "lore": [],
+    "requires": "lure1,lureEssence",
+    "attributes": {},
+    "ingredients": {
+      "L": "LUREESSENCE",
+      "B": "LURE1"
+    },
+    "recipe": [
+      " L ",
+      " B ",
+      "L L"
+    ]
+  }
+}

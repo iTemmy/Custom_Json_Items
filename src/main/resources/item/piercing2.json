@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "piercing2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["PIERCING;2"],
+    "lore": [],
+    "requires": "piercing1,splicingEssence",
+    "attributes": {},
+    "ingredients": {
+      "L": "SPLICINGESSENCE",
+      "P": "PIERCING1"
+    },
+    "recipe": [
+      " S ",
+      " P ",
+      "S S"
+    ]
+  }
+}

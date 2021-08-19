@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "power5",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["POWER;5"],
+    "lore": [],
+    "requires": "power4,skeletonEssence",
+    "attributes": {},
+    "ingredients": {
+      "S": "SKELETONESSENCE",
+      "P": "POWER4"
+    },
+    "recipe": [
+      "SSS",
+      "SPS",
+      "SSS"
+    ]
+  }
+}

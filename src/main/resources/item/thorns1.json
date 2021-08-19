@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "thorns1",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["THORNS;1"],
+    "lore": [],
+    "requires": "baseEnchant,pricklyEssence",
+    "attributes": {},
+    "ingredients": {
+      "P": "PRICKLYESSENCE",
+      "B": "BASEENCHANT"
+    },
+    "recipe": [
+      " P ",
+      " B ",
+      " P "
+    ]
+  }
+}

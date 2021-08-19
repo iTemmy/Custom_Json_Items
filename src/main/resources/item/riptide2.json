@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "riptide2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["RIPTIDE;2"],
+    "lore": [],
+    "requires": "riptide1,oxidisedEssence",
+    "attributes": {},
+    "ingredients": {
+      "O": "OXIDISEDESSENCE",
+      "B": "riptide1",
+      "R": "RESTONE",
+      "S": "SCUTE"
+    },
+    "recipe": [
+      "OOO",
+      "RBR",
+      "RSR"
+    ]
+  }
+}

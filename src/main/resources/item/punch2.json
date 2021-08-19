@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "punch2",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["PUNCH;2"],
+    "lore": [],
+    "requires": "punch1",
+    "attributes": {},
+    "ingredients": {
+      "S": "STRING",
+      "P": "PISTON",
+      "B": "BOW",
+      "E": "PUNCH1"
+    },
+    "recipe": [
+      "SPS",
+      "BEB",
+      "SPS"
+    ]
+  }
+}

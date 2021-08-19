@@ -1,0 +1,23 @@
+{
+  "ITEM": {
+    "file_name": "silktouch",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["SILK_TOUCH;1"],
+    "lore": [],
+    "requires": "baseEnchant,silkyJewel",
+    "attributes": {},
+    "ingredients": {
+      "J": "SILKYJEWEL",
+      "B": "BASEENCHANT",
+      "G": "GHAST_TEAR",
+      "S": "STRING"
+    },
+    "recipe": [
+      "JSJ",
+      "GBG",
+      "JSJ"
+    ]
+  }
+}

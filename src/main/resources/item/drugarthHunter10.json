@@ -1,0 +1,28 @@
+{
+  "ITEM": {
+    "file_name": "drugarthHunter10",
+    "name": "&fDrugarth Hunters Sword [&aX&f]",
+    "material": "GOLDEN_SWORD",
+    "model": 0,
+    "enchants": ["BANE_OF_ARTHROPODS;10,LOOTING;10,SMITE;10,UNBREAKING;10"],
+    "unbreakable": true,
+    "lore": [],
+    "attributes": {
+      "CRAFT": {"CRAFT": false}
+    },
+    "requires": "IMBUEDMOBESSENCE,IMBUEDBLAZE,IMBUEDARACHNIDESSENCE,IMBUEDUNDEAD,drugarthHunter5,IMBUEDHARDENING",
+    "ingredients": {
+      "M": "IMBUEDMOBESSENCE",
+      "B": "BLAZEESSENCE",
+      "A": "ARACHNIDESSENCE",
+      "U": "UNDEADESSENCE",
+      "G": "DRUGARTHHUNTER5",
+      "H": "IMBUEDHARDENING"
+    },
+    "recipe": [
+      "UMU",
+      "BGA",
+      "AHA"
+    ]
+  }
+}

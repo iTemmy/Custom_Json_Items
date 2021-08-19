@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "infinity",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["INFINITY;1"],
+    "lore": [],
+    "requires": "baseEnchant",
+    "attributes": {},
+    "ingredients": {
+      "E": "EMERALD",
+      "B": "BASEENCHANT",
+      "A": "ARROW"
+    },
+    "recipe": [
+      "EAE",
+      "ABA",
+      "EAE"
+    ]
+  }
+}

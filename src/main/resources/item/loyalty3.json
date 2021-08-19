@@ -1,0 +1,22 @@
+{
+  "ITEM": {
+    "file_name": "loyalty3",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["LOYALTY;3"],
+    "lore": [],
+    "requires": "loyalty2,oxidisedEssence",
+    "attributes": {},
+    "ingredients": {
+      "O": "OXIDISEDESSENCE",
+      "B": "LOYALTY2",
+      "G": "GOLD_INGOT"
+    },
+    "recipe": [
+      "GGG",
+      "OBO",
+      "GGG"
+    ]
+  }
+}

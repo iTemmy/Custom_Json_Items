@@ -1,0 +1,21 @@
+{
+  "ITEM": {
+    "file_name": "luckOfTheSea3",
+    "name": "&eEnchanted Book",
+    "material": "ENCHANTED_BOOK",
+    "model": 0,
+    "enchants": ["LUCK_OF_THE_SEA;3"],
+    "lore": [],
+    "requires": "luckOfTheSea2,treasureEssence",
+    "attributes": {},
+    "ingredients": {
+      "T": "TREASUREESSENCE",
+      "L": "LUCKOFTHESEA2"
+    },
+    "recipe": [
+      " T ",
+      "TLT",
+      " T "
+    ]
+  }
+}
