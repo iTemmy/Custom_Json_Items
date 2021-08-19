@@ -10,8 +10,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -45,16 +48,30 @@ public final class ItemParser {
             if (itemSection == null) return null;
 
             itemStack = new ItemStack(Material.valueOf((String)itemSection.get("material")));
-            ItemMeta meta = itemStack.getItemMeta();
+            ItemMeta meta = null;
+            EnchantmentStorageMeta Emeta = null;
+            if (itemStack.getType() == Material.ENCHANTED_BOOK)
+                Emeta = (EnchantmentStorageMeta) itemStack.getItemMeta();
+            else
+                meta = itemStack.getItemMeta();
+
             String name;
             name = ChatColor.translateAlternateColorCodes('&', (String) itemSection.get("name"));
             Component componentName = Component.text(name);
 
-            meta.displayName(componentName);
-            meta.setLocalizedName(((String) itemSection.get("name")).trim());
+            if (itemStack.getType() == Material.ENCHANTED_BOOK) {
+                Emeta.displayName(componentName);
+                Emeta.setLocalizedName(((String) itemSection.get("name")).trim());
+            }else{
+                meta.displayName(componentName);
+                meta.setLocalizedName(((String) itemSection.get("name")).trim());
+            }
 
             Integer customModelData = Integer.parseInt(itemSection.get("model").toString());
-            meta.setCustomModelData(customModelData);
+            if (itemStack.getType() == Material.ENCHANTED_BOOK)
+                Emeta.setCustomModelData(customModelData);
+            else
+                meta.setCustomModelData(customModelData);
 
             JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
             if (JSONEnchants != null){
@@ -67,9 +84,17 @@ public final class ItemParser {
                         if (enchants[0].equalsIgnoreCase("glow")) {
                             NamespacedKey key = new NamespacedKey(Main.getPlugin(), Main.getPlugin().getDescription().getName());
                             Glow glow = new Glow(key);
-                            meta.addEnchant(glow, 1, true);
+                            if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                                Emeta.addStoredEnchant(glow, 1, true);
+                            }else {
+                                meta.addEnchant(glow, 1, true);
+                            }
                         } else{
-                            meta.addEnchant(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]), true);
+                            if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                                Emeta.addStoredEnchant(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]), true);
+                            }else {
+                                meta.addEnchant(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]), true);
+                            }
                         }
                     }
                 }
@@ -85,9 +110,17 @@ public final class ItemParser {
                 }
             }
             if (loreList.size() <= 0)
-                meta.lore(null);
+                if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                    Emeta.lore(null);
+                }else {
+                    meta.lore(null);
+                }
             else
-                meta.lore(loreList1);
+                if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                    Emeta.lore(loreList1);
+                }else {
+                    meta.lore(loreList1);
+                }
 
             Map<String, JSONObject> attributesJson = (Map<String, JSONObject>) itemSection.get("attributes");
             Map<String, String[]> attributes = new HashMap<>();
@@ -99,14 +132,27 @@ public final class ItemParser {
                 }
             }
 
-            PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-            dataContainer.set(
-                    Attribute.namespacedKey
-                    , PersistentDataType.STRING
-                    , Convert.mapToString(attributes)
-            );
+            if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                PersistentDataContainer dataContainer = Emeta.getPersistentDataContainer();
+                dataContainer.set(
+                        Attribute.namespacedKey
+                        , PersistentDataType.STRING
+                        , Convert.mapToString(attributes)
+                );
+            }else {
+                PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
+                dataContainer.set(
+                        Attribute.namespacedKey
+                        , PersistentDataType.STRING
+                        , Convert.mapToString(attributes)
+                );
+            }
 
-            itemStack.setItemMeta(meta);
+            if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                itemStack.setItemMeta(Emeta);
+            }else {
+                itemStack.setItemMeta(meta);
+            }
         }catch (JsonSyntaxException e){
             Bukkit.getLogger().log(Level.WARNING, "Syntax Error in " + filename);
             e.printStackTrace();
