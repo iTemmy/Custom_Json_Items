@@ -100,6 +100,16 @@ public final class ItemParser {
                 }
             }
 
+            boolean unbreable = false;
+            if (itemSection.get("unbreakable") != null)
+                unbreable = (boolean) itemSection.get("unbreakable");
+            if (unbreable)
+                if (itemStack.getType() == Material.ENCHANTED_BOOK){
+                    Emeta.setUnbreakable(true);
+                }else {
+                    meta.setUnbreakable(true);
+                }
+            
             JSONArray lore = (JSONArray) itemSection.get("lore");
             List<Component> loreList1 = new ArrayList<>(lore);
             List<String> loreList = new ArrayList<>(lore);
