@@ -33,7 +33,7 @@ public class GiveItem implements CommandExecutor {
         Recipe recipe = Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), item.toLowerCase()));
         if (recipe != null){
             player.getInventory().addItem(recipe.getResult());
-        }else if (Main.getCustomItems().contains(item)){
+        }else if (Main.getCustomItems().containsKey(item)){
             player.getInventory().addItem(Main.getCustomItems().get(item));
         }else {
             player.sendMessage(ChatColor.YELLOW + String.format("Item '%s' doesn't exist", item));

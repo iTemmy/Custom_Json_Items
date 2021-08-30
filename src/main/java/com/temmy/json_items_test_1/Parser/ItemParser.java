@@ -37,9 +37,9 @@ public final class ItemParser {
     public static ItemStack parseItem(String item){
         ItemStack itemStack = null;
         String filename = item.toLowerCase();
-        InputStream inputStream = ItemParser.class.getResourceAsStream(String.format("/item/%s.json", filename));
+        InputStream inputStream = ItemParser.class.getResourceAsStream(String.format("/item/%s.json", item));
 
-        if (inputStream == null) return null;
+        if (inputStream == null) {return null;}
 
         try {
             Object jsonObject = new JSONParser().parse(new InputStreamReader(inputStream));

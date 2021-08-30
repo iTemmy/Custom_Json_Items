@@ -31,7 +31,8 @@ import java.util.*;
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
-    private static Trie<ItemStack> customItems = new Trie();
+    private static Map<String, ItemStack> customItems = new HashMap<String, ItemStack>();
+    public static boolean debug;
 
 
     @Override
@@ -51,22 +52,12 @@ public final class Main extends JavaPlugin {
         loadConfig();
         for (File item : PluginFiles.getItemFiles())
             registerItemRecipes(item);
-        for (File file : PluginFiles.getItemFiles())
-            if (!(files.isEmpty())) {
-                if (files.peek() != null && !(files.peek().getName().equalsIgnoreCase("null"))) {
-                    if (file == files.peek()) {
-                        registerItemRecipes(files.peek());
-                        files.dequeue();
-                    }
-                }
-            }else if (!(files2.isEmpty())){
-                if (files2.peek() != null && !(files2.peek().getName().equalsIgnoreCase("null"))){
-                    if (file == files2.peek()){
-                        registerItemRecipes(files2.peek());
-                        files2.dequeue();
-                    }
-                }
-            }
+        for (String s : files3.keySet()) {
+            registerItemRecipes(files3.get(s));
+            l.add(s);
+        }
+        for (String s : l)
+            files3.remove(s);
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("trieDump").setExecutor(new trieDump());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
@@ -78,10 +69,10 @@ public final class Main extends JavaPlugin {
         saveLocalConfig();
     }
 
-    public static Trie<ItemStack> getCustomItems(){return customItems;}
+    public static Map<String, ItemStack> getCustomItems(){return customItems;}
 
-    Queue<File> files = new Queue<>();
-    Queue<File> files2 = new Queue<>();
+    Map<String, File> files3 = new HashMap<String, File>();
+    List<String> l = new ArrayList<>();
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void registerItemRecipes(File itemFile){
@@ -95,8 +86,12 @@ public final class Main extends JavaPlugin {
             Map<String, String> ingredients = (Map) itemSection.get("ingredients");
             JSONArray recipe = (JSONArray) itemSection.get("recipe");
 
-            String fileName = ((String) itemSection.get("file_name")).trim().toLowerCase().replaceAll("\\s", "_");
-            if (customItems.contains(fileName)) return;
+            String fileName = ((String) itemSection.get("file_name")).trim().replaceAll("\\s", "_");
+            if (customItems.containsKey(fileName.toLowerCase())) {
+                if (debug)
+                    getLogger().info("file already loaded: " +fileName);
+                return;
+            }
 
             String requires = (String) itemSection.get("requires");
             if (itemSection.get("requires") != null){
@@ -104,20 +99,23 @@ public final class Main extends JavaPlugin {
                     String[] require = requires.split(",");
                     for (String req : require) {
 
+
                         for (File file : PluginFiles.getItemFiles())
                             if (req.equalsIgnoreCase(file.getName().trim().replace(".json", "")))
                                 registerItemRecipes(file);
-                        getLogger().info("req: --> "+req);
-                        if (!(customItems.contains(req)) && Bukkit.getRecipe(new NamespacedKey(plugin, req.toLowerCase())) == null) {
-                            files2.enqueue(itemFile);
-                            return;
+                        if (!(customItems.containsKey(req))) {
+                            if (!files3.containsValue(itemFile))
+                                files3.put(fileName, itemFile);
                         }
                     }
                 }
             }
 
             ItemStack item = ItemParser.parseItem(fileName);
-            if (item == null) return;
+            if (item == null) {
+                if (debug)
+                    getLogger().info("Error "+fileName+" is null.");
+                return;}
 
             String itemName = ((String) itemSection.get("name")).trim().toLowerCase().replaceAll("\\s", "_");
             if (ingredients != null && recipe != null){
@@ -131,21 +129,20 @@ public final class Main extends JavaPlugin {
                         shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key).toUpperCase()));
                     else if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), ingredients.get(key))) != null)
                         shapedRecipe.setIngredient(key.charAt(0), Bukkit.getRecipe(new NamespacedKey(getPlugin(), ingredients.get(key))).getResult());
-                    else if (customItems.contains(ingredients.get(key).toLowerCase())){
+                    else if (customItems.containsKey(ingredients.get(key).toLowerCase())){
                         shapedRecipe.setIngredient(key.charAt(0), customItems.get(ingredients.get(key).toLowerCase()));
                     }
                 }
-                Bukkit.addRecipe(shapedRecipe);
+                if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), fileName)) == null) {
+                    if (debug)
+                        getLogger().info("Registering "+fileName);
+                    Bukkit.addRecipe(shapedRecipe);
+                }
             }
             customItems.put(fileName.toLowerCase(), item);
 
-            if (!(files.isEmpty())) {
-                if (files.peek() != null && !(files.peek().getName().equalsIgnoreCase("null"))) {
-                    registerItemRecipes(files.peek());
-                    files.dequeue();
-                }
-            }
-        }catch (IOException | ParseException | IllegalArgumentException e){
+        }catch (IOException | ParseException | IllegalArgumentException | NullPointerException e){
+            if (debug) getLogger().warning("Error: "+itemFile.getName());
             e.printStackTrace();
         }
     }
@@ -178,6 +175,7 @@ public final class Main extends JavaPlugin {
         chances.put("Jolixanine".toLowerCase(), plugin.getConfig().getInt("Jolixanine"));
         chances.put("Corinthium".toLowerCase(), plugin.getConfig().getInt("Corinthium"));
         chances.put("Zinc".toLowerCase(), plugin.getConfig().getInt("Zinc"));
+        debug = plugin.getConfig().getBoolean("IncreasedDebugging");
     }
 
     private static void saveLocalConfig(){

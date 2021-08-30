@@ -16,7 +16,7 @@ public class GiveItemTabCompleter implements TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (sender instanceof Player) {
             List<String> tabComplete = new ArrayList<>();
-            for (String s : Main.getCustomItems().keys())
+            for (String s : Main.getCustomItems().keySet())
                 tabComplete.add(s);
             return tabComplete;
         }else return null;

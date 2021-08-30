@@ -6,3 +6,5 @@ Tungsten: 500
 Jolixanine: 200
 Corinthium: 100
 Zinc: 250
+# This option will provide increased debugging information in console when the server starts.
+IncreasedDebugging: false

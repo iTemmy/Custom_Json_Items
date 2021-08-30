@@ -21,7 +21,7 @@ public class DenyCustomItemCraft {
             if (event.getRecipe().getResult().getItemMeta().hasLocalizedName())
                 recipeLocalized = true;
             if (recipeLocalized && itemLocalized) {
-                if (Main.getCustomItems().contains(item.getItemMeta().getLocalizedName().toLowerCase()) && Main.getCustomItems().contains(event.getRecipe().getResult().getItemMeta().getLocalizedName()))
+                if (Main.getCustomItems().containsValue(item.getItemMeta().getLocalizedName().toLowerCase()) && Main.getCustomItems().containsValue(event.getRecipe().getResult().getItemMeta().getLocalizedName()))
                     return;
             }else {
                 event.setCancelled(true);
