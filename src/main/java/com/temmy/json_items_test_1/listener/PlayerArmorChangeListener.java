@@ -1,14 +1,17 @@
 package com.temmy.json_items_test_1.listener;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.ArmorEffects;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
@@ -17,6 +20,7 @@ import java.util.logging.Logger;
 public class PlayerArmorChangeListener implements Listener {
 
     Logger log = Bukkit.getLogger();
+    public static final NamespacedKey fullSetHealth = new NamespacedKey(Main.getPlugin(), "health");
 
     @EventHandler
     public void onPlayerArmorChange(PlayerArmorChangeEvent e){
@@ -83,9 +87,12 @@ public class PlayerArmorChangeListener implements Listener {
             String[] attribute = s.split(":");
             for (int i = 0; i < attribute.length; i++){
                 if (attribute[i].contains("health")){
+                    if (player.getPersistentDataContainer().has(fullSetHealth, PersistentDataType.BYTE))
+                        if (player.getPersistentDataContainer().get(fullSetHealth, PersistentDataType.BYTE) == 0) continue;
                     attribute[i+1] = attribute[i+1].replace("}", "");
                     player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).setBaseValue(
                             player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getBaseValue() - Integer.parseInt(attribute[i+1]));
+                    player.getPersistentDataContainer().set(fullSetHealth, PersistentDataType.BYTE, (byte) 0);
                 }else if (attribute[i].contains("speed")){
                     attribute[i+1] = attribute[i+1].replace("}", "");
                     player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(
