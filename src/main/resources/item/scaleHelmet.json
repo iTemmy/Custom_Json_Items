@@ -1,0 +1,31 @@
+{
+  "ITEM": {
+    "file_name": "scaleHelmet",
+    "name": "&5&lScale Helmet",
+    "material": "DIAMOND_HELMET",
+    "model": 0,
+    "enchants": ["PROTECTION;6,UNBREAKING;5"],
+    "lore": ["&6Wearing(1)","&5Speed 1","&6Full Set Bonus:","&5Resistance 2","Strength 1"],
+    "attributes": {
+      "ARMOREFFECTS": {
+        "SPEED": 1
+      },
+      "FULLSETARMOREFFECTS": {
+        "setName": "scale",
+        "DAMAGE_RESISTANCE": 2,
+        "INCREASE_DAMAGE": 1
+      }
+    },
+    "requires":  "imbuedHardening,janelite,imbuedProtection",
+    "ingredients": {
+      "H": "IMBUEDHARDENING",
+      "J": "JANELITE",
+      "P": "IMBUEDPROTECTION"
+    },
+    "recipe": [
+      "PHP",
+      "J J",
+      "   "
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "ITEM": {
+    "file_name": "dragonscaleHelmet",
+    "name": "&4&lDragonscale Helmet",
+    "material": "NETHERITE_HELMET",
+    "model": 0,
+    "enchants": ["PROTECTION;7"],
+    "unbreakable": true,
+    "lore": ["&6Wearing(1)","&4Strength 2","Full Set Bonus:","Resistance 3","Fire Resistance","Regeneration 1"],
+    "attributes": {
+      "ARMOREFFECTS": {
+        "INCREASE_DAMAGE": 2
+      },
+      "FULLSETARMOREFFECTS": {
+        "setName": "dragonscale",
+        "DAMAGE_RESISTANCE": 3,
+        "FIRE_RESISTANCE": 1,
+        "REGENERATION": 1
+      }
+    },
+    "requires":  "imbuedHardening,ellendyte,otherworldlyTrophy,scaleHelmet",
+    "ingredients": {
+      "H": "IMBUEDHARDENING",
+      "E": "ELLENDYTE",
+      "O": "OTHERWORLDLYTROPHY",
+      "S": "SCALEHELMET"
+    },
+    "recipe": [
+      "HOH",
+      "ESE",
+      "   "
+    ]
+  }
+}
