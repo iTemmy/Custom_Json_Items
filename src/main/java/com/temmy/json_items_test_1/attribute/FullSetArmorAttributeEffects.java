@@ -1,6 +1,7 @@
 package com.temmy.json_items_test_1.attribute;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import com.temmy.json_items_test_1.listener.PlayerArmorChangeListener;
 import com.temmy.json_items_test_1.util.Queue;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -57,8 +58,11 @@ public class FullSetArmorAttributeEffects {
                 String[] attributes = arg.split(":");
                 for (int i = 0; i < attributes.length; i++) {
                     if (attributes[i].contains("health")) {
+                        if (event.getPlayer().getPersistentDataContainer().has(PlayerArmorChangeListener.fullSetHealth, PersistentDataType.BYTE))
+                            if (event.getPlayer().getPersistentDataContainer().get(PlayerArmorChangeListener.fullSetHealth, PersistentDataType.BYTE) == 1) continue;
                         attributes[i+1] = attributes[i+1].replace("}", "");
                         event.getPlayer().getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).setBaseValue(event.getPlayer().getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getBaseValue()+Integer.parseInt(attributes[i+1]));
+                        event.getPlayer().getPersistentDataContainer().set(PlayerArmorChangeListener.fullSetHealth, PersistentDataType.BYTE, (byte)1);
                     }else if (attributes[i].contains("speed")) {
                         attributes[i + 1] = attributes[i + 1].replace("}", "");
                         event.getPlayer().getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(event.getPlayer().getAttribute(org.bukkit.attribute.Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() + Integer.parseInt(attributes[i+1]));
