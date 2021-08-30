@@ -9,7 +9,7 @@
     "requires": "blastProtection1,combustibleScraps",
     "attributes": {},
     "ingredients": {
-      "A": "COMBUSTIBLE_SCRAPS",
+      "C": "COMBUSTIBLESCRAPS",
       "B": "BLASTPROTECTION1"
     },
     "recipe": [

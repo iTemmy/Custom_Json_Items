@@ -4,7 +4,7 @@
     "name": "&eEnchanted Book",
     "material": "ENCHANTED_BOOK",
     "model": 0,
-    "enchants": ["SWEEPING_EDGE;2"],
+    "enchants": ["SWEEPING;2"],
     "lore": [],
     "requires": "sweepingEdge1,splicingEssence",
     "attributes": {},

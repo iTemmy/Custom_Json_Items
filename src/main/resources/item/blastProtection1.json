@@ -9,7 +9,7 @@
     "requires": "baseEnchant,combustibleScraps",
     "attributes": {},
     "ingredients": {
-      "A": "COMBUSTIBLE_SCRAPS",
+      "C": "COMBUSTIBLESCRAPS",
       "B": "BASEENCHANT"
     },
     "recipe": [

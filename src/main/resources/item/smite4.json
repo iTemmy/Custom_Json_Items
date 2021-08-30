@@ -9,7 +9,7 @@
     "requires": "smite3,undeadEssence",
     "attributes": {},
     "ingredients": {
-      "O": "UNDEADESSENCE",
+      "U": "UNDEADESSENCE",
       "B": "SMITE3"
     },
     "recipe": [

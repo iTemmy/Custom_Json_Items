@@ -9,7 +9,7 @@
     "requires": "sharpness4,blazeEssence",
     "attributes": {},
     "ingredients": {
-      "O": "BLAZEESSENCE",
+      "E": "BLAZEESSENCE",
       "S": "SHARPNESS4"
     },
     "recipe": [

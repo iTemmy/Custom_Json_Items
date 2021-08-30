@@ -9,7 +9,7 @@
     "requires": "baseEnchant,frostEssence",
     "attributes": {},
     "ingredients": {
-      "F": "FROSTESSENCE",
+      "I": "FROSTESSENCE",
       "B": "BASEENCHANT"
     },
     "recipe": [

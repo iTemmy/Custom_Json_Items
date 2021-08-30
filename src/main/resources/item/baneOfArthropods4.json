@@ -6,10 +6,10 @@
     "model": 0,
     "enchants": ["BANE_OF_ARTHROPODS;4"],
     "lore": [],
-    "requires": "baneOfArthropods3,arachnid_essence",
+    "requires": "baneOfArthropods3,arachnidEssence",
     "attributes": {},
     "ingredients": {
-      "A": "ARACHNID_ESSENCE",
+      "A": "ARACHNIDESSENCE",
       "B": "BANEOFARTHROPODS3"
     },
     "recipe": [

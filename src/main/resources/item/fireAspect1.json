@@ -4,7 +4,7 @@
     "name": "&eEnchanted Book",
     "material": "ENCHANTED_BOOK",
     "model": 0,
-    "enchants": ["fireAspect;1"],
+    "enchants": ["FIRE_ASPECT;1"],
     "lore": [],
     "requires": "baseEnchant,imbuedFlame",
     "attributes": {},

@@ -9,7 +9,7 @@
     "requires": "piercing3,splicingEssence",
     "attributes": {},
     "ingredients": {
-      "L": "SPLICINGESSENCE",
+      "S": "SPLICINGESSENCE",
       "P": "PIERCING3"
     },
     "recipe": [

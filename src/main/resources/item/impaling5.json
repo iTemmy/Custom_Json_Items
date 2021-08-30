@@ -10,8 +10,7 @@
     "attributes": {},
     "ingredients": {
       "O": "OXIDISEDESSENCE",
-      "B": "IMPALING4",
-      "A": "ARROW"
+      "B": "IMPALING4"
     },
     "recipe": [
       "OOO",

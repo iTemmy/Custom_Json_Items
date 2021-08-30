@@ -9,7 +9,7 @@
     "requires": "frostWalker1,frostEssence",
     "attributes": {},
     "ingredients": {
-      "F": "FROSTESSENCE",
+      "I": "FROSTESSENCE",
       "B": "FROSTWALKER1"
     },
     "recipe": [

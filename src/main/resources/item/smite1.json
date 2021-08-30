@@ -9,7 +9,7 @@
     "requires": "baseEnchant,undeadEssence",
     "attributes": {},
     "ingredients": {
-      "O": "UNDEADESSENCE",
+      "U": "UNDEADESSENCE",
       "B": "BASEENCHANT"
     },
     "recipe": [

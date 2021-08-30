@@ -9,7 +9,7 @@
     "requires": "baseEnchant,blazeEssence",
     "attributes": {},
     "ingredients": {
-      "O": "BLAZEESSENCE",
+      "E": "BLAZEESSENCE",
       "B": "BASEENCHANT"
     },
     "recipe": [

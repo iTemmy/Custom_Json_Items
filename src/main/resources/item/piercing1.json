@@ -9,7 +9,7 @@
     "requires": "baseEnchant,splicingEssence",
     "attributes": {},
     "ingredients": {
-      "L": "SPLICINGESSENCE",
+      "S": "SPLICINGESSENCE",
       "B": "BASEENCHANT"
     },
     "recipe": [
