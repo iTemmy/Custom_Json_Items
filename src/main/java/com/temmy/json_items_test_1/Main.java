@@ -8,8 +8,6 @@ import com.temmy.json_items_test_1.command.trieDump;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
 import com.temmy.json_items_test_1.util.Glow;
-import com.temmy.json_items_test_1.util.Queue;
-import com.temmy.json_items_test_1.util.trie.Trie;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -159,6 +157,8 @@ public final class Main extends JavaPlugin {
             NamespacedKey key = new NamespacedKey(Main.getPlugin(), getDescription().getName());
 
             Glow glow = new Glow(key);
+            if (Enchantment.getByKey(key) == null)
+                Enchantment.registerEnchantment(glow);
         } catch (Exception e) {
             e.printStackTrace();
         }
