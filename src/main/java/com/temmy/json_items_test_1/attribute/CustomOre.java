@@ -39,7 +39,18 @@ public class CustomOre {
                     }
                 case COPPER_ORE:
                 case DEEPSLATE_COPPER_ORE:
-                    break;
+                    if (rnd.nextInt(Main.getChances().get("Kaylax".toLowerCase())) == 1){
+                        block.getWorld().dropItem(block.getLocation(), Main.getCustomItems().get("kaylax"));
+                        data.set(Main.getOres().get("Kaylax"), PersistentDataType.INTEGER, 0);
+                        return true;
+                    }else if (data.get(Main.getOres().get("Kaylax"), PersistentDataType.INTEGER) >= Main.getChances().get("Kaylax".toLowerCase())-1){
+                        block.getWorld().dropItem(block.getLocation(), Main.getCustomItems().get("kaylax"));
+                        data.set(Main.getOres().get("Kaylax"), PersistentDataType.INTEGER, 0);
+                        return true;
+                    }else{
+                        data.set(Main.getOres().get("Kaylax"), PersistentDataType.INTEGER, data.get(Main.getOres().get("Kaylax"), PersistentDataType.INTEGER) + 1);
+                        return false;
+                    }
                 case DIAMOND_ORE:
                 case DEEPSLATE_DIAMOND_ORE:
                     if (rnd.nextInt(Main.getChances().get("Janelite".toLowerCase())) == 1){

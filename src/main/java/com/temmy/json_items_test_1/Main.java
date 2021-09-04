@@ -175,6 +175,7 @@ public final class Main extends JavaPlugin {
         chances.put("Jolixanine".toLowerCase(), plugin.getConfig().getInt("Jolixanine"));
         chances.put("Corinthium".toLowerCase(), plugin.getConfig().getInt("Corinthium"));
         chances.put("Zinc".toLowerCase(), plugin.getConfig().getInt("Zinc"));
+        chances.put("Kaylax".toLowerCase(), plugin.getConfig().getInt("Kaylax"));
         debug = plugin.getConfig().getBoolean("IncreasedDebugging");
     }
 
@@ -200,6 +201,7 @@ public final class Main extends JavaPlugin {
         NamespacedKey jolixanineKey = new NamespacedKey(plugin, "Jolixanine");
         NamespacedKey corinthiumKey = new NamespacedKey(plugin, "Corinthium");
         NamespacedKey zincKey = new NamespacedKey(plugin, "Zinc");
+        NamespacedKey kaylaxKey = new NamespacedKey(plugin, "Kaylax");
         ores.put("Phosphorus", phosphorusKey);
         ores.put("Janelite", janeliteKey);
         ores.put("Ellendyte", ellendyteKey);
@@ -208,6 +210,7 @@ public final class Main extends JavaPlugin {
         ores.put("Jolixanine", jolixanineKey);
         ores.put("Corinthium", corinthiumKey);
         ores.put("Zinc", zincKey);
+        ores.put("Kaylax", kaylaxKey);
     }
     public static Map<String, NamespacedKey> getOres(){return ores;}
 

@@ -1,10 +1,11 @@
-Phosphorus: 1000
+Phosphorus: 500
 Janelite: 200
 Ellendyte: 50
-Sapphire: 400
+Sapphire: 300
 Tungsten: 500
-Jolixanine: 200
-Corinthium: 100
-Zinc: 250
+Jolixanine: 300
+Corinthium: 250
+Zinc: 400
+Kaylax: 200
 # This option will provide increased debugging information in console when the server starts.
 IncreasedDebugging: false

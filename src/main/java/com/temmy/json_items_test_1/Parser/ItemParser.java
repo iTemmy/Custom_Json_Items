@@ -23,9 +23,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,9 +35,14 @@ public final class ItemParser {
     public static ItemStack parseItem(String item){
         ItemStack itemStack = null;
         String filename = item.toLowerCase();
-        InputStream inputStream = ItemParser.class.getResourceAsStream(String.format("/item/%s.json", item));
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(Main.getPlugin().getDataFolder()+String.format("/item/%s.json", item));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        if (inputStream == null) {return null;}
+        if (inputStream == null) {log.info("invalid input stream for file "+item);return null;}
 
         try {
             Object jsonObject = new JSONParser().parse(new InputStreamReader(inputStream));
