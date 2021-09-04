@@ -1,0 +1,14 @@
+{
+  "ITEM": {
+    "file_name": "kaylax",
+    "name": "&2&lKaylax",
+    "material": "COPPER_INGOT",
+    "model": 1,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "attributes": {
+      "PLACE": {"PLACE": false},
+      "CRAFT": {"CRAFT": false}
+    }
+  }
+}

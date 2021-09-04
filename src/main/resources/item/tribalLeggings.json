@@ -1,0 +1,32 @@
+{
+  "ITEM": {
+    "file_name": "tribalLeggings",
+    "name": "&b&lTribal Leggings",
+    "material": "CHAINMAIL_LEGGINGS",
+    "model": 0,
+    "enchants": ["BLAST_PROTECTION;4,UNBREAKING;5"],
+    "lore": ["&6Wearing(1)","&bHaste 1","&6Full Set Bonus:","&bHaste 3","Resistance 1","Jump Boost 2"],
+    "attributes": {
+      "ARMOREFFECTS":{
+        "FAST_DIGGING": 1
+      },
+      "FULLSETARMOREFFECTS": {
+        "setName": "tribal",
+        "FAST_DIGGING": 3,
+        "DAMAGE_RESISTANCE": 1,
+        "JUMP": 2
+      }
+    },
+    "requires":  "imbuedCushion,imbuedSilk,zinc",
+    "ingredients": {
+      "C": "IMBUEDCUSHION",
+      "S": "IMBUEDSILK",
+      "Z": "ZINC"
+    },
+    "recipe": [
+      "ZSZ",
+      "C C",
+      "C C"
+    ]
+  }
+}

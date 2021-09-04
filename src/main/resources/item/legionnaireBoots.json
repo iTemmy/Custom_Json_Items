@@ -1,0 +1,27 @@
+{
+  "ITEM": {
+    "file_name": "legionnaireBoots",
+    "name": "&f&lLegionnaire Boots",
+    "material": "IRON_BOOTS",
+    "model": 0,
+    "enchants": ["PROTECTION;5,THORNS;5,UNBREAKING;5"],
+    "lore": ["Boots of the Legionnaire","&6Full Set Bonus:","+10 Max HP"],
+    "attributes": {
+      "FULLSETARMORATTRIBUTES": {
+        "setName": "legionnaire",
+        "health": 10
+      }
+    },
+    "requires":  "pricklyEssence,imbuedProtection,phosphorus",
+    "ingredients": {
+      "P": "PRICKLYESSENCE",
+      "I": "IMBUEDPROTECTION",
+      "C": "PHOSPHORUS"
+    },
+    "recipe": [
+      "   ",
+      "I I",
+      "CPC"
+    ]
+  }
+}

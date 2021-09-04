@@ -1,0 +1,33 @@
+{
+  "ITEM": {
+    "file_name": "sageHelmet",
+    "name": "&4&lSage Helmet",
+    "material": "GOLDEN_HELMET",
+    "model": 0,
+    "enchants": ["FIRE_PROTECTION;4,UNBREAKING;5"],
+    "lore": ["&6Wearing(1)","&4Dolphin's grace","&6Full Set Bonus:","&4Fire Resistance","Water Breathing","Resistance 2"],
+    "attributes": {
+      "ARMOREFFECTS":{
+        "DOLPHINS_GRACE": 1
+      },
+      "FULLSETARMOREFFECTS": {
+        "setName": "sage",
+        "FIRE_RESISTANCE": 1,
+        "WATER_BREATHING": 1,
+        "DAMAGE_RESISTANCE": 2
+      }
+    },
+    "requires":  "oxidizedSerum,oceanicEssence,imbuedFlame,sapphire",
+    "ingredients": {
+      "O": "OXIDIZEDSERUM",
+      "0": "OCEANICESSENCE",
+      "S": "SAPPHIRE",
+      "F": "IMBUEDFLAME"
+    },
+    "recipe": [
+      "O0O",
+      "FSF",
+      "   "
+    ]
+  }
+}

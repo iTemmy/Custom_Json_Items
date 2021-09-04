@@ -1,0 +1,27 @@
+{
+  "ITEM": {
+    "file_name": "legionnaireLeggings",
+    "name": "&f&lLegionnaire Leggings",
+    "material": "IRON_LEGGINGS",
+    "model": 0,
+    "enchants": ["PROTECTION;5,THORNS;5,UNBREAKING;5"],
+    "lore": ["Leggings of the Legionnaire","&6Full Set Bonus:","+10 Max HP"],
+    "attributes": {
+      "FULLSETARMORATTRIBUTES": {
+        "setName": "legionnaire",
+        "health": 10
+      }
+    },
+    "requires":  "pricklyEssence,imbuedProtection,phosphorus",
+    "ingredients": {
+      "P": "PRICKLYESSENCE",
+      "I": "IMBUEDPROTECTION",
+      "C": "PHOSPHORUS"
+    },
+    "recipe": [
+      "CPC",
+      "I I",
+      "I I"
+    ]
+  }
+}

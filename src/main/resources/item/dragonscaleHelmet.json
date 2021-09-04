@@ -6,7 +6,7 @@
     "model": 0,
     "enchants": ["PROTECTION;7"],
     "unbreakable": true,
-    "lore": ["&6Wearing(1)","&4Strength 2","Full Set Bonus:","Resistance 3","Fire Resistance","Regeneration 1"],
+    "lore": ["&6Wearing(1)","&4Strength 2","&6Full Set Bonus:","&4Resistance 3","Fire Resistance","Regeneration 1"],
     "attributes": {
       "ARMOREFFECTS": {
         "INCREASE_DAMAGE": 2

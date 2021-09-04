@@ -27,6 +27,7 @@ public class trieDump implements CommandExecutor {
             player.getPersistentDataContainer().set(Main.getOres().get("Jolixanine"), PersistentDataType.INTEGER, Main.getChances().get("jolixanine")-1);
             player.getPersistentDataContainer().set(Main.getOres().get("Corinthium"), PersistentDataType.INTEGER, Main.getChances().get("corinthium")-1);
             player.getPersistentDataContainer().set(Main.getOres().get("Zinc"), PersistentDataType.INTEGER, Main.getChances().get("zinc")-1);
+            player.getPersistentDataContainer().set(Main.getOres().get("Kaylax"), PersistentDataType.INTEGER, Main.getChances().get("kaylax")-1);
             log.info(String.valueOf(Main.getChances().get("phosphorus")));
             log.info(String.valueOf(Main.getChances().get("janelite")));
             log.info(String.valueOf(Main.getChances().get("ellendyte")));
@@ -35,6 +36,7 @@ public class trieDump implements CommandExecutor {
             log.info(String.valueOf(Main.getChances().get("jolixanine")));
             log.info(String.valueOf(Main.getChances().get("corinthium")));
             log.info(String.valueOf(Main.getChances().get("zinc")));
+            log.info(String.valueOf(Main.getChances().get("kaylax")));
         }
         return true;
     }

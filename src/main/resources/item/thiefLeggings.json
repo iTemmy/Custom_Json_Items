@@ -1,0 +1,32 @@
+{
+  "ITEM": {
+    "file_name": "thiefLeggings",
+    "name": "&2&lThief Leggings",
+    "material": "LEATHER_LEGGINGS",
+    "model": 0,
+    "enchants": ["PROJECTILE_PROTECTION;4,UNBREAKING;5"],
+    "lore": ["&6Wearing(1)","&2Speed 1","&6Full Set Bonus:","&2Speed 3","Resistance 1","Strength 2"],
+    "attributes": {
+      "ARMOREFFECTS":{
+        "SPEED": 1
+      },
+      "FULLSETARMOREFFECTS": {
+        "setName": "thief",
+        "SPEED": 3,
+        "DAMAGE_RESISTANCE": 1,
+        "INCREASE_DAMAGE": 2
+      }
+    },
+    "requires":  "imbuedProjectile,imbuedQuickening,tungsten",
+    "ingredients": {
+      "P": "IMBUEDPROJECTILE",
+      "Q": "IMBUEDQUICKENING",
+      "T": "TUNGSTEN"
+    },
+    "recipe": [
+      "TQT",
+      "P P",
+      "P P"
+    ]
+  }
+}
