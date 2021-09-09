@@ -6,6 +6,8 @@ import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.util.Convert;
 import com.temmy.json_items_test_1.util.Glow;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -59,17 +61,23 @@ public final class ItemParser {
                 meta = itemStack.getItemMeta();
 
             String name;
-            name = ChatColor.translateAlternateColorCodes('&', (String) itemSection.get("name"));
-            Component componentName = Component.text(name);
-
-            if (itemStack.getType() == Material.ENCHANTED_BOOK) {
-                Emeta.displayName(componentName);
-                Emeta.setLocalizedName(((String) itemSection.get("name")).trim());
-            }else{
-                meta.displayName(componentName);
-                meta.setLocalizedName(((String) itemSection.get("name")).trim());
+            if (itemSection.get("name") != null) {
+                name = (String) itemSection.get("name");
+                Component comp = null;
+                    if (getComponentDecoration(name).size() >= 1) {
+                        for (TextDecoration d : getComponentDecoration(name))
+                            comp = Component.text().content(removeColourCodes(name)).color(getComponentColor(name)).decorate(d).build();
+                    }else{
+                        comp = Component.text().content(removeColourCodes(name)).color(getComponentColor(name)).build();
+                    }
+                if (itemStack.getType() == Material.ENCHANTED_BOOK) {
+                    Emeta.displayName(comp);
+                    Emeta.setLocalizedName(((String) itemSection.get("name")).trim());
+                }else{
+                    meta.displayName(comp);
+                    meta.setLocalizedName(((String) itemSection.get("name")).trim());
+                }
             }
-
             Integer customModelData = Integer.parseInt(itemSection.get("model").toString());
             if (itemStack.getType() == Material.ENCHANTED_BOOK)
                 Emeta.setCustomModelData(customModelData);
@@ -181,5 +189,194 @@ public final class ItemParser {
         }
 
         return itemStack;
+    }
+
+    public static TextColor getComponentColor(String textToTranslate){
+        char[] b = textToTranslate.toCharArray();
+        for (int i = 0; i < b.length - 1; i++) {
+            if (b[i] == '&' && b[i+1] == '0') {
+                return TextColor.fromHexString("#000000");
+            }
+            if (b[i] == '&' && b[i+1] == '1') {
+                return TextColor.fromHexString("#0000AA");
+            }
+            if (b[i] == '&' && b[i+1] == '2') {
+                return TextColor.fromHexString("#00AA00");
+            }
+            if (b[i] == '&' && b[i+1] == '3') {
+                return TextColor.fromHexString("#00AAAA");
+            }
+            if (b[i] == '&' && b[i+1] == '4') {
+                return TextColor.fromHexString("#AA0000");
+            }
+            if (b[i] == '&' && b[i+1] == '5') {
+                return TextColor.fromHexString("#AA00AA");
+            }
+            if (b[i] == '&' && b[i+1] == '6') {
+                return TextColor.fromHexString("#FFAA00");
+            }
+            if (b[i] == '&' && b[i+1] == '7') {
+                return TextColor.fromHexString("#AAAAAA");
+            }
+            if (b[i] == '&' && b[i+1] == '8') {
+                return TextColor.fromHexString("#555555");
+            }
+            if (b[i] == '&' && b[i+1] == '9') {
+                return TextColor.fromHexString("#5555FF");
+            }
+            if (b[i] == '&' && b[i+1] == 'A') {
+                return TextColor.fromHexString("#55FF55");
+            }
+            if (b[i] == '&' && b[i+1] == 'a') {
+                return TextColor.fromHexString("#55FF55");
+            }
+            if (b[i] == '&' && b[i+1] == 'B'){
+                return TextColor.fromHexString("#55FFFF");
+            }
+            if (b[i] == '&' && b[i+1] == 'b') {
+                return TextColor.fromHexString("#55FFFF");
+            }
+            if (b[i] == '&' && b[i+1] == 'C'){
+                return TextColor.fromHexString("#FF5555");
+            }
+            if (b[i] == '&' && b[i+1] == 'c') {
+                return TextColor.fromHexString("#FF5555");
+            }
+            if (b[i] == '&' && b[i+1] == 'D'){
+                return TextColor.fromHexString("#FF55FF");
+            }
+            if (b[i] == '&' && b[i+1] == 'd') {
+                return TextColor.fromHexString("#FF55FF");
+            }
+            if (b[i] == '&' && b[i+1] == 'E'){
+                return TextColor.fromHexString("#FFFF55");
+            }
+            if (b[i] == '&' && b[i+1] == 'e') {
+                return TextColor.fromHexString("#FFFF55");
+            }
+            if (b[i] == '&' && b[i+1] == 'F'){
+                return TextColor.fromHexString("#FFFFFF");
+            }
+            if (b[i] == '&' && b[i+1] == 'f') {
+                return TextColor.fromHexString("#FFFFFF");
+            }
+        }
+        log.info("TextToTranslate: --> "+textToTranslate);
+        return TextColor.fromHexString("#FFFFFF");
+    }
+
+    public static List<TextDecoration> getComponentDecoration(String textToTranslate){
+        char[] b =textToTranslate.toCharArray();
+        List<TextDecoration> decor = new ArrayList<>();
+        for (int i = 0; i< b.length-1;i++){
+            if (b[i] == '&' && "Kk".indexOf(b[i+1])>-1){
+                decor.add(TextDecoration.OBFUSCATED);
+            }
+            if (b[i] == '&' && "Ll".indexOf(b[i+1])>-1){
+                decor.add(TextDecoration.BOLD);
+            }
+            if (b[i] == '&' && "Mm".indexOf(b[i+1])>-1){
+                decor.add(TextDecoration.STRIKETHROUGH);
+            }
+            if (b[i] == '&' && "Nn".indexOf(b[i+1])>-1){
+                decor.add(TextDecoration.UNDERLINED);
+            }
+            if (b[i] == '&' && "Oo".indexOf(b[i+1])>-1){
+                decor.add(TextDecoration.ITALIC);
+            }
+        }
+        return decor;
+    }
+
+    private static String removeColourCodes(String textToTranslate){
+        char[] b = textToTranslate.toCharArray();
+        char[] c = new char[b.length];
+        int j = 0;
+        for (int i = 0; i < b.length; i++){
+            if (b[i] == '&' && b[i+1] == '0') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '1') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '2') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '3') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '4') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '5') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '6') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '7') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '8') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == '9') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'A') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'a') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'B'){
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'b') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'C'){
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'c') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'D'){
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'd') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'E'){
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'e') {
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'F'){
+                i=i+2;
+            }
+            if (b[i] == '&' && b[i+1] == 'f') {
+                i=i+2;
+            }
+            if (b[i] == '&' && "Kk".indexOf(b[i+1])>-1){
+                i=i+2;
+            }
+            if (b[i] == '&' && "Ll".indexOf(b[i+1])>-1){
+                i=i+2;
+            }
+            if (b[i] == '&' && "Mm".indexOf(b[i+1])>-1){
+                i=i+2;
+            }
+            if (b[i] == '&' && "Nn".indexOf(b[i+1])>-1){
+                i=i+2;
+            }
+            if (b[i] == '&' && "Oo".indexOf(b[i+1])>-1){
+                i=i+2;
+            }
+            c[j] = b[i];
+            j++;
+        }
+        return new String(c).trim();
     }
 }
