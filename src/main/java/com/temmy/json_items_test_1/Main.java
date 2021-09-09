@@ -115,7 +115,6 @@ public final class Main extends JavaPlugin {
                     getLogger().info("Error "+fileName+" is null.");
                 return;}
 
-            String itemName = ((String) itemSection.get("name")).trim().toLowerCase().replaceAll("\\s", "_");
             if (ingredients != null && recipe != null){
                 ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(Main.getPlugin(), fileName), item);
 
