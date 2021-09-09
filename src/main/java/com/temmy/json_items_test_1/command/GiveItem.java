@@ -17,6 +17,7 @@ public class GiveItem implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (!(sender.hasPermission("jsonitems.giveitem"))) return false;
         if (!(sender instanceof Player) && (args.length != 2)){
             Bukkit.getLogger().log(Level.INFO,"You must provide a player to give the item to.");
             return false;
