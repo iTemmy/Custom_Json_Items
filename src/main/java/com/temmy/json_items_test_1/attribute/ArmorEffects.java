@@ -10,8 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -24,7 +22,6 @@ public final class ArmorEffects {
         if (!(e instanceof PlayerArmorChangeEvent)) return;
         PlayerArmorChangeEvent event = (PlayerArmorChangeEvent) e;
         Player player  = event.getPlayer();
-        Queue<String> stringQueue = new Queue<>();
 
         for (String arg : args){
             String[] effects = arg.split(",");
@@ -46,7 +43,6 @@ public final class ArmorEffects {
                         }catch (NumberFormatException ignored){
 
                         }
-                        stringQueue.enqueue(l);
                         if (type != null && power != -99) {
                             player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, power-1));
                             power = -99;
