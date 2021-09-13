@@ -120,10 +120,10 @@ public final class ItemParser {
                 }
             }
 
-            boolean unbreable = false;
+            boolean unbreakable = false;
             if (itemSection.get("unbreakable") != null)
-                unbreable = (boolean) itemSection.get("unbreakable");
-            if (unbreable)
+                unbreakable = (boolean) itemSection.get("unbreakable");
+            if (unbreakable)
                 if (itemStack.getType() == Material.ENCHANTED_BOOK){
                     Emeta.setUnbreakable(true);
                 }else {
