@@ -91,6 +91,15 @@ public final class ItemParser {
                         "generic.attack.damage", attackDamage, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
             }
 
+            int health = 0;
+            String slot = null;
+            if (itemSection.get("health") != null && itemSection.get("healthSlot") != null){
+                health = Integer.parseInt(String.valueOf((long) itemSection.get("health")));
+                slot = (String) itemSection.get("healthSlot");
+                meta.addAttributeModifier(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(UUID.randomUUID(),
+                        "generic.max.health", health, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.valueOf(slot)));
+            }
+
             JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
             if (JSONEnchants != null){
                 List<String> enchantsList = new ArrayList<>(JSONEnchants);
