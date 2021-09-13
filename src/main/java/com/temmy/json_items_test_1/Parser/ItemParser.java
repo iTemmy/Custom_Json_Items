@@ -63,18 +63,11 @@ public final class ItemParser {
             String name;
             if (itemSection.get("name") != null) {
                 name = (String) itemSection.get("name");
-                Component comp = null;
-                    if (getComponentDecoration(name).size() >= 1) {
-                        for (TextDecoration d : getComponentDecoration(name))
-                            comp = Component.text().content(removeColourCodes(name)).color(getComponentColor(name)).decorate(d).build();
-                    }else{
-                        comp = Component.text().content(removeColourCodes(name)).color(getComponentColor(name)).build();
-                    }
                 if (itemStack.getType() == Material.ENCHANTED_BOOK) {
-                    Emeta.displayName(comp);
+                    Emeta.displayName(regextesting(name));
                     Emeta.setLocalizedName(((String) itemSection.get("name")).trim());
                 }else{
-                    meta.displayName(comp);
+                    meta.displayName(regextesting(name));
                     meta.setLocalizedName(((String) itemSection.get("name")).trim());
                 }
             }
@@ -142,8 +135,7 @@ public final class ItemParser {
             List<String> loreList = new ArrayList<>(lore);
             if (loreList != null && loreList.size() > 0) {
                 for (int i = 0; i <= loreList.size()-1; i++) {
-                    loreList.set(i, ChatColor.translateAlternateColorCodes('&', loreList.get(i)));
-                    loreList1.set(i, Component.text(loreList.get(i)));
+                    loreList1.set(i, regextesting(loreList.get(i)));
                 }
             }
             if (loreList.size() <= 0)
@@ -198,6 +190,48 @@ public final class ItemParser {
         }
 
         return itemStack;
+    }
+
+    private static Component regextesting(String name){
+        String[] s = name.split("&[0-9a-fl-oA-FL-O]");
+        Component comp = Component.text("");
+        char[] chararray = name.toCharArray();
+        char[] newchararray = new char[chararray.length];
+        int j = 2;
+        int k = 2;
+        TextColor[] color = new TextColor[10];
+        Set<TextDecoration>[] decor1 = new Set[10];
+        for (int i = 0; i <= chararray.length-1; i++){
+            if (chararray[i] == '&' && "0123456789AaBbCcDdEeFf".indexOf(chararray[i + 1]) > -1){
+                newchararray[0] = chararray[i];
+                newchararray[1] = chararray[i+1];
+                color[j] = getComponentColor(new String(newchararray));
+                newchararray = new char[10];
+                i=i+2;
+                j++;
+            }
+            if (chararray[i] == '&' && "KkLlMmNnOo".indexOf(chararray[i + 1]) > -1) {
+                newchararray[0] = chararray[i];
+                newchararray[1] = chararray[i+1];
+                decor1[k] = getComponentDecorationSet(new String(newchararray));
+                i=i+2;
+                k++;
+            }
+        }
+        for (int i = 0; i <= s.length-1; i++){
+            if (k >= 3) {
+                if (decor1[i] != null)
+                    comp = comp.append(Component.text().content(s[i]).color(color[i]).decorations(decor1[i], true));
+                else
+                    comp = comp.append(Component.text().content(s[i]).color(color[i]));
+            }else{
+                if (decor1[i+1] != null)
+                    comp = comp.append(Component.text().content(s[i]).color(color[i+1]).decorations(decor1[i+1], true));
+                else
+                    comp = comp.append(Component.text().content(s[i]).color(color[i+1]));
+            }
+        }
+        return comp;
     }
 
     public static TextColor getComponentColor(String textToTranslate){
@@ -270,13 +304,12 @@ public final class ItemParser {
                 return TextColor.fromHexString("#FFFFFF");
             }
         }
-        log.info("TextToTranslate: --> "+textToTranslate);
-        return TextColor.fromHexString("#FFFFFF");
+        return null;
     }
 
-    public static List<TextDecoration> getComponentDecoration(String textToTranslate){
+    public static Set<TextDecoration> getComponentDecorationSet(String textToTranslate){
         char[] b =textToTranslate.toCharArray();
-        List<TextDecoration> decor = new ArrayList<>();
+        Set<TextDecoration> decor = new HashSet<>();
         for (int i = 0; i< b.length-1;i++){
             if (b[i] == '&' && "Kk".indexOf(b[i+1])>-1){
                 decor.add(TextDecoration.OBFUSCATED);
