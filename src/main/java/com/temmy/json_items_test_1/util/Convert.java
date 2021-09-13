@@ -32,11 +32,17 @@ public final class Convert {
 
     public static Map<String, String[]> stringToMap(String mapString){
         Map<String, String[]> map = new HashMap<>();
-        String[] pairs = mapString.split("\n");
-        for (String pair : pairs){
-            String[] KV = pair.split(":", 2);
-            String[] args = KV[1].substring(1, KV[1].length()-1).split(";");
-            map.put(KV[0], args);
+        try {
+            String[] pairs = mapString.split("\n");
+            for (String pair : pairs) {
+                String[] KV = pair.split(":", 2);
+                String[] args = KV[1].substring(1, KV[1].length() - 1).split(";");
+                map.put(KV[0], args);
+            }
+            return map;
+        } catch (Exception e) {
+            if (Main.debug);
+                //e.printStackTrace();
         }
         return map;
     }
