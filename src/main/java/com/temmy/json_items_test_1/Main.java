@@ -86,8 +86,6 @@ public final class Main extends JavaPlugin {
 
             String fileName = ((String) itemSection.get("file_name")).trim().replaceAll("\\s", "_");
             if (customItems.containsKey(fileName.toLowerCase())) {
-                if (debug)
-                    getLogger().info("file already loaded: " +fileName);
                 return;
             }
 
