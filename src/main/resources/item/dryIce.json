@@ -1,0 +1,20 @@
+{
+  "ITEM": {
+    "file_name": "dryIce",
+    "name": "&b&lDry Ice",
+    "material": "BLUE_ICE",
+    "model": 0,
+    "enchants": ["GLOW;1"],
+    "lore": [],
+    "requires": "frostEssence",
+    "attributes": {},
+    "ingredients": {
+      "F": "FROSTESSENCE"
+    },
+    "recipe": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ]
+  }
+}
