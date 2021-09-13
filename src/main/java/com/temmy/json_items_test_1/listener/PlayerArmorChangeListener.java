@@ -23,7 +23,7 @@ public class PlayerArmorChangeListener implements Listener {
     public static final NamespacedKey fullSetHealth = new NamespacedKey(Main.getPlugin(), "health");
 
     @EventHandler
-    public void onPlayerArmorChange(PlayerArmorChangeEvent e){
+    public static void onPlayerArmorChange(PlayerArmorChangeEvent e){
         removeArmorEffects(e.getPlayer(), e.getOldItem());
         removeFullSetArmorEffects(e.getPlayer(), e.getOldItem());
         removeArmorAttributes(e.getPlayer(), e.getOldItem());
@@ -35,7 +35,7 @@ public class PlayerArmorChangeListener implements Listener {
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
     }
 
-    private void removeArmorEffects(Player player, ItemStack armorItem) {
+    private static void removeArmorEffects(Player player, ItemStack armorItem) {
         if (armorItem.getItemMeta() == null) return;
         String[] effects = ItemUtils.getItemAttributeMap(armorItem.getItemMeta().getPersistentDataContainer()).get("ARMOREFFECTS");
         if (effects == null) return;
@@ -47,7 +47,7 @@ public class PlayerArmorChangeListener implements Listener {
         }
     }
 
-    private void removeFullSetArmorEffects(Player player, ItemStack armorItem) {
+    private static void removeFullSetArmorEffects(Player player, ItemStack armorItem) {
         if (armorItem.getItemMeta() == null) return;
         String[] fullSetEffects = ItemUtils.getItemAttributeMap(armorItem.getItemMeta().getPersistentDataContainer()).get("FULLSETARMOREFFECTS");
         if (fullSetEffects == null) return;
@@ -59,7 +59,7 @@ public class PlayerArmorChangeListener implements Listener {
         }
     }
 
-    private void removeArmorAttributes(Player player, ItemStack armorItem) {
+    private static void removeArmorAttributes(Player player, ItemStack armorItem) {
         if (armorItem.getItemMeta() == null) return;
         String[] attributes = ItemUtils.getItemAttributeMap(armorItem.getItemMeta().getPersistentDataContainer()).get("ARMORATTRIBUTES");
         if (attributes == null) return;
@@ -79,7 +79,7 @@ public class PlayerArmorChangeListener implements Listener {
         }
     }
 
-    private void removeFullSetAttributes(Player player, ItemStack armorItem) {
+    private static void removeFullSetAttributes(Player player, ItemStack armorItem) {
         if (armorItem.getItemMeta() == null) return;
         String[] fullSetAttributes = ItemUtils.getItemAttributeMap(armorItem.getItemMeta().getPersistentDataContainer()).get("FULLSETARMORATTRIBUTES");
         if (fullSetAttributes == null) return;
