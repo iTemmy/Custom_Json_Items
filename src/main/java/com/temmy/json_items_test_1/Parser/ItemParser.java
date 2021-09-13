@@ -79,7 +79,7 @@ public final class ItemParser {
 
             int attackDamage = 0;
             if (itemSection.get("attackDamage") != null) {
-                attackDamage = Integer.parseInt(String.valueOf((Long) itemSection.get("attackDamage")));
+                attackDamage = Integer.parseInt(String.valueOf((long) itemSection.get("attackDamage")));
                 meta.addAttributeModifier(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
                         "generic.attack.damage", attackDamage, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
             }
