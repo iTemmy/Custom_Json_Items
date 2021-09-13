@@ -5,7 +5,7 @@
     "material": "DIAMOND_BOOTS",
     "model": 0,
     "enchants": ["PROTECTION;6,UNBREAKING;5"],
-    "lore": ["&6Wearing(1)","&5Speed 1","&6Full Set Bonus:","&5Resistance 2","Strength 1"],
+    "lore": ["&6Wearing(1)","&5Speed 1","&6Full Set Bonus:","&5Resistance 2","&5Strength 1"],
     "attributes": {
       "ARMOREFFECTS": {
         "SPEED": 1

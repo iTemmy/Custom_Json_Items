@@ -5,7 +5,7 @@
     "material": "LEATHER_LEGGINGS",
     "model": 0,
     "enchants": ["PROJECTILE_PROTECTION;4,UNBREAKING;5"],
-    "lore": ["&6Wearing(1)","&2Speed 1","&6Full Set Bonus:","&2Speed 3","Resistance 1","Strength 2"],
+    "lore": ["&6Wearing(1)","&2Speed 1","&6Full Set Bonus:","&2Speed 3","&2Resistance 1","&2Strength 2"],
     "attributes": {
       "ARMOREFFECTS":{
         "SPEED": 1

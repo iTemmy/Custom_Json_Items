@@ -6,9 +6,7 @@
     "model": 0,
     "enchants": ["BANE_OF_ARTHROPODS;5,LOOTING;5,SMITE;5,UNBREAKING;5"],
     "lore": [],
-    "attributes": {
-      "CRAFT": {"CRAFT": false}
-    },
+    "attributes": {},
     "requires": "IMBUEDMOBESSENCE,BLAZEESSENCE,ARACHNIDESSENCE,UNDEADESSENCE,drugarthHunter4,IMBUEDHARDENING",
     "ingredients": {
       "M": "IMBUEDMOBESSENCE",
@@ -20,7 +18,7 @@
     },
     "recipe": [
       "UMU",
-      "BGA",
+      "BGB",
       "AHA"
     ]
   }

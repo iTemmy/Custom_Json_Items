@@ -16,7 +16,7 @@
     "recipe": [
       "SLS",
       "SBS",
-      "SLS"
+      "SSS"
     ]
   }
 }

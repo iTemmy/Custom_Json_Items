@@ -6,9 +6,7 @@
     "model": 0,
     "enchants": ["BANE_OF_ARTHROPODS;4,LOOTING;4,SMITE;4,UNBREAKING;4"],
     "lore": [],
-    "attributes": {
-      "CRAFT": {"CRAFT": false}
-    },
+    "attributes": {},
     "requires": "IMBUEDMOBESSENCE,BLAZEESSENCE,ARACHNIDESSENCE,UNDEADESSENCE,drugarthHunter3",
     "ingredients": {
       "M": "IMBUEDMOBESSENCE",

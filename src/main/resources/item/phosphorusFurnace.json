@@ -8,8 +8,7 @@
     "attributes": {
       "SPEEDFURNACE": {
         "Multiplier": 5
-      },
-      "CRAFT": {"CRAFT": false}
+      }
     },
     "requires": "phosphorus",
     "ingredients": {

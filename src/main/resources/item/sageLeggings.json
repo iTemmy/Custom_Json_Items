@@ -5,7 +5,7 @@
     "material": "GOLDEN_LEGGINGS",
     "model": 0,
     "enchants": ["FIRE_PROTECTION;4,UNBREAKING;5"],
-    "lore": ["&6Wearing(1)","&4Dolphin's grace","&6Full Set Bonus:","&4Fire Resistance","Water Breathing","Resistance 2"],
+    "lore": ["&6Wearing(1)","&4Dolphin's grace","&6Full Set Bonus:","&4Fire Resistance","&4Water Breathing","&4Resistance 2"],
     "attributes": {
       "ARMOREFFECTS":{
         "DOLPHINS_GRACE": 1

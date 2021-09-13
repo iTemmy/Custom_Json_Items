@@ -7,21 +7,19 @@
     "enchants": ["BANE_OF_ARTHROPODS;10,LOOTING;10,SMITE;10,UNBREAKING;10"],
     "unbreakable": true,
     "lore": [],
-    "attributes": {
-      "CRAFT": {"CRAFT": false}
-    },
+    "attributes": {},
     "requires": "IMBUEDMOBESSENCE,IMBUEDBLAZE,IMBUEDARACHNIDESSENCE,IMBUEDUNDEAD,drugarthHunter5,IMBUEDHARDENING",
     "ingredients": {
       "M": "IMBUEDMOBESSENCE",
-      "B": "BLAZEESSENCE",
-      "A": "ARACHNIDESSENCE",
-      "U": "UNDEADESSENCE",
+      "B": "IMBUEDBLAZE",
+      "A": "IMBUEDARACHNIDESSENCE",
+      "U": "IMBUEDUNDEAD",
       "G": "DRUGARTHHUNTER5",
       "H": "IMBUEDHARDENING"
     },
     "recipe": [
       "UMU",
-      "BGA",
+      "BGB",
       "AHA"
     ]
   }

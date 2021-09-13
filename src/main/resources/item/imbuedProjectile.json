@@ -7,7 +7,6 @@
     "enchants": ["GLOW;1"],
     "lore": [],
     "attributes": {
-      "CRAFT": {"CRAFT": false}
     },
     "requires": "projectileScraps",
     "ingredients": {
