@@ -1,0 +1,25 @@
+{
+  "ITEM": {
+    "file_name": "testArrow",
+    "name": "testbow",
+    "material": "BOW",
+    "model": 0,
+    "lore": [],
+    "attributes": {
+      "ARROWATTRIBUTE": {
+        "Entity": "CREEPER"
+      }
+    },
+    "comment": "The 'requires' needs the 'file_name' of the required item.",
+    "requires":  "corinthium",
+    "ingredients": {
+      "B": "CORINTHIUM",
+      "D": "BARRIER"
+    },
+    "recipe": [
+      "DBB",
+      "BBB",
+      "DDB"
+    ]
+  }
+}

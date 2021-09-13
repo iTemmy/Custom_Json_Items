@@ -1,0 +1,28 @@
+{
+  "ITEM": {
+    "file_name": "testMainHand",
+    "name": "test Main Hand",
+    "material": "DIAMOND_SWORD",
+    "model": 0,
+    "health": 5,
+    "healthSlot": "HAND",
+    "lore": [],
+    "attributes": {
+      "HELDITEM": {
+        "hand": "main",
+        "SPEED": "3"
+      }
+    },
+    "comment": "The 'requires' needs the 'file_name' of the required item.",
+    "requires":  "corinthium",
+    "ingredients": {
+      "B": "CORINTHIUM",
+      "D": "BARRIER"
+    },
+    "recipe": [
+      "DBB",
+      "BBB",
+      "DDB"
+    ]
+  }
+}

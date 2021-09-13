@@ -12,7 +12,6 @@ public final class Attribute {
     public static final NamespacedKey namespacedKey = new NamespacedKey(Main.getPlugin(), "attributes");
     private static final Map<String, AttributeMethod> attributeMethods = new HashMap<>();
 
-    //TODO: Create Attribute for bows
     //TODO: Create Attribute for hoes that when used to break crops they will auto replant and
     // possibly have a chance to drop extra crops from harvest
 
@@ -26,6 +25,8 @@ public final class Attribute {
         attributeMethods.put("FULLSETARMOREFFECTS", FullSetArmorEffects::trigger);
         attributeMethods.put("ARMORATTRIBUTES", ArmorAttributeEffects::trigger);
         attributeMethods.put("FULLSETARMORATTRIBUTES", FullSetArmorAttributeEffects::trigger);
+        attributeMethods.put("ARROWATTRIBUTE", ArrowAttribute::trigger);
+        attributeMethods.put("HELDITEM", HeldItemEffects::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
