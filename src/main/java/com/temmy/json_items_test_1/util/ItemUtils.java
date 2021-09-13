@@ -36,12 +36,12 @@ public final class ItemUtils {
         return recipeMap.get(item);
     }
 
-    private static String getItemAttrbutes(PersistentDataContainer container){
+    private static String getItemAttributes(PersistentDataContainer container){
         return  (container != null ? container.get(Attribute.namespacedKey, PersistentDataType.STRING) : null);
     }
 
     public static Map<String, String[]> getItemAttributeMap(PersistentDataContainer container){
-        String attributes = getItemAttrbutes(container);
+        String attributes = getItemAttributes(container);
         return (attributes != null) ? Convert.stringToMap(attributes) : new HashMap<>();
     }
 
