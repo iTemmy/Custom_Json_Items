@@ -1,8 +1,10 @@
 package com.temmy.json_items_test_1.attribute;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -21,6 +23,7 @@ public class HeldItemEffects {
         if (e instanceof PlayerSwapHandItemsEvent) playerSwapHandItem(e, args);
         if (e instanceof PlayerItemHeldEvent) playerItemHeld(e, args);
         if (e instanceof InventoryClickEvent) InventoryClick(e, args);
+        if (e instanceof EntityPickupItemEvent) entityPickupItem(e, args);
     }
 
     public static void playerSwapHandItem(Event e, String[] args){
@@ -149,6 +152,51 @@ public class HeldItemEffects {
                             }
                         }
                         if (offb) giveEffects(attributes, (Player) event.getView().getPlayer());
+                    }
+                }
+            }
+        }
+    }
+
+    public static void entityPickupItem(Event e, String[] args){
+        EntityPickupItemEvent event = (EntityPickupItemEvent) e;
+        if (!(event.getEntity().getType() == EntityType.PLAYER)) return;
+        ItemStack item = event.getItem().getItemStack();
+        boolean mainb = false;
+        if (item != null) {
+            if (item.hasItemMeta()) {
+                if (item.getItemMeta().getPersistentDataContainer().has(Attribute.namespacedKey, PersistentDataType.STRING)) {
+                    PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+                    String[] attributes = data.get(Attribute.namespacedKey, PersistentDataType.STRING).split(",");
+                    for (String s : attributes) {
+                        String[] arg = s.split(":");
+                        for (String ss : arg) {
+                            ss = ss.toUpperCase().replaceAll("\"", "");
+                            if (ss.toUpperCase().contains("MAIN")) {
+                                mainb = true;
+                            }
+                        }
+                        if (mainb) giveEffects(attributes, (Player) event.getEntity());
+                    }
+                }
+            }
+        }
+        ItemStack offhand = ((Player) event.getEntity()).getInventory().getItemInOffHand();
+        boolean offb = false;
+        if (offhand != null) {
+            if (offhand.hasItemMeta()) {
+                if (offhand.getItemMeta().getPersistentDataContainer().has(Attribute.namespacedKey, PersistentDataType.STRING)) {
+                    PersistentDataContainer data = offhand.getItemMeta().getPersistentDataContainer();
+                    String[] attributes = data.get(Attribute.namespacedKey, PersistentDataType.STRING).split(",");
+                    for (String s : attributes) {
+                        String[] arg = s.split(":");
+                        for (String ss : arg) {
+                            ss = ss.toUpperCase().replaceAll("\"", "");
+                            if (ss.toUpperCase().contains("OFF")) {
+                                offb = true;
+                            }
+                        }
+                        if (offb) giveEffects(attributes, (Player) event.getEntity());
                     }
                 }
             }
