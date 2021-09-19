@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,29 +26,52 @@ public class GiveItem implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender.hasPermission("jsonitems.giveitem"))) return false;
-        if (!(sender instanceof Player) && (args.length != 2)){
+        if (!(sender.hasPermission("jsonitems.giveitem"))) {
+            sender.sendMessage(ChatColor.RED+"Error: You do not have permission to run this command.");
+            sender.sendMessage(ChatColor.RED+"If you believe this to be an error then please contact an admin.");
+            return false;
+        }
+        if (!(sender instanceof Player) && (args.length != 3)){
             Bukkit.getLogger().log(Level.INFO,"You must provide a player to give the item to.");
             return false;
         }
-        if (args.length == 2) giveItem(Bukkit.getPlayer(args[0]), args[1]);
+        if (args.length == 3) giveItem(Bukkit.getPlayer(args[0]), args[1], Integer.parseInt(args[2]));
+        else if (args.length == 2){
+            try {
+                if (giveItem((Player) sender, args[0], Integer.parseInt(args[1]))) {
+                    sender.sendMessage("Given " + sender.getName() + args[0]);
+                    return true;
+                } return false;
+            }catch (NumberFormatException e){
+                sender.sendMessage("Invalid number.");
+            }
+        }
         else if (args.length == 1){
-            giveItem((Player) sender, args[0]);
-            return true;
+            if (giveItem((Player) sender, args[0], 1)) {
+                sender.sendMessage("Given " + sender.getName() + " " + args[0]);
+                return true;
+            }
+            return false;
         }
         return false;
     }
 
-    private void giveItem(Player player, String item){
+    private boolean giveItem(Player player, String item, int amount){
         Recipe recipe = Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), item.toLowerCase()));
         if (recipe != null){
-            player.getInventory().addItem(recipe.getResult());
+            ItemStack itemstack = recipe.getResult();
+            itemstack.setAmount(amount);
+            player.getInventory().addItem(itemstack);
         }else if (Main.getCustomItems().containsKey(item)){
-            player.getInventory().addItem(Main.getCustomItems().get(item));
+            ItemStack itemstack = Main.getCustomItems().get(item);
+            itemstack.setAmount(amount);
+            player.getInventory().addItem(itemstack);
         }else {
             player.sendMessage(ChatColor.YELLOW + String.format("Item '%s' doesn't exist", item));
+            return false;
         }
         InventoryClickListener.onInventoryClick(new InventoryClickEvent(getView(player), InventoryType.SlotType.CONTAINER, 0, ClickType.LEFT, InventoryAction.NOTHING));
+        return true;
     }
 
     private InventoryView getView(Player player){
