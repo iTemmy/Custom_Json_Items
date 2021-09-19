@@ -6,7 +6,7 @@
 
     <groupId>com.temmy</groupId>
     <artifactId>Json_items_test_1</artifactId>
-    <version>BETA 0.0.2</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>Json_items_test_1</name>
