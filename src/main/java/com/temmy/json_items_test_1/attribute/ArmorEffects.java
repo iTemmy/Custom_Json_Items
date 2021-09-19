@@ -2,7 +2,6 @@ package com.temmy.json_items_test_1.attribute;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.temmy.json_items_test_1.util.ItemUtils;
-import com.temmy.json_items_test_1.util.Queue;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -15,8 +14,6 @@ import java.util.logging.Logger;
 
 public final class ArmorEffects {
     private ArmorEffects(){}
-
-    static Logger log = Bukkit.getLogger();
 
     public static void trigger(Event e, String[] args){
         if (!(e instanceof PlayerArmorChangeEvent)) return;
@@ -60,7 +57,7 @@ public final class ArmorEffects {
             if (item == null) continue;
             Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(item.getItemMeta().getPersistentDataContainer());
             String[] armorEffects = attributeMap.get("ARMOREFFECTS");
-            Queue<String> stringQueue = new Queue<>();
+            if (armorEffects == null) continue;
             for (String arg : armorEffects) {
                 String[] effects = arg.split(",");
                 int power = -99;
@@ -81,7 +78,7 @@ public final class ArmorEffects {
                             } catch (NumberFormatException ignored) {
 
                             }
-                            stringQueue.enqueue(l);
+
                             if (type != null && power != -99) {
                                 player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, power - 1));
                                 power = -99;
