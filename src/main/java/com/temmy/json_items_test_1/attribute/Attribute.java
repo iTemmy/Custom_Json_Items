@@ -1,7 +1,6 @@
 package com.temmy.json_items_test_1.attribute;
 
 import com.temmy.json_items_test_1.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 
@@ -30,11 +29,12 @@ public final class Attribute {
         attributeMethods.put("GREEDSIN", GreedSin::trigger);
         attributeMethods.put("PRIDESIN", PrideSin::trigger);
         attributeMethods.put("SLOTHSIN", SlothSin::trigger);
+        attributeMethods.put("LUSTSIN", LustSin::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
         AttributeMethod attributeMethod = attributeMethods.get(attribute);
         if (attributeMethod != null) attributeMethod.trigger(event, args);
-        else Bukkit.getLogger().severe(String.format("Unrecognized attribute '%s'.", attribute));
+        else Main.getPlugin().getLogger().severe(String.format("Unrecognized attribute '%s'.", attribute));
     }
 }

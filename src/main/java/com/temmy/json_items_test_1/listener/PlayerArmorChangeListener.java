@@ -4,6 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.ArmorEffects;
 import com.temmy.json_items_test_1.attribute.Attribute;
+import com.temmy.json_items_test_1.attribute.LustSin;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -29,6 +30,7 @@ public class PlayerArmorChangeListener implements Listener {
         removeArmorAttributes(e.getPlayer(), e.getOldItem());
         removeFullSetAttributes(e.getPlayer(), e.getOldItem());
         ArmorEffects.checkPlayerArmor(e.getPlayer().getInventory().getArmorContents(),e.getPlayer());
+        LustSin.removeLustHealth(e.getPlayer(), e.getOldItem());
         if (e.getNewItem() == null || e.getNewItem().getItemMeta() == null) return;
         Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(e.getNewItem().getItemMeta().getPersistentDataContainer());
         for (String attribute : attributeMap.keySet())
