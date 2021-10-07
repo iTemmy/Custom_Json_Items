@@ -21,7 +21,6 @@ public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e){
-        Main.getPlugin().getLogger().info(e.getCause().name());
         if (e.getDamager() instanceof Arrow) arrowDamage((Arrow) e.getDamager(), e);
 
         if (!(e.getDamager() instanceof LivingEntity)) return;
