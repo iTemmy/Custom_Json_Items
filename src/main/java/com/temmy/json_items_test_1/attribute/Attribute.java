@@ -29,6 +29,7 @@ public final class Attribute {
         attributeMethods.put("HELDITEM", HeldItemEffects::trigger);
         attributeMethods.put("GREEDSIN", GreedSin::trigger);
         attributeMethods.put("PRIDESIN", PrideSin::trigger);
+        attributeMethods.put("SLOTHSIN", SlothSin::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
