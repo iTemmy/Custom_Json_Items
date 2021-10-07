@@ -28,6 +28,7 @@ public final class Attribute {
         attributeMethods.put("ARROWATTRIBUTE", ArrowAttribute::trigger);
         attributeMethods.put("HELDITEM", HeldItemEffects::trigger);
         attributeMethods.put("GREEDSIN", GreedSin::trigger);
+        attributeMethods.put("PRIDESIN", PrideSin::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
