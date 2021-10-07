@@ -27,6 +27,7 @@ public final class Attribute {
         attributeMethods.put("FULLSETARMORATTRIBUTES", FullSetArmorAttributeEffects::trigger);
         attributeMethods.put("ARROWATTRIBUTE", ArrowAttribute::trigger);
         attributeMethods.put("HELDITEM", HeldItemEffects::trigger);
+        attributeMethods.put("GREEDSIN", GreedSin::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
