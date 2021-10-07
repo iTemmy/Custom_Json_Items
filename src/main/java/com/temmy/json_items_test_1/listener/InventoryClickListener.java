@@ -2,6 +2,7 @@ package com.temmy.json_items_test_1.listener;
 
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
+import com.temmy.json_items_test_1.attribute.PrideSin;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public class InventoryClickListener implements Listener {
     public static void onInventoryClick(InventoryClickEvent e){
         PlayerSwapHandItemListener.removeHeldItemEffects((Player) e.getView().getPlayer(), e.getView().getPlayer().getInventory().getItemInMainHand());
         PlayerSwapHandItemListener.removeHeldItemEffects((Player) e.getView().getPlayer(), e.getView().getPlayer().getInventory().getItemInOffHand());
+        PrideSin.removeArmor((Player) e.getView().getPlayer());
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->{
             if (e.getView().getPlayer() != null)
             if (e.getView().getPlayer().getInventory().getItemInMainHand() == null) return;
