@@ -1,9 +1,12 @@
 package com.temmy.json_items_test_1.listener;
 
+import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -18,6 +21,9 @@ public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e){
+        Main.getPlugin().getLogger().info(e.getCause().name());
+        if (e.getDamager() instanceof Arrow) arrowDamage((Arrow) e.getDamager(), e);
+
         if (!(e.getDamager() instanceof LivingEntity)) return;
 
         LivingEntity damager = (LivingEntity) e.getDamager();
@@ -29,5 +35,11 @@ public class EntityDamageByEntityListener implements Listener {
         for (String attribute : attributeMap.keySet()) {
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
         }
+    }
+
+    private static void arrowDamage(Arrow arrow, Event e){
+        Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(arrow.getPersistentDataContainer());
+        for (String attribute : attributeMap.keySet())
+            Attribute.invoke(attribute, e, attributeMap.get(attribute));
     }
 }
