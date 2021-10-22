@@ -95,6 +95,15 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Test resources
+testArrow.json
+testboots.json
+testhelmet.json
+testleggings.json
+testMainHand.json
+testOffHand.json
+testplate.json
+
 target/
 
 pom.xml.tag
