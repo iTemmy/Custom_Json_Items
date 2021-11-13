@@ -51,6 +51,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), this);
         getServer().getPluginManager().registerEvents(new EntityPickupItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerPickupExperienceListener(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileLaunchListener(), this);
         PluginFiles.init();
         getConfig().options().copyDefaults();
         saveDefaultConfig();
