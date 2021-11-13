@@ -1,11 +1,12 @@
 package com.temmy.json_items_test_1.listener;
 
-import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
+import com.temmy.json_items_test_1.attribute.GluttonySin;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,8 +23,10 @@ public class EntityDamageByEntityListener implements Listener {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e){
         if (e.getDamager() instanceof Arrow) arrowDamage((Arrow) e.getDamager(), e);
-
+        if (e.getDamager() instanceof Trident) GluttonySin.entityHitByTrident(e);
         if (!(e.getDamager() instanceof LivingEntity)) return;
+
+        if (e.isCancelled()) return;
 
         LivingEntity damager = (LivingEntity) e.getDamager();
         if (damager.getEquipment().getItemInMainHand() == null) return;
