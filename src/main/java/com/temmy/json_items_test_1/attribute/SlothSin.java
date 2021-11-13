@@ -76,7 +76,6 @@ public class SlothSin {
         }
         handMeta.getPersistentDataContainer().set(task, PersistentDataType.INTEGER, createTask((cooldown * 20), damager, damager.getInventory().getItemInMainHand()));
         handMeta.getPersistentDataContainer().set(activated, PersistentDataType.BYTE, (byte) 1);
-        log.info(String.valueOf(handMeta.getPersistentDataContainer().get(task, PersistentDataType.INTEGER)));
         hand.setItemMeta(handMeta);
     }
 
@@ -87,6 +86,8 @@ public class SlothSin {
             meta.getPersistentDataContainer().remove(task);
             player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(player.getPersistentDataContainer().get(speedBaseValue, PersistentDataType.DOUBLE));
             player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(player.getPersistentDataContainer().get(damageBaseValue, PersistentDataType.DOUBLE));
+            if (player.getPersistentDataContainer().has(speedBaseValue, PersistentDataType.DOUBLE))
+                player.getPersistentDataContainer().remove(speedBaseValue);
             oldhand.setItemMeta(meta);
         }, delay);
     }
