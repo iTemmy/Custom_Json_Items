@@ -47,25 +47,26 @@ public class GreedSin {
             damage = baseDamage*fuck;
             if (damage < 0.2) damage = 0.2;
             arrow.setDamage(damage);
-            int newExp = getExpOnLevel(player, player.getLevel())/100*20;
+            long newExp = getExpOnLevel(player, player.getLevel())/100*20;
             newExp = getExpOnLevel(player, player.getLevel()) - newExp;
             player.setExp(0);
             player.setLevel(0);
-            player.giveExp(newExp);
+            if (newExp > Integer.MAX_VALUE) newExp = Integer.MAX_VALUE;
+            player.giveExp((int) newExp);
         }
     }
 
-    public static int getExpOnLevel(Player player, int level){
-        return getExpAtLevel(level)+Math.round(player.getExpToLevel()*player.getExp());
+    public static long getExpOnLevel(Player player, long level){
+        return getExpAtLevel(level)+Math.round((long) player.getExpToLevel()* (double) player.getExp());
     }
 
-    public static int getExpAtLevel(int level){
+    public static long getExpAtLevel(long level){
         if (level <= 16)
-            return (int) (Math.pow(level, 2) + 6*level);
+            return (long) (Math.pow(level, 2) + 6L *level);
         else if (level <= 31)
-            return (int) (2.5*Math.pow(level, 2) - 40.5*level + 360.0);
+            return (long) (2.5*Math.pow(level, 2) - 40.5*level + 360.0);
         else
-            return (int) (4.5*Math.pow(level, 2) - 162.5*level + 2220.0);
+            return (long) (4.5*Math.pow(level, 2) - 162.5*level + 2220.0);
     }
 
 }
