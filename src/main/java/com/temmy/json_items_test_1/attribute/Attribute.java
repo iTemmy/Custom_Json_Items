@@ -31,6 +31,7 @@ public final class Attribute {
         attributeMethods.put("SLOTHSIN", SlothSin::trigger);
         attributeMethods.put("LUSTSIN", LustSin::trigger);
         attributeMethods.put("GLUTTONYSIN", GluttonySin::trigger);
+        attributeMethods.put("AUTOFEED", AutoFeed::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
