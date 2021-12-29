@@ -3,8 +3,6 @@ package com.temmy.json_items_test_1.listener;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.attribute.CustomOre;
 import com.temmy.json_items_test_1.util.ItemUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.BlastFurnace;
 import org.bukkit.block.Furnace;
 import org.bukkit.block.Smoker;
