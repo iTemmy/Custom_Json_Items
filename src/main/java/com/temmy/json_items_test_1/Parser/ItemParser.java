@@ -17,8 +17,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,14 +27,13 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class ItemParser {
 
     static Logger log = Bukkit.getLogger();
 
-    public static ItemStack parseItem(String item){
+    public static @Nullable ItemStack parseItem(@NotNull String item){
         ItemStack itemStack = null;
         String filename = item.toLowerCase();
         InputStream inputStream = null;
@@ -42,156 +42,147 @@ public final class ItemParser {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        if (inputStream == null) {log.info("invalid input stream for file "+item);return null;}
+        if (inputStream == null) {log.warning("Invalid input stream for file "+item);return null;}
 
         try {
             Object jsonObject = new JSONParser().parse(new InputStreamReader(inputStream));
-            JSONObject  itemJson = (JSONObject) jsonObject;
+            JSONObject itemJson = (JSONObject) jsonObject;
             Map<String, ?> itemSection = (Map<String, ?>) itemJson.get("ITEM");
-            if (itemSection == null) return null;
-
             itemStack = new ItemStack(Material.valueOf((String)itemSection.get("material")));
-            ItemMeta meta = null;
-            EnchantmentStorageMeta Emeta = null;
-            if (itemStack.getType() == Material.ENCHANTED_BOOK)
-                Emeta = (EnchantmentStorageMeta) itemStack.getItemMeta();
-            else
-                meta = itemStack.getItemMeta();
-
-            String name;
-            if (itemSection.get("name") != null) {
-                name = (String) itemSection.get("name");
-                if (itemStack.getType() == Material.ENCHANTED_BOOK) {
-                    Emeta.displayName(regextesting(name));
-                    Emeta.setLocalizedName(((String) itemSection.get("name")).trim());
-                }else{
-                    meta.displayName(regextesting(name));
-                    meta.setLocalizedName(((String) itemSection.get("name")).trim());
-                }
-            }
-            Integer customModelData = Integer.parseInt(itemSection.get("model").toString());
-            if (itemStack.getType() == Material.ENCHANTED_BOOK)
-                Emeta.setCustomModelData(customModelData);
-            else
-                meta.setCustomModelData(customModelData);
-
-            int attackDamage = 0;
-            if (itemSection.get("attackDamage") != null) {
-                attackDamage = Integer.parseInt(String.valueOf((long) itemSection.get("attackDamage")));
-                meta.addAttributeModifier(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-                        "generic.attack.damage", attackDamage, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
-            }
-
-            int health = 0;
-            String slot = null;
-            if (itemSection.get("health") != null && itemSection.get("healthSlot") != null){
-                health = Integer.parseInt(String.valueOf((long) itemSection.get("health")));
-                slot = (String) itemSection.get("healthSlot");
-                meta.addAttributeModifier(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(UUID.randomUUID(),
-                        "generic.max.health", health, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.valueOf(slot)));
-            }
-
-            JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
-            if (JSONEnchants != null){
-                List<String> enchantsList = new ArrayList<>(JSONEnchants);
-                for (String s : enchantsList){
-                    if (s.equals(null)||s.equals("")) continue;
-                    String[] enchantsWithLevel = s.split(",");
-                    for (String enchant : enchantsWithLevel) {
-                        String[] enchants = enchant.split(";");
-                        if (enchants[0].equalsIgnoreCase("glow")) {
-                            NamespacedKey key = new NamespacedKey(Main.getPlugin(), Main.getPlugin().getDescription().getName());
-                            Glow glow = new Glow(key);
-                            if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                                Emeta.addStoredEnchant(glow, 1, true);
-                            }else {
-                                meta.addEnchant(glow, 1, true);
-                            }
-                        } else{
-                            if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                                Emeta.addStoredEnchant(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]), true);
-                            }else {
-                                meta.addEnchant(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]), true);
-                            }
-                        }
-                    }
-                }
-            }
-
-            boolean unbreakable = false;
-            if (itemSection.get("unbreakable") != null)
-                unbreakable = (boolean) itemSection.get("unbreakable");
-            if (unbreakable)
-                if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                    Emeta.setUnbreakable(true);
-                }else {
-                    meta.setUnbreakable(true);
-                }
-
-            JSONArray lore = (JSONArray) itemSection.get("lore");
-            List<Component> loreList1 = new ArrayList<>(lore);
-            List<String> loreList = new ArrayList<>(lore);
-            if (loreList != null && loreList.size() > 0) {
-                for (int i = 0; i <= loreList.size()-1; i++) {
-                    loreList1.set(i, regextesting(loreList.get(i)));
-                }
-            }
-            if (loreList.size() <= 0)
-                if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                    Emeta.lore(null);
-                }else {
-                    meta.lore(null);
-                }
-            else
-                if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                    Emeta.lore(loreList1);
-                }else {
-                    meta.lore(loreList1);
-                }
-
             Map<String, JSONObject> attributesJson = (Map<String, JSONObject>) itemSection.get("attributes");
             Map<String, String[]> attributes = new HashMap<>();
 
-            if (attributesJson != null) {
-                for (String key : attributesJson.keySet()) {
+            if (attributesJson != null){
+                for (String key : attributesJson.keySet()){
                     List<String> attributeList = new ArrayList<String>(Collections.singleton(String.valueOf(attributesJson.get(key))));
                     attributes.put(key, attributeList.toArray(new String[attributeList.size()]));
                 }
             }
 
-            if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                PersistentDataContainer dataContainer = Emeta.getPersistentDataContainer();
-                dataContainer.set(
-                        Attribute.namespacedKey
-                        , PersistentDataType.STRING
-                        , Convert.mapToString(attributes)
-                );
-            }else {
-                PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-                dataContainer.set(
-                        Attribute.namespacedKey
-                        , PersistentDataType.STRING
-                        , Convert.mapToString(attributes)
-                );
+            ItemMeta meta = itemStack.getItemMeta();
+            itemStack.addUnsafeEnchantments(getEnchants(itemSection));
+            meta.lore(getLore(itemSection));
+            meta.setUnbreakable(getUnbreakable(itemSection));
+            meta.displayName(getName(itemSection));
+            meta.setCustomModelData(getCustomModelData(itemSection));
+            Map<org.bukkit.attribute.Attribute, AttributeModifier> attributeMap = getAttributes(itemSection);
+            for (org.bukkit.attribute.Attribute attribute : attributeMap.keySet()){
+                meta.addAttributeModifier(attribute, attributeMap.get(attribute));
+            }
+            meta.getPersistentDataContainer().set(Attribute.namespacedKey,
+                    PersistentDataType.STRING,
+                    Convert.mapToString(attributes));
+
+
+            if (meta.hasEnchants() && itemStack.getType() == Material.ENCHANTED_BOOK){
+                EnchantmentStorageMeta eMeta = (EnchantmentStorageMeta) meta;
+                for (Enchantment enchant : meta.getEnchants().keySet()) {
+                    eMeta.addStoredEnchant(enchant, meta.getEnchants().get(enchant), true);
+                    meta.removeEnchant(enchant);
+                }
+                meta = eMeta;
             }
 
-            if (itemStack.getType() == Material.ENCHANTED_BOOK){
-                itemStack.setItemMeta(Emeta);
-            }else {
-                itemStack.setItemMeta(meta);
-            }
-        }catch (JsonSyntaxException e){
-            Bukkit.getLogger().log(Level.WARNING, "Syntax Error in " + filename);
-            e.printStackTrace();
+            itemStack.setItemMeta(meta);
+        } catch (JsonSyntaxException e){
+            log.warning("Syntax Error in "+filename);
+            if (Main.debug)
+                e.printStackTrace();
         }catch (IOException | ParseException e1){
-            e1.printStackTrace();
+            if (Main.debug)
+                e1.printStackTrace();
         }
-
         return itemStack;
     }
 
-    private static Component regextesting(String name){
+    private static boolean getUnbreakable(@NotNull Map<String, ?> itemSection){
+        if (itemSection.get("unbreakable") == null) return false;
+        return ((boolean) itemSection.get("unbreakable"));
+    }
+
+    private static @NotNull Map<Enchantment, Integer> getEnchants(@NotNull Map<String, ?> itemSection){
+        Map<Enchantment, Integer> finalEnchants = new HashMap<>();
+        JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
+        if (JSONEnchants == null) return new HashMap<>();
+        List<String> enchantsList = new ArrayList<>(JSONEnchants);
+        for (String s : enchantsList){
+            if (s.equals(null)||s.equals(""))continue;
+            String[] enchantsWithLevel = s.split(",");
+            for (String enchant : enchantsWithLevel){
+                String[] enchants = enchant.split(";");
+                if (enchants[0].equalsIgnoreCase("glow")){
+                    NamespacedKey key = new NamespacedKey(Main.getPlugin(), Main.getPlugin().getDescription().getName());
+                    Glow glow = new Glow(key);
+                    finalEnchants.put(glow, 1);
+                }else {
+                    finalEnchants.put(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]));
+                }
+            }
+        }
+        return finalEnchants;
+    }
+
+    private static @Nullable List<Component> getLore(@NotNull Map<String, ?> itemSection){
+        JSONArray lore = (JSONArray) itemSection.get("lore");
+        List<Component> loreList = new ArrayList<>(lore);
+        List<String> stringLore = new ArrayList<>(lore);
+        if (stringLore != null && stringLore.size() > 0){
+            for (int i = 0; i <= stringLore.size()-1; i++)
+                loreList.set(i, ItemParser.regextesting(stringLore.get(i)));
+        }
+        if (stringLore.size() <= 0){
+            return null;
+        }else
+            return loreList;
+    }
+
+    private static @NotNull Map<org.bukkit.attribute.Attribute, AttributeModifier> getAttributes(@NotNull Map<String, ?> itemSection){
+        Map<org.bukkit.attribute.Attribute, AttributeModifier> attributes = new HashMap<>();
+        int health = 0;
+        String healthSlot = null;
+        if (itemSection.get("health") != null && itemSection.get(itemSection.get("healthSlot")) != null){
+            health = Integer.parseInt(String.valueOf((long) itemSection.get("health")));
+            healthSlot = (String) itemSection.get("healthSlot");
+            attributes.put(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH,
+                    new AttributeModifier(UUID.randomUUID(), "generic.max.health", health,
+                            AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.valueOf(healthSlot)));
+        }
+
+        int damage = 0;
+        String damageSlot = null;
+        if (itemSection.get("damage") != null && itemSection.get("damageSlot") != null){
+            damage = Integer.parseInt(String.valueOf((long) itemSection.get("damage")));
+            damageSlot = (String) itemSection.get("damageSlot");
+            attributes.put(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE,
+                    new AttributeModifier(UUID.randomUUID(), "generic.attack.damage", damage,
+                            AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.valueOf(damageSlot)));
+        }
+
+        int attackSpeed = 0;
+        String attackSpeedSlot = null;
+        if (itemSection.get("attackSpeed") != null && itemSection.get("attackSpeedSlot") !=null){
+            attackSpeed = Integer.parseInt(String.valueOf((long) itemSection.get("attackSpeed")));
+            attackSpeedSlot = (String) itemSection.get("attackSpeedSlot");
+            attributes.put(org.bukkit.attribute.Attribute.GENERIC_ATTACK_SPEED,
+                    new AttributeModifier(UUID.randomUUID(), "generic.attack.speed", attackSpeed,
+                            AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.valueOf(attackSpeedSlot)));
+        }
+
+        return attributes;
+    }
+
+    private static @Nullable Component getName(@NotNull Map<String, ?> itemSection){
+        if (itemSection.get("name") == null) return null;
+        String name = (String) itemSection.get("name");
+        return ItemParser.regextesting(name);
+    }
+
+    private static int getCustomModelData(@NotNull Map<String, ?> itemSection){
+        if (itemSection.get("model") == null) return 0;
+        return Integer.parseInt(itemSection.get("model").toString());
+    }
+
+    public static Component regextesting(@NotNull String name){
         String[] s = name.split("&[0-9a-fl-oA-FL-O]");
         Component comp = Component.text("");
         char[] chararray = name.toCharArray();
@@ -233,7 +224,7 @@ public final class ItemParser {
         return comp;
     }
 
-    public static TextColor getComponentColor(String textToTranslate){
+    public static @Nullable TextColor getComponentColor(@NotNull String textToTranslate){
         char[] b = textToTranslate.toCharArray();
         for (int i = 0; i < b.length - 1; i++) {
             if (b[i] == '&' && b[i+1] == '0') {
@@ -306,7 +297,7 @@ public final class ItemParser {
         return null;
     }
 
-    public static Set<TextDecoration> getComponentDecorationSet(String textToTranslate){
+    public static @NotNull Set<TextDecoration> getComponentDecorationSet(@NotNull String textToTranslate){
         char[] b =textToTranslate.toCharArray();
         Set<TextDecoration> decor = new HashSet<>();
         for (int i = 0; i< b.length-1;i++){
@@ -327,97 +318,5 @@ public final class ItemParser {
             }
         }
         return decor;
-    }
-
-    private static String removeColourCodes(String textToTranslate){
-        char[] b = textToTranslate.toCharArray();
-        char[] c = new char[b.length];
-        int j = 0;
-        for (int i = 0; i < b.length; i++){
-            if (b[i] == '&' && b[i+1] == '0') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '1') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '2') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '3') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '4') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '5') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '6') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '7') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '8') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == '9') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'A') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'a') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'B'){
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'b') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'C'){
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'c') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'D'){
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'd') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'E'){
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'e') {
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'F'){
-                i=i+2;
-            }
-            if (b[i] == '&' && b[i+1] == 'f') {
-                i=i+2;
-            }
-            if (b[i] == '&' && "Kk".indexOf(b[i+1])>-1){
-                i=i+2;
-            }
-            if (b[i] == '&' && "Ll".indexOf(b[i+1])>-1){
-                i=i+2;
-            }
-            if (b[i] == '&' && "Mm".indexOf(b[i+1])>-1){
-                i=i+2;
-            }
-            if (b[i] == '&' && "Nn".indexOf(b[i+1])>-1){
-                i=i+2;
-            }
-            if (b[i] == '&' && "Oo".indexOf(b[i+1])>-1){
-                i=i+2;
-            }
-            c[j] = b[i];
-            j++;
-        }
-        return new String(c).trim();
     }
 }
