@@ -87,4 +87,9 @@ public class Glow extends Enchantment {
     public @NotNull Set<EquipmentSlot> getActiveSlots() {
         return null;
     }
+
+    @Override
+    public @NotNull String translationKey() {
+        return null;
+    }
 }
