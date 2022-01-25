@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "sapphire",
-    "name": "&1&lSapphire",
-    "material": "LAPIS_LAZULI",
+    "file_name": "ironCustomOre",
+    "name": "&f&lJolixanine",
+    "material": "IRON_INGOT",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],

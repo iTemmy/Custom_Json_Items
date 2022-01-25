@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "phosphorus",
-    "name": "&7&lPhosphorus",
-    "material": "COAL",
+    "file_name": "diamondCustomOre",
+    "name": "&b&lJanelite",
+    "material": "DIAMOND",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],

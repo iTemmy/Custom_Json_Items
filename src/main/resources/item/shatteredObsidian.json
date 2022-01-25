@@ -9,9 +9,9 @@
     "attributes": {
       "PLACE": {"PLACE": false}
     },
-    "requires": "ellendyte",
+    "requires": "emeraldCustomOre",
     "ingredients": {
-      "E": "ELLENDYTE",
+      "E": "emeraldCustomOre",
       "O": "OBSIDIAN"
     },
     "recipe": [

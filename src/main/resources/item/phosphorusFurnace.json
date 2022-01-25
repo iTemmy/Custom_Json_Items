@@ -10,9 +10,9 @@
         "Multiplier": 5
       }
     },
-    "requires": "phosphorus",
+    "requires": "coalCustomOre",
     "ingredients": {
-      "B": "PHOSPHORUS",
+      "B": "coalCustomOre",
       "D": "BARRIER"
     },
     "craftRecipe": [

@@ -18,10 +18,10 @@
         "REGENERATION": 1
       }
     },
-    "requires":  "imbuedHardening,ellendyte,otherworldlyTrophy,scaleChestplate",
+    "requires":  "imbuedHardening,emeraldCustomOre,otherworldlyTrophy,scaleChestplate",
     "ingredients": {
       "H": "IMBUEDHARDENING",
-      "E": "ELLENDYTE",
+      "E": "emeraldCustomOre",
       "O": "OTHERWORLDLYTROPHY",
       "S": "SCALECHESTPLATE"
     },

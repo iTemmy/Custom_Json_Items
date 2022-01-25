@@ -17,11 +17,11 @@
         "INCREASE_DAMAGE": 2
       }
     },
-    "requires":  "imbuedProjectile,imbuedQuickening,tungsten",
+    "requires":  "imbuedProjectile,imbuedQuickening,redstoneCustomOre",
     "ingredients": {
       "P": "IMBUEDPROJECTILE",
       "Q": "IMBUEDQUICKENING",
-      "T": "TUNGSTEN"
+      "T": "redstoneCustomOre"
     },
     "recipe": [
       "T T",

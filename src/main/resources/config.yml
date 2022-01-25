@@ -1,11 +1,14 @@
-Phosphorus: 500
-Janelite: 200
-Ellendyte: 50
-Sapphire: 300
-Tungsten: 500
-Jolixanine: 300
-Corinthium: 250
-Zinc: 400
-Kaylax: 200
+COAL_ORE: 500
+DIAMOND_ORE: 200
+EMERALD_ORE: 50
+LAPIS_ORE: 300
+REDSTONE_ORE: 500
+IRON_ORE: 300
+GOLD_ORE: 250
+NETHER_QUARTZ_ORE: 400
+COPPER_ORE: 200
 # This option will provide increased debugging information in console when the server starts.
 IncreasedDebugging: false
+# This is the world that the custom ores will drop in.
+# The ores that only drop in the nether will just be this followed by "_nether".
+CustomOresWorld: resource_world

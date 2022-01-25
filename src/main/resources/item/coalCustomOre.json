@@ -1,11 +1,10 @@
 {
   "ITEM": {
-    "file_name": "zinc",
-    "name": "&f&lZinc",
-    "material": "QUARTZ",
+    "file_name": "coalCustomOre",
+    "name": "&7&lPhosphorus",
+    "material": "COAL",
     "model": 1,
     "enchants": ["GLOW;1"],
-    "hide_enchants": true,
     "lore": [],
     "attributes": {
       "PLACE": {"PLACE": false},

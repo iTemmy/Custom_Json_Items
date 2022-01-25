@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "kaylax",
-    "name": "&2&lKaylax",
-    "material": "COPPER_INGOT",
+    "file_name": "lapisCustomOre",
+    "name": "&1&lSapphire",
+    "material": "LAPIS_LAZULI",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],

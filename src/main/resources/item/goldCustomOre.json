@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "janelite",
-    "name": "&b&lJanelite",
-    "material": "DIAMOND",
+    "file_name": "goldCustomOre",
+    "name": "&6&lCorinthium",
+    "material": "GOLD_INGOT",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],

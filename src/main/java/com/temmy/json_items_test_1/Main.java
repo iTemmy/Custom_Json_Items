@@ -34,6 +34,7 @@ public final class Main extends JavaPlugin {
     public static JavaPlugin getPlugin(){return plugin;}
     private static Map<String, ItemStack> customItems = new HashMap<String, ItemStack>();
     public static boolean debug;
+    public static String customOreWorld;
 
 
     @Override
@@ -177,15 +178,16 @@ public final class Main extends JavaPlugin {
     static Map<String, Integer> chances = new HashMap<>();
 
     public static void loadConfig(){
-        chances.put("Phosphorus".toLowerCase(), plugin.getConfig().getInt("Phosphorus"));
-        chances.put("Janelite".toLowerCase(), plugin.getConfig().getInt("Janelite"));
-        chances.put("Ellendyte".toLowerCase(), plugin.getConfig().getInt("Ellendyte"));
-        chances.put("Sapphire".toLowerCase(), plugin.getConfig().getInt("Sapphire"));
-        chances.put("Tungsten".toLowerCase(), plugin.getConfig().getInt("Tungsten"));
-        chances.put("Jolixanine".toLowerCase(), plugin.getConfig().getInt("Jolixanine"));
-        chances.put("Corinthium".toLowerCase(), plugin.getConfig().getInt("Corinthium"));
-        chances.put("Zinc".toLowerCase(), plugin.getConfig().getInt("Zinc"));
-        chances.put("Kaylax".toLowerCase(), plugin.getConfig().getInt("Kaylax"));
+        customOreWorld = plugin.getConfig().getString("CustomOresWorld");
+        chances.put(Material.COAL_ORE.name(), plugin.getConfig().getInt(Material.COAL_ORE.name()));
+        chances.put(Material.DIAMOND_ORE.name(), plugin.getConfig().getInt(Material.DIAMOND_ORE.name()));
+        chances.put(Material.EMERALD_ORE.name(), plugin.getConfig().getInt(Material.EMERALD_ORE.name()));
+        chances.put(Material.LAPIS_ORE.name(), plugin.getConfig().getInt(Material.LAPIS_ORE.name()));
+        chances.put(Material.REDSTONE_ORE.name(), plugin.getConfig().getInt(Material.REDSTONE_ORE.name()));
+        chances.put(Material.IRON_ORE.name(), plugin.getConfig().getInt(Material.IRON_ORE.name()));
+        chances.put(Material.GOLD_ORE.name(), plugin.getConfig().getInt(Material.GOLD_ORE.name()));
+        chances.put(Material.NETHER_QUARTZ_ORE.name(), plugin.getConfig().getInt(Material.NETHER_QUARTZ_ORE.name()));
+        chances.put(Material.COPPER_ORE.name(), plugin.getConfig().getInt(Material.COPPER_ORE.name()));
         debug = plugin.getConfig().getBoolean("IncreasedDebugging");
     }
 
@@ -212,15 +214,15 @@ public final class Main extends JavaPlugin {
         NamespacedKey corinthiumKey = new NamespacedKey(plugin, "Corinthium");
         NamespacedKey zincKey = new NamespacedKey(plugin, "Zinc");
         NamespacedKey kaylaxKey = new NamespacedKey(plugin, "Kaylax");
-        ores.put("Phosphorus", phosphorusKey);
-        ores.put("Janelite", janeliteKey);
-        ores.put("Ellendyte", ellendyteKey);
-        ores.put("Sapphire", sapphireKey);
-        ores.put("Tungsten", tungstenKey);
-        ores.put("Jolixanine", jolixanineKey);
-        ores.put("Corinthium", corinthiumKey);
-        ores.put("Zinc", zincKey);
-        ores.put("Kaylax", kaylaxKey);
+        ores.put(Material.COAL_ORE.name(), phosphorusKey);
+        ores.put(Material.DIAMOND_ORE.name(), janeliteKey);
+        ores.put(Material.EMERALD_ORE.name(), ellendyteKey);
+        ores.put(Material.LAPIS_ORE.name(), sapphireKey);
+        ores.put(Material.REDSTONE_ORE.name(), tungstenKey);
+        ores.put(Material.IRON_ORE.name(), jolixanineKey);
+        ores.put(Material.GOLD_ORE.name(), corinthiumKey);
+        ores.put(Material.NETHER_QUARTZ_ORE.name(), zincKey);
+        ores.put(Material.COPPER_ORE.name(), kaylaxKey);
     }
     public static Map<String, NamespacedKey> getOres(){return ores;}
 

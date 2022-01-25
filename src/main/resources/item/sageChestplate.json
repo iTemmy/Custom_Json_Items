@@ -17,11 +17,11 @@
         "DAMAGE_RESISTANCE": 2
       }
     },
-    "requires":  "oxidizedSerum,oceanicEssence,imbuedFlame,sapphire",
+    "requires":  "oxidizedSerum,oceanicEssence,imbuedFlame,lapisCustomOre",
     "ingredients": {
       "O": "OXIDIZEDSERUM",
       "0": "OCEANICESSENCE",
-      "S": "SAPPHIRE",
+      "S": "lapisCustomOre",
       "F": "IMBUEDFLAME"
     },
     "recipe": [

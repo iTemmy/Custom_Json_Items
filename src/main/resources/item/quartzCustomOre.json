@@ -1,10 +1,11 @@
 {
   "ITEM": {
-    "file_name": "tungsten",
-    "name": "&4&lTungsten",
-    "material": "REDSTONE",
+    "file_name": "quartzCustomOre",
+    "name": "&f&lZinc",
+    "material": "QUARTZ",
     "model": 1,
     "enchants": ["GLOW;1"],
+    "hide_enchants": true,
     "lore": [],
     "attributes": {
       "PLACE": {"PLACE": false},

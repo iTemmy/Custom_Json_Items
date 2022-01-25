@@ -16,10 +16,10 @@
         "INCREASE_DAMAGE": 1
       }
     },
-    "requires":  "imbuedHardening,janelite,imbuedProtection",
+    "requires":  "imbuedHardening,diamondCustomOre,imbuedProtection",
     "ingredients": {
       "H": "IMBUEDHARDENING",
-      "J": "JANELITE",
+      "J": "diamondCustomOre",
       "P": "IMBUEDPROTECTION"
     },
     "recipe": [

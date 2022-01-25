@@ -12,11 +12,11 @@
         "health": 10
       }
     },
-    "requires":  "pricklyEssence,imbuedProtection,phosphorus",
+    "requires":  "pricklyEssence,imbuedProtection,coalCustomOre",
     "ingredients": {
       "P": "PRICKLYESSENCE",
       "I": "IMBUEDPROTECTION",
-      "C": "PHOSPHORUS"
+      "C": "coalCustomOre"
     },
     "recipe": [
       "   ",

@@ -18,10 +18,10 @@
         "REGENERATION": 1
       }
     },
-    "requires":  "imbuedHardening,ellendyte,otherworldlyTrophy,scaleBoots",
+    "requires":  "imbuedHardening,emeraldCustomOre,otherworldlyTrophy,scaleBoots",
     "ingredients": {
       "H": "IMBUEDHARDENING",
-      "E": "ELLENDYTE",
+      "E": "emeraldCustomOre",
       "O": "OTHERWORLDLYTROPHY",
       "S": "SCALEBOOTS"
     },

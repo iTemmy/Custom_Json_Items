@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "jolixanine",
-    "name": "&f&lJolixanine",
-    "material": "IRON_INGOT",
+    "file_name": "emeraldCustomOre",
+    "name": "&2&lEllendyte",
+    "material": "EMERALD",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],

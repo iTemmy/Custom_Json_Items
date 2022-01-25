@@ -1,8 +1,8 @@
 {
   "ITEM": {
-    "file_name": "ellendyte",
-    "name": "&2&lEllendyte",
-    "material": "EMERALD",
+    "file_name": "redstoneCustomOre",
+    "name": "&4&lTungsten",
+    "material": "REDSTONE",
     "model": 1,
     "enchants": ["GLOW;1"],
     "lore": [],
