@@ -31,6 +31,8 @@ import java.util.logging.Logger;
 
 public final class ItemParser {
 
+    static final NamespacedKey glowKey = new NamespacedKey(Main.getPlugin(), "glow");
+    static final Glow glow = new Glow(glowKey);
     static Logger log = Bukkit.getLogger();
 
     public static @Nullable ItemStack parseItem(@NotNull String item){
@@ -58,7 +60,11 @@ public final class ItemParser {
                     attributes.put(key, attributeList.toArray(new String[attributeList.size()]));
                 }
             }
-
+            Map<Enchantment, Integer> enchants = getEnchants(itemSection);
+            if (enchants.containsKey(glow)){
+                itemStack.addUnsafeEnchantment(glow, 1);
+                enchants.remove(glow);
+            }
             ItemMeta meta = itemStack.getItemMeta();
             itemStack.addUnsafeEnchantments(getEnchants(itemSection));
             meta.lore(getLore(itemSection));
@@ -111,8 +117,6 @@ public final class ItemParser {
             for (String enchant : enchantsWithLevel){
                 String[] enchants = enchant.split(";");
                 if (enchants[0].equalsIgnoreCase("glow")){
-                    NamespacedKey key = new NamespacedKey(Main.getPlugin(), Main.getPlugin().getDescription().getName());
-                    Glow glow = new Glow(key);
                     finalEnchants.put(glow, 1);
                 }else {
                     finalEnchants.put(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]));
