@@ -162,7 +162,8 @@ public final class Main extends JavaPlugin {
             f.setAccessible(true);
             f.set(null, true);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            if (debug)
+                e.printStackTrace();
         }
         try {
             NamespacedKey key = new NamespacedKey(Main.getPlugin(), getDescription().getName());
@@ -171,7 +172,8 @@ public final class Main extends JavaPlugin {
             if (Enchantment.getByKey(key) == null)
                 Enchantment.registerEnchantment(glow);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (debug)
+                e.printStackTrace();
         }
     }
 
