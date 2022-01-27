@@ -4,7 +4,7 @@
     "name": "&fDrugarth Hunters Mastery [&c&lX&f]",
     "material": "GOLDEN_SWORD",
     "model": 0,
-    "enchants": ["BANE_OF_ARTHROPODS;10,LOOTING;10,SMITE;10,UNBREAKING;10"],
+    "enchants": ["BANE_OF_ARTHROPODS;10,LOOTING;10,SMITE;10"],
     "unbreakable": true,
     "lore": [],
     "attributes": {},
