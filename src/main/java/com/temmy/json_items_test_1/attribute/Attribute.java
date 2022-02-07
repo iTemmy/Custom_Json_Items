@@ -33,6 +33,7 @@ public final class Attribute {
         attributeMethods.put("GLUTTONYSIN", GluttonySin::trigger);
         attributeMethods.put("AUTOFEED", AutoFeed::trigger);
         attributeMethods.put("REACH", Reach::trigger);
+        attributeMethods.put("NECROMANCER", MagicNecromancer::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
