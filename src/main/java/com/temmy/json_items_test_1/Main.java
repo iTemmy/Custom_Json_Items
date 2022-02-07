@@ -1,10 +1,10 @@
 package com.temmy.json_items_test_1;
 
 import com.temmy.json_items_test_1.Parser.ItemParser;
+import com.temmy.json_items_test_1.command.Debugging;
 import com.temmy.json_items_test_1.command.GiveItem;
 import com.temmy.json_items_test_1.command.GiveItemTabCompleter;
 import com.temmy.json_items_test_1.command.Reload;
-import com.temmy.json_items_test_1.command.trieDump;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
 import com.temmy.json_items_test_1.util.FoodDetails;
@@ -73,9 +73,9 @@ public final class Main extends JavaPlugin {
         for (String s : l)
             files3.remove(s);
         getCommand("giveitem").setExecutor(new GiveItem());
-        //getCommand("trieDump").setExecutor(new trieDump());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
         getCommand("reloadores").setExecutor(new Reload());
+        getCommand("debugging").setExecutor(new Debugging());
         ores();
     }
 
@@ -91,6 +91,7 @@ public final class Main extends JavaPlugin {
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void registerItemRecipes(File itemFile){
         try {
+            if (itemFile.isDirectory()) return;
             Object jsonObject = new JSONParser().parse(new FileReader(itemFile));
             JSONObject itemJson = (JSONObject) jsonObject;
 
@@ -283,7 +284,7 @@ public final class Main extends JavaPlugin {
         foodMap.put(Material.MELON_SLICE, new FoodDetails(2, 1.2f));
         foodMap.put(Material.MUSHROOM_STEW, new FoodDetails(6, 7.2f));
         foodMap.put(Material.POISONOUS_POTATO, new FoodDetails(2, 1.2f,
-                new ArrayList<>(Arrays.asList(new PotionEffect(PotionEffectType.POISON, 100, 0)))));
+                new ArrayList<>(List.of(new PotionEffect(PotionEffectType.POISON, 100, 0)))));
         foodMap.put(Material.POTATO, new FoodDetails(1, 0.6f));
         foodMap.put(Material.PUFFERFISH, new FoodDetails(1, 0.2f,
                 new ArrayList<>(Arrays.asList(new PotionEffect(PotionEffectType.HUNGER, 300, 2),
@@ -293,16 +294,16 @@ public final class Main extends JavaPlugin {
         foodMap.put(Material.RABBIT_STEW, new FoodDetails(10, 12));
         foodMap.put(Material.BEEF, new FoodDetails(3, 1.8f));
         foodMap.put(Material.CHICKEN, new FoodDetails(2, 1.2f,
-                new ArrayList<>(Arrays.asList(new PotionEffect(PotionEffectType.HUNGER, 600, 0)))));
+                new ArrayList<>(List.of(new PotionEffect(PotionEffectType.HUNGER, 600, 0)))));
         foodMap.put(Material.COD, new FoodDetails(2, 0.4f));
         foodMap.put(Material.MUTTON, new FoodDetails(2, 1.2f));
         foodMap.put(Material.PORKCHOP, new FoodDetails(3, 1.8f));
         foodMap.put(Material.RABBIT, new FoodDetails(3, 1.8f));
         foodMap.put(Material.SALMON, new FoodDetails(2, 0.4f));
         foodMap.put(Material.ROTTEN_FLESH, new FoodDetails(4, 0.8f,
-                new ArrayList<>(Arrays.asList(new PotionEffect(PotionEffectType.HUNGER, 600, 0)))));
+                new ArrayList<>(List.of(new PotionEffect(PotionEffectType.HUNGER, 600, 0)))));
         foodMap.put(Material.SPIDER_EYE, new FoodDetails(2, 3.2f,
-                new ArrayList<>(Arrays.asList(new PotionEffect(PotionEffectType.POISON, 100, 0)))));
+                new ArrayList<>(List.of(new PotionEffect(PotionEffectType.POISON, 100, 0)))));
         foodMap.put(Material.COOKED_BEEF, new FoodDetails(8, 12.8f));
         foodMap.put(Material.SUSPICIOUS_STEW, new FoodDetails(6, 7.2f));
         foodMap.put(Material.SWEET_BERRIES, new FoodDetails(2, 0.4f));

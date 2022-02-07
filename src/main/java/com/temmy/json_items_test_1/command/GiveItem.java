@@ -26,26 +26,28 @@ public class GiveItem implements CommandExecutor {
             return false;
         }
         if (!(sender instanceof Player) && (args.length != 3)){
-            Bukkit.getLogger().log(Level.INFO,"You must provide a player to give the item to.");
+            sender.sendMessage("You must provide a player to give the item to.");
             return false;
         }
-        if (args.length == 3) giveItem(Bukkit.getPlayer(args[0]), args[1], Integer.parseInt(args[2]));
-        else if (args.length == 2){
-            try {
-                if (giveItem((Player) sender, args[0], Integer.parseInt(args[1]))) {
-                    sender.sendMessage("Given " + sender.getName() + args[0]);
+        try {
+            if (args.length == 3) {
+                giveItem(Bukkit.getPlayer(args[0]), args[1], Integer.parseInt(args[2]));
+                sender.sendMessage(String.format("Gave %s %d %s", Bukkit.getPlayer(args[0]).getName(), Integer.parseInt(args[2]), args[1]));
+            } else if (args.length == 2) {
+                    if (giveItem((Player) sender, args[0], Integer.parseInt(args[1]))) {
+                        sender.sendMessage(String.format("Gave %s %d %s", sender.getName(), Integer.parseInt(args[1]), args[0]));
+                        return true;
+                    }
+                    return false;
+            } else if (args.length == 1) {
+                if (giveItem((Player) sender, args[0], 1)) {
+                    sender.sendMessage(String.format("Gave %s %d %s", sender.getName(), 1, args[0]));
                     return true;
-                } return false;
-            }catch (NumberFormatException e){
-                sender.sendMessage("Invalid number.");
+                }
+                return false;
             }
-        }
-        else if (args.length == 1){
-            if (giveItem((Player) sender, args[0], 1)) {
-                sender.sendMessage("Given " + sender.getName() + " " + args[0]);
-                return true;
-            }
-            return false;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
         return false;
     }
