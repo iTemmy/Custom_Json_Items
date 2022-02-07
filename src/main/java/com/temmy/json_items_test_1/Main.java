@@ -59,6 +59,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ProjectileLaunchListener(), this);
         getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityTargetLivingEntity(), this);
         PluginFiles.init();
         getConfig().options().copyDefaults();
         saveDefaultConfig();
