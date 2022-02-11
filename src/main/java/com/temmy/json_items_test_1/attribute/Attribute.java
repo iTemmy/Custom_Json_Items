@@ -34,6 +34,7 @@ public final class Attribute {
         attributeMethods.put("AUTOFEED", AutoFeed::trigger);
         attributeMethods.put("REACH", Reach::trigger);
         attributeMethods.put("NECROMANCER", MagicNecromancer::trigger);
+        attributeMethods.put("FIREBALL", MagicFireball::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){
