@@ -43,6 +43,6 @@ public class EntityExplode implements Listener {
         e.setCancelled(true);
         e.getEntity().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, e.getEntity().getLocation(), 10);
         e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 100, 1);
-        //e.getEntity().remove();
+        e.getEntity().remove();
     }
 }
