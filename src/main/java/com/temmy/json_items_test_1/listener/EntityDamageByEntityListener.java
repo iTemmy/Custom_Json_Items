@@ -2,11 +2,11 @@ package com.temmy.json_items_test_1.listener;
 
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.attribute.GluttonySin;
-import com.temmy.json_items_test_1.attribute.MagicFireball;
-import com.temmy.json_items_test_1.util.CustomDataTypes;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +24,6 @@ public class EntityDamageByEntityListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e){
         if (e.getDamager() instanceof Arrow) arrowDamage((Arrow) e.getDamager(), e);
         if (e.getDamager() instanceof Trident) GluttonySin.entityHitByTrident(e);
-        if (e.getEntity() instanceof ItemFrame) magicFireballItemFrameDestroy(e);
         if (!(e.getDamager() instanceof LivingEntity)) return;
 
         if (e.isCancelled()) return;
@@ -37,14 +36,6 @@ public class EntityDamageByEntityListener implements Listener {
         Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getItemMeta().getPersistentDataContainer());
         for (String attribute : attributeMap.keySet()) {
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
-        }
-    }
-
-    private static void magicFireballItemFrameDestroy(EntityDamageByEntityEvent e){
-        if (e.getDamager() instanceof Fireball) {
-            if (e.getDamager().getPersistentDataContainer().has(MagicFireball.fireballKey, CustomDataTypes.Boolean)){
-                e.setCancelled(true);
-            }
         }
     }
 

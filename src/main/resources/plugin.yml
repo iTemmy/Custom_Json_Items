@@ -10,5 +10,3 @@ commands:
     description: reloads the ore drop chances from the config file.
   debugging:
     description: Toggles addtional debugging information to console.
-  triedump:
-    description: fuck you
