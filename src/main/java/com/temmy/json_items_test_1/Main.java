@@ -1,10 +1,7 @@
 package com.temmy.json_items_test_1;
 
 import com.temmy.json_items_test_1.Parser.ItemParser;
-import com.temmy.json_items_test_1.command.Debugging;
-import com.temmy.json_items_test_1.command.GiveItem;
-import com.temmy.json_items_test_1.command.GiveItemTabCompleter;
-import com.temmy.json_items_test_1.command.Reload;
+import com.temmy.json_items_test_1.command.*;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
 import com.temmy.json_items_test_1.util.FoodDetails;
@@ -64,6 +61,7 @@ public final class Main extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         loadConfig();
+        getLogger().info("Registering Custom Items.");
         for (File item : PluginFiles.getItemFiles())
             registerItemRecipes(item);
         for (String s : files3.keySet()) {
@@ -72,6 +70,7 @@ public final class Main extends JavaPlugin {
         }
         for (String s : l)
             files3.remove(s);
+        getLogger().info(String.format("Registered %s items.", customItems.size()));
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
         getCommand("reloadores").setExecutor(new Reload());
