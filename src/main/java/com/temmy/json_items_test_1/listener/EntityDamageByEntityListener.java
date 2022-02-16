@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.Map;
 import java.util.logging.Logger;
@@ -24,12 +25,12 @@ public class EntityDamageByEntityListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e){
         if (e.getDamager() instanceof Arrow) arrowDamage((Arrow) e.getDamager(), e);
         if (e.getDamager() instanceof Trident) GluttonySin.entityHitByTrident(e);
-        if (!(e.getDamager() instanceof LivingEntity)) return;
         if (e.getEntity() instanceof ItemFrame) magicFireballItemFrameDestroy(e);
+        if (e.getEntity() instanceof Player) magicFireballPlayerDamage(e);
+        if (!(e.getDamager() instanceof LivingEntity damager)) return;
 
         if (e.isCancelled()) return;
 
-        LivingEntity damager = (LivingEntity) e.getDamager();
         if (damager.getEquipment().getItemInMainHand() == null) return;
         ItemMeta itemMeta = ((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getItemMeta();
         if (itemMeta == null) return;
@@ -37,6 +38,16 @@ public class EntityDamageByEntityListener implements Listener {
         Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getItemMeta().getPersistentDataContainer());
         for (String attribute : attributeMap.keySet()) {
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
+        }
+    }
+
+    private static void magicFireballPlayerDamage(EntityDamageByEntityEvent e){
+        if (e.getDamager() instanceof Fireball){
+            PersistentDataContainer data = e.getDamager().getPersistentDataContainer();
+            if (data.has(MagicFireball.fireballKey, CustomDataTypes.Boolean) && data.has(MagicFireball.fireballShooterKey, CustomDataTypes.UUID)){
+                if (e.getEntity().getUniqueId().equals(data.get(MagicFireball.fireballShooterKey, CustomDataTypes.UUID)))
+                    e.setCancelled(true);
+            }
         }
     }
 
