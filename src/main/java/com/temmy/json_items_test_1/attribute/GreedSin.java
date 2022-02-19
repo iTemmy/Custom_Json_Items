@@ -1,5 +1,11 @@
 package com.temmy.json_items_test_1.attribute;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
+import com.temmy.json_items_test_1.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -18,13 +24,13 @@ public class GreedSin {
     }
 
     private static void entityShootBow(EntityShootBowEvent e, String[] args){
-        if (!(e.getEntity() instanceof Player)) return;
-        if (!(e.getProjectile() instanceof Arrow)) return;
-        Player player = (Player) e.getEntity();
-        Arrow arrow = (Arrow) e.getProjectile();
+        if (!(e.getEntity() instanceof Player player)) return;
+        if (!(e.getProjectile() instanceof Arrow arrow)) return;
+        if (Main.worldGuardEnabled)
+            worldGuard(e);
         double level = -99;
         double baseDamage = -99;
-        double damage = -99;
+        double damage;
         for (String arg : args) {
             arg = arg.replaceAll("[\"\\{\\}]", "").trim();
             String[] ss = arg.split(",");
@@ -33,12 +39,12 @@ public class GreedSin {
                     s = s.replaceAll("level:", "").trim();
                     try {
                         level = Integer.parseInt(s);
-                    }catch (NumberFormatException ignored){ignored.printStackTrace();}
+                    }catch (NumberFormatException exception){if (Main.debug) exception.printStackTrace();}
                 }else if (s.toLowerCase().contains("baseDamage".toLowerCase())){
                     s = s.toLowerCase().replaceAll("baseDamage:".toLowerCase(), "").trim();
                     try {
                         baseDamage = Double.parseDouble(s);
-                    }catch (NumberFormatException ignored){ignored.printStackTrace();}
+                    }catch (NumberFormatException exception){if (Main.debug) exception.printStackTrace();}
                 }
             }
         }
@@ -67,6 +73,15 @@ public class GreedSin {
             return (long) (2.5*Math.pow(level, 2) - 40.5*level + 360.0);
         else
             return (long) (4.5*Math.pow(level, 2) - 162.5*level + 2220.0);
+    }
+
+    private static void worldGuard(EntityShootBowEvent e){
+        WorldGuard worldGuard = Main.getWorldGuard();
+        RegionContainer container = worldGuard.getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
+        if (set == null) return;
+        if (!set.testState(null, Main.attributesEnabledFlag)) e.setCancelled(true);
     }
 
 }

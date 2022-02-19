@@ -3,6 +3,7 @@ version: ${project.version}
 main: com.temmy.json_items_test_1.Main
 api-version: 1.18
 authors: [ iTemmy ]
+depend:  [WorldGuard]
 commands:
   giveitem:
     description: Spawn a custom item for the given player, or to the executor if none is provided.

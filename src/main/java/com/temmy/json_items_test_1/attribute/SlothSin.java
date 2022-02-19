@@ -1,5 +1,10 @@
 package com.temmy.json_items_test_1.attribute;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import com.temmy.json_items_test_1.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -24,10 +29,10 @@ public class SlothSin {
     static NamespacedKey damageBaseValue = new NamespacedKey(Main.getPlugin(), "damagebaseValue");
 
     public static void trigger(Event e, String[] args){
-        if (!(e instanceof EntityDamageByEntityEvent)) return;
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
-        if (!(event.getDamager() instanceof Player)) return;
-        Player damager = (Player) event.getDamager();
+        if (!(e instanceof EntityDamageByEntityEvent event)) return;
+        if (!(event.getDamager() instanceof Player damager)) return;
+        if (Main.worldGuardEnabled)
+            worldGuard(event);
         ItemStack hand = damager.getInventory().getItemInMainHand();
         ItemMeta handMeta = hand.getItemMeta();
         int cooldown = -99;
@@ -74,9 +79,26 @@ public class SlothSin {
             damager.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(damager.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue() + speedIncrease);
             damager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + damageIncrease);
         }
-        handMeta.getPersistentDataContainer().set(task, PersistentDataType.INTEGER, createTask((cooldown * 20), damager, damager.getInventory().getItemInMainHand()));
+        handMeta.getPersistentDataContainer().set(task, PersistentDataType.INTEGER, createTask((cooldown * 20L), damager, damager.getInventory().getItemInMainHand()));
         handMeta.getPersistentDataContainer().set(activated, PersistentDataType.BYTE, (byte) 1);
         hand.setItemMeta(handMeta);
+    }
+
+    private static void worldGuard(EntityDamageByEntityEvent e) {
+        WorldGuard worldGuard = Main.getWorldGuard();
+        RegionContainer container = worldGuard.getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
+        if (set == null) return;
+        if (!set.testState(null, Main.attributesEnabledFlag)){
+            e.setCancelled(true);
+            return;
+        }
+        set = query.getApplicableRegions(BukkitAdapter.adapt(e.getDamager().getLocation()));
+        if (set == null) return;
+        if (!set.testState(null, Main.attributesEnabledFlag)) {
+            e.setCancelled(true);
+        }
     }
 
     public static int createTask(long delay, Player player, ItemStack oldhand){

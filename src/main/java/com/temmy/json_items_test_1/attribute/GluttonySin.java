@@ -1,5 +1,10 @@
 package com.temmy.json_items_test_1.attribute;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import com.temmy.json_items_test_1.Main;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
@@ -29,10 +34,10 @@ public class GluttonySin {
     }
 
     public static void entityHitByTrident(EntityDamageByEntityEvent e){
-        if (!(e.getDamager() instanceof Trident)) return;
-        if (!(e.getEntity() instanceof LivingEntity)) return;
-        LivingEntity livingEntity = (LivingEntity) e.getEntity();
-        Trident trident = (Trident) e.getDamager();
+        if (!(e.getDamager() instanceof Trident trident)) return;
+        if (!(e.getEntity() instanceof LivingEntity livingEntity)) return;
+        if (Main.worldGuardEnabled)
+            worldGuard(e);
         PersistentDataContainer data = trident.getPersistentDataContainer();
         if (!data.has(effectKey, PersistentDataType.STRING) || !data.has(timeLevelKey, PersistentDataType.INTEGER)
                 || !data.has(effectLevelKey, PersistentDataType.INTEGER)) return;
@@ -44,10 +49,10 @@ public class GluttonySin {
     }
 
     public static void ProjectileLaunchEvent(ProjectileLaunchEvent event, String[] args){
-        if (!(event.getEntity() instanceof Trident)) return;
-        if (!(event.getEntity().getShooter() instanceof Player)) return;
-        Player player = (Player) event.getEntity().getShooter();
-        Trident trident = (Trident) event.getEntity();
+        if (!(event.getEntity() instanceof Trident trident)) return;
+        if (!(event.getEntity().getShooter() instanceof Player player)) return;
+        if (Main.worldGuardEnabled)
+            worldGuard(event);
         ItemStack tridentI = trident.getItemStack();
         if (!tridentI.hasItemMeta()) return;
         PotionEffectType type = null;
@@ -62,8 +67,8 @@ public class GluttonySin {
                         String[] effectlevels = string.split(":");
                         try{
                             effectlevel = Integer.parseInt(effectlevels[1]);
-                        } catch (NumberFormatException ignored) {
-                            ignored.printStackTrace();
+                        } catch (NumberFormatException exception) {
+                            if (Main.debug) exception.printStackTrace();
                         }
                     }else if (string.toLowerCase().contains("effect")){
                         string = string.toLowerCase().replaceAll("\"", "");
@@ -71,13 +76,13 @@ public class GluttonySin {
                         for (String effect : effects){
                             try {
                                 type = PotionEffectType.getByName(effects[1]);
-                            }catch (NullPointerException ignored){ignored.printStackTrace();}
+                            }catch (NullPointerException exception){if (Main.debug) exception.printStackTrace();}
                         }
                     }else if (string.toLowerCase().contains("timelevel")){
                         String[] levels = string.split(":");
                         try {
                             timelevel = Integer.parseInt(levels[1]);
-                        } catch (NumberFormatException ignored) {ignored.printStackTrace();}
+                        } catch (NumberFormatException exception) {if (Main.debug) exception.printStackTrace();}
                     }
                 }
             }
@@ -90,4 +95,31 @@ public class GluttonySin {
             }
         }
     }
+
+    private static void worldGuard(EntityDamageByEntityEvent e) {
+        WorldGuard worldGuard = Main.getWorldGuard();
+        RegionContainer container = worldGuard.getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
+        if (set == null) return;
+        if (!set.testState(null, Main.attributesEnabledFlag)){
+            e.setCancelled(true);
+            return;
+        }
+        set = query.getApplicableRegions(BukkitAdapter.adapt(e.getDamager().getLocation()));
+        if (set == null) return;
+        if (!set.testState(null, Main.attributesEnabledFlag)) {
+            e.setCancelled(true);
+        }
+    }
+
+    private static void worldGuard(ProjectileLaunchEvent e){
+        WorldGuard worldGuard = Main.getWorldGuard();
+        RegionContainer container = worldGuard.getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
+        if (set == null) return;
+        if (!set.testState(null, Main.attributesEnabledFlag)) e.setCancelled(true);
+    }
+
 }

@@ -1,5 +1,10 @@
 package com.temmy.json_items_test_1;
 
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
+import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.temmy.json_items_test_1.Parser.ItemParser;
 import com.temmy.json_items_test_1.command.*;
 import com.temmy.json_items_test_1.file.PluginFiles;
@@ -32,10 +37,34 @@ public final class Main extends JavaPlugin {
     private static Map<String, ItemStack> customItems = new HashMap<String, ItemStack>();
     public static boolean debug;
     public static String customOreWorld;
+    public static Boolean worldGuardEnabled = false;
+    public static WorldGuard worldGuard = null;
+    public static StateFlag attributesEnabledFlag;
 
+    public static WorldGuard getWorldGuard(){
+        return worldGuard;
+    }
+
+    public static void registerCustomFlag(){
+        FlagRegistry registry = worldGuard.getFlagRegistry();
+        try {
+            StateFlag flag = new StateFlag("Attribute-Use", true);
+            registry.register(flag);
+            attributesEnabledFlag = flag;
+        } catch (FlagConflictException e) {
+            Flag<?> existing = registry.get("Attribute-Use");
+            if (existing instanceof StateFlag) {
+                attributesEnabledFlag = (StateFlag) existing;
+            }else {
+                plugin.getLogger().severe("SEVERE ERROR with WorldGuard Flag");
+            }
+            return;
+        }
+        plugin.getLogger().info("Registered Custom WorldGuard Flag");
+    }
 
     @Override
-    public void onEnable() {
+    public void onLoad(){
         plugin = this;
         registerGlow();
         registerFoods();

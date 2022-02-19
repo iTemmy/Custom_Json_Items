@@ -1,5 +1,10 @@
 package com.temmy.json_items_test_1.attribute;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.util.CustomDataTypes;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -28,6 +33,8 @@ public class MagicNecromancer {
     public static void trigger(Event e, String[] args){
         if (!(e instanceof PlayerInteractEvent event)) return;
         if (!event.getAction().isRightClick()) return;
+        if (Main.worldGuardEnabled)
+            if (worldGuard(event)) return;
         Player player = event.getPlayer();
         if (player.getPersistentDataContainer().has(necromancerCooldownKey, CustomDataTypes.Boolean)&& !player.hasPermission("jsonitems.cooldownbypass")) return;
         Location loc = player.getLocation();
@@ -104,4 +111,18 @@ public class MagicNecromancer {
             player.getPersistentDataContainer().remove(necromancerCooldownKey);
         }, cooldown);
     }
+
+    private static boolean worldGuard(PlayerInteractEvent e) {
+        WorldGuard worldGuard = Main.getWorldGuard();
+        RegionContainer container = worldGuard.getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getPlayer().getLocation()));
+        if (set == null) return false;
+        if (!set.testState(null, Main.attributesEnabledFlag)){
+            e.setCancelled(true);
+            return true;
+        }
+        return false;
+    }
+
 }
