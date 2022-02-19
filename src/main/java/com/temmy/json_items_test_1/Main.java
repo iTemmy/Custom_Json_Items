@@ -34,7 +34,7 @@ import java.util.*;
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
-    private static Map<String, ItemStack> customItems = new HashMap<String, ItemStack>();
+    private static Map<String, ItemStack> customItems = new HashMap<>();
     public static boolean debug;
     public static String customOreWorld;
     public static Boolean worldGuardEnabled = false;
@@ -66,6 +66,17 @@ public final class Main extends JavaPlugin {
     @Override
     public void onLoad(){
         plugin = this;
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            worldGuardEnabled = true;
+            getLogger().info("Registering Custom WorldGuard Flag");
+            worldGuard = WorldGuard.getInstance();
+            registerCustomFlag();
+        }else
+            getLogger().warning("WorldGuard not detected, players will be able to use attributes anywhere!");
+    }
+
+    @Override
+    public void onEnable() {
         registerGlow();
         registerFoods();
         getServer().getPluginManager().registerEvents(new onBlockDropItemListener(), this);
@@ -114,7 +125,7 @@ public final class Main extends JavaPlugin {
 
     public static Map<String, ItemStack> getCustomItems(){return customItems;}
 
-    Map<String, File> files3 = new HashMap<String, File>();
+    Map<String, File> files3 = new HashMap<>();
     List<String> l = new ArrayList<>();
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -236,7 +247,7 @@ public final class Main extends JavaPlugin {
     }
 
 
-    static Map<String, NamespacedKey> ores = new HashMap<String, NamespacedKey>();
+    static Map<String, NamespacedKey> ores = new HashMap<>();
 
     void ores() {
         NamespacedKey phosphorusKey = new NamespacedKey(plugin, "Phosphorus");
@@ -263,7 +274,7 @@ public final class Main extends JavaPlugin {
     static Map<Material, FoodDetails> foodMap = new HashMap<>();
 
     public void registerFoods(){
-        Map<PotionEffect, Boolean> map = new HashMap<PotionEffect, Boolean>();
+        Map<PotionEffect, Boolean> map = new HashMap<>();
         foodMap.put(Material.APPLE, new FoodDetails(4, 2.4f));
         foodMap.put(Material.BAKED_POTATO, new FoodDetails(5, 6));
         foodMap.put(Material.BEETROOT, new FoodDetails(1, 1.2f));
