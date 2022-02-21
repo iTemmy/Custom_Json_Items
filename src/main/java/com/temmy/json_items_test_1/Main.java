@@ -14,6 +14,7 @@ import com.temmy.json_items_test_1.util.Glow;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -34,6 +35,7 @@ import java.util.*;
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
+    @SuppressWarnings("FieldMayBeFinal")
     private static Map<String, ItemStack> customItems = new HashMap<>();
     public static boolean debug;
     public static String customOreWorld;
@@ -78,26 +80,8 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         registerGlow();
-        registerFoods();
-        getServer().getPluginManager().registerEvents(new onBlockDropItemListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerArmorChangeListener(), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
-        getServer().getPluginManager().registerEvents(new onBlockPlaceListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
-        getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerSwapHandItemListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), this);
-        getServer().getPluginManager().registerEvents(new EntityPickupItemListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerPickupExperienceListener(), this);
-        getServer().getPluginManager().registerEvents(new ProjectileLaunchListener(), this);
-        getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
-        getServer().getPluginManager().registerEvents(new EntityTargetLivingEntity(), this);
-        getServer().getPluginManager().registerEvents(new EntityExplode(), this);
+        new Thread(this::registerFoods).start();
+        registerEvents(getServer());
         PluginFiles.init();
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -119,6 +103,28 @@ public final class Main extends JavaPlugin {
         ores();
     }
 
+    private void registerEvents(Server server){
+        server.getPluginManager().registerEvents(new onBlockDropItemListener(), this);
+        server.getPluginManager().registerEvents(new PlayerArmorChangeListener(), this);
+        server.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        server.getPluginManager().registerEvents(new onBlockPlaceListener(), this);
+        server.getPluginManager().registerEvents(new BlockBreakListener(), this);
+        server.getPluginManager().registerEvents(new CraftItemListener(), this);
+        server.getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        server.getPluginManager().registerEvents(new EntityShootBowListener(), this);
+        server.getPluginManager().registerEvents(new PlayerSwapHandItemListener(), this);
+        server.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
+        server.getPluginManager().registerEvents(new InventoryClickListener(), this);
+        server.getPluginManager().registerEvents(new PlayerDropItemListener(), this);
+        server.getPluginManager().registerEvents(new EntityPickupItemListener(), this);
+        server.getPluginManager().registerEvents(new PlayerPickupExperienceListener(), this);
+        server.getPluginManager().registerEvents(new ProjectileLaunchListener(), this);
+        server.getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+        server.getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        server.getPluginManager().registerEvents(new EntityTargetLivingEntity(), this);
+        server.getPluginManager().registerEvents(new EntityExplode(), this);
+    }
+
     public void onDisable(){
         saveLocalConfig();
     }
@@ -128,7 +134,7 @@ public final class Main extends JavaPlugin {
     Map<String, File> files3 = new HashMap<>();
     List<String> l = new ArrayList<>();
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({"unchecked", "rawtypes", "ConstantConditions"})
     private void registerItemRecipes(File itemFile){
         try {
             if (itemFile.isDirectory()) return;
@@ -245,7 +251,6 @@ public final class Main extends JavaPlugin {
     public static Map<String, Integer> getChances(){
         return chances;
     }
-
 
     static Map<String, NamespacedKey> ores = new HashMap<>();
 
