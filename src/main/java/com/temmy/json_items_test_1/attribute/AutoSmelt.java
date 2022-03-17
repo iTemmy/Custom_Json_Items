@@ -1,6 +1,8 @@
 package com.temmy.json_items_test_1.attribute;
 
+import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.util.ItemUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -9,18 +11,25 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockDropItemEvent;
+import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 public final class AutoSmelt {
     private AutoSmelt(){}
 
+    static final Logger log = Main.getPlugin().getLogger();
+
     public static void trigger(Event e, String[] args) {
-        if (!(e instanceof BlockDropItemEvent)) return;
-        BlockDropItemEvent event = (BlockDropItemEvent) e;
+        if (!(e instanceof BlockDropItemEvent event)) return;
         Player player = event.getPlayer();
         if (player.getGameMode() == GameMode.CREATIVE)
             return;
 
+        log.info("ttttttt");
         event.setCancelled(true);
         BlockState blockstate = event.getBlockState();
         World world  = blockstate.getWorld();
@@ -30,21 +39,30 @@ public final class AutoSmelt {
         boolean dropped = false;
         for (Item item : event.getItems()){
             ItemStack droppedItem = item.getItemStack();
-            if (droppedItem.getType() == block){
-                blockDrop = droppedItem;
-                dropped = true;
-                break;
+            Iterator<Recipe> recipes = Bukkit.recipeIterator();
+            while (recipes.hasNext()) {
+                Recipe recipe = recipes.next();
+                if (!(recipe instanceof FurnaceRecipe furnaceRecipe)) continue;
+                if (furnaceRecipe.getInput().equals(droppedItem)) {
+                    droppedItem = furnaceRecipe.getResult();
+
+                    break;
+                }
             }
-            world.dropItem(item.getLocation(), droppedItem);
+            //world.dropItem(item.getLocation(), droppedItem);
         }
-        if (!dropped) return;
+        log.info(String.format("dropped: --> %s", dropped));
+        //if (!dropped) return;
 
         boolean whitelisted = false;
         boolean blacklisted = false;
         String blockName = block.name().toUpperCase();
         for (String s : args) {
+            log.info(String.format("s: --> %s",s));
             boolean blackList = s.charAt(0) == '!';
-            boolean match = blockName.matches(String.format("(.*)%s(.*)$"));
+            boolean match = blockName.matches(String.format("(.*)%s(.*)$", s));
+            log.info(String.format("match: --> %s", match));
+            log.info(String.format("blacklist: --> %s", blackList));
             if (!blackList && match)
                 whitelisted = true;
             else if (blackList && match)

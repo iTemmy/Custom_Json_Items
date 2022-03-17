@@ -33,7 +33,7 @@ public class CustomOre {
             switch (block.getType()) {
                 case COAL_ORE:
                 case DEEPSLATE_COAL_ORE:
-                    item = Main.getCustomItems().get("coalCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("coalCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1) {
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -49,7 +49,7 @@ public class CustomOre {
                     }
                 case COPPER_ORE:
                 case DEEPSLATE_COPPER_ORE:
-                    item = Main.getCustomItems().get("copperCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("copperCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -65,7 +65,7 @@ public class CustomOre {
                     }
                 case DIAMOND_ORE:
                 case DEEPSLATE_DIAMOND_ORE:
-                    item = Main.getCustomItems().get("diamondCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("diamondCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -81,7 +81,7 @@ public class CustomOre {
                     }
                 case EMERALD_ORE:
                 case DEEPSLATE_EMERALD_ORE:
-                    item = Main.getCustomItems().get("emeraldCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("emeraldCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1) {
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -97,7 +97,7 @@ public class CustomOre {
                     }
                 case GOLD_ORE:
                 case DEEPSLATE_GOLD_ORE:
-                    item = Main.getCustomItems().get("goldCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("goldCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -113,7 +113,7 @@ public class CustomOre {
                     }
                 case IRON_ORE:
                 case DEEPSLATE_IRON_ORE:
-                    item = Main.getCustomItems().get("ironCustomORe".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("ironCustomORe".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -129,7 +129,7 @@ public class CustomOre {
                     }
                 case LAPIS_ORE:
                 case DEEPSLATE_LAPIS_ORE:
-                    item = Main.getCustomItems().get("lapisCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("lapisCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -145,7 +145,7 @@ public class CustomOre {
                     }
                 case REDSTONE_ORE:
                 case DEEPSLATE_REDSTONE_ORE:
-                    item = Main.getCustomItems().get("redstoneCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("redstoneCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);
@@ -165,7 +165,7 @@ public class CustomOre {
         }else if (block.getWorld().getName().equals(Main.customOreWorld+"_nether") && player.getGameMode() == GameMode.SURVIVAL) {
             switch (block.getType()){
                 case NETHER_GOLD_ORE:
-                    item = Main.getCustomItems().get("goldCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("goldCustomOre".toLowerCase());
                     item.setAmount(amount);
                     log.info("Nether_Gold_Ore");
                     if (rnd.nextInt(Main.getChances().get(block.getType().name().toLowerCase())) == 1){
@@ -181,7 +181,7 @@ public class CustomOre {
                         return false;
                     }
                 case NETHER_QUARTZ_ORE:
-                    item = Main.getCustomItems().get("quartzCustomOre".toLowerCase());
+                    item = Main.getCustomItems_OLD().get("quartzCustomOre".toLowerCase());
                     item.setAmount(amount);
                     if (rnd.nextInt(Main.getChances().get(block.getType().name())) == 1){
                         block.getWorld().dropItem(block.getLocation(), item);

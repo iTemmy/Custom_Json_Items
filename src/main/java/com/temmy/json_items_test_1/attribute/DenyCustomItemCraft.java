@@ -9,6 +9,8 @@ public class DenyCustomItemCraft {
 
     private DenyCustomItemCraft(){}
 
+    //TODO Change the ItemMeta.hasLocalizedName to the new version or checking if displayName is instanceof translatable
+
     public static void trigger(Event e, String[] args){
         if (!(e instanceof CraftItemEvent)) return;
         CraftItemEvent event = (CraftItemEvent) e;
@@ -21,7 +23,7 @@ public class DenyCustomItemCraft {
             if (event.getRecipe().getResult().getItemMeta().hasLocalizedName())
                 recipeLocalized = true;
             if (recipeLocalized && itemLocalized) {
-                if (Main.getCustomItems().containsValue(item.getItemMeta().getLocalizedName().toLowerCase()) && Main.getCustomItems().containsValue(event.getRecipe().getResult().getItemMeta().getLocalizedName()))
+                if (Main.getCustomItems_OLD().containsValue(item.getItemMeta().getLocalizedName().toLowerCase()) && Main.getCustomItems_OLD().containsValue(event.getRecipe().getResult().getItemMeta().getLocalizedName()))
                     return;
             }else {
                 event.setCancelled(true);

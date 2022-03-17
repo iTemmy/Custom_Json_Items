@@ -17,7 +17,7 @@ public class GiveItemTabCompleter implements TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (sender instanceof Player) {
             List<String> tabComplete = new ArrayList<>();
-            for (String s : Main.getCustomItems().keySet())
+            for (String s : Main.getCustomItems_OLD().keySet())
                 tabComplete.add(s);
             if (args.length == 1)
                 for (Player p : Bukkit.getOnlinePlayers())

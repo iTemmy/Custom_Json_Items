@@ -10,6 +10,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Set;
 
 public class Glow extends Enchantment {
@@ -20,17 +21,17 @@ public class Glow extends Enchantment {
 
     @Override
     public @NotNull String getName() {
-        return null;
+        return "Glow";
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getStartLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -55,12 +56,12 @@ public class Glow extends Enchantment {
 
     @Override
     public boolean canEnchantItem(@NotNull ItemStack item) {
-        return false;
+        return true;
     }
 
     @Override
     public @NotNull Component displayName(int level) {
-        return null;
+        return Component.text("Glow");
     }
 
     @Override
@@ -75,7 +76,7 @@ public class Glow extends Enchantment {
 
     @Override
     public @NotNull EnchantmentRarity getRarity() {
-        return null;
+        return EnchantmentRarity.COMMON;
     }
 
     @Override
@@ -85,11 +86,12 @@ public class Glow extends Enchantment {
 
     @Override
     public @NotNull Set<EquipmentSlot> getActiveSlots() {
-        return null;
+        Set<EquipmentSlot> slots = (Set<EquipmentSlot>) Arrays.asList(EquipmentSlot.HAND);
+        return slots;
     }
 
     @Override
     public @NotNull String translationKey() {
-        return null;
+        return "Glow";
     }
 }

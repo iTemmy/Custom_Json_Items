@@ -5,16 +5,12 @@ import com.temmy.json_items_test_1.attribute.HeldItemEffects;
 import com.temmy.json_items_test_1.listener.PlayerSwapHandItemListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.logging.Level;
 
 public class GiveItem implements CommandExecutor {
 
@@ -53,13 +49,8 @@ public class GiveItem implements CommandExecutor {
     }
 
     private boolean giveItem(Player player, String item, int amount){
-        Recipe recipe = Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), item.toLowerCase()));
-        if (recipe != null){
-            ItemStack itemstack = recipe.getResult();
-            itemstack.setAmount(amount);
-            player.getInventory().addItem(itemstack);
-        }else if (Main.getCustomItems().containsKey(item)){
-            ItemStack itemstack = Main.getCustomItems().get(item);
+        if (Main.getCustomItems_OLD().containsKey(item)){
+            ItemStack itemstack = Main.getCustomItems_OLD().get(item);
             itemstack.setAmount(amount);
             player.getInventory().addItem(itemstack);
         }else {

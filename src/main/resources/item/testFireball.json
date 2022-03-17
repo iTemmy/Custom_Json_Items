@@ -1,0 +1,17 @@
+{
+  "ITEM": {
+    "file_name": "testFireball",
+    "name": "&5&lStaff of the Fireball",
+    "material": "STICK",
+    "model": 2,
+    "lore": [],
+    "attributes": {
+      "FIREBALL":{
+        "distance": 50,
+        "damage": 10,
+        "range": 5,
+        "cooldown": 60
+      }
+    }
+  }
+}

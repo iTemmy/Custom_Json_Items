@@ -1,0 +1,16 @@
+{
+  "ITEM": {
+    "file_name": "necromancerStaff",
+    "name": "&5&lStaff of the Necromancer",
+    "material": "STICK",
+    "model": 1,
+    "lore": [],
+    "attributes": {
+      "NECROMANCER":{
+        "entity": "ZOMBIE",
+        "distance": 4,
+        "cooldown": 60
+      }
+    }
+  }
+}

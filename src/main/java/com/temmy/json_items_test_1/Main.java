@@ -1,5 +1,7 @@
 package com.temmy.json_items_test_1;
 
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
@@ -9,13 +11,14 @@ import com.temmy.json_items_test_1.Parser.ItemParser;
 import com.temmy.json_items_test_1.command.*;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
-import com.temmy.json_items_test_1.util.FoodDetails;
-import com.temmy.json_items_test_1.util.Glow;
+import com.temmy.json_items_test_1.util.*;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,22 +29,50 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+
+//TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
+//TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
+//TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
+//TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
+//TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
+//TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
+
+
+//TODO: Working on changing the saving format to be sql so items will have to be made via in-game gui editor or
+// possibly have command to import .json files from the item folder for importing old items or creating items via json
+
 
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
     @SuppressWarnings("FieldMayBeFinal")
-    private static Map<String, ItemStack> customItems = new HashMap<>();
+    private static Map<String, ItemStack> customItems_OLD = new HashMap<>();
+    private static Map<String, CustomItem> db_customItems_OLDv2 = new HashMap<>();
+    private static Map<String, CustomItem> customItems = new HashMap<>();
     public static boolean debug;
     public static String customOreWorld;
     public static Boolean worldGuardEnabled = false;
     public static WorldGuard worldGuard = null;
     public static StateFlag attributesEnabledFlag;
+    public static Map<Player, UUID[]> allies = new HashMap<>();
+    public static Map<Player, Boolean> activeEditors;
+    @SuppressWarnings("ConstantConditions")
+    public static NamespacedKey glowKey;
+    public static Glow glow;
+    static DataSource dataSource;
+    Database database;
+    Connection conn;
 
     public static WorldGuard getWorldGuard(){
         return worldGuard;
@@ -80,26 +111,37 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         registerGlow();
+        loadDatabase();
+        try {
+            dataSource = initDataBase();
+            initDb();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
         new Thread(this::registerFoods).start();
         registerEvents(getServer());
         PluginFiles.init();
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         loadConfig();
+
         getLogger().info("Registering Custom Items.");
         for (File item : PluginFiles.getItemFiles())
-            registerItemRecipes(item);
+            registerItemJsonRecipes(item);
         for (String s : files3.keySet()) {
-            registerItemRecipes(files3.get(s));
+            registerItemJsonRecipes(files3.get(s));
             l.add(s);
         }
         for (String s : l)
             files3.remove(s);
-        getLogger().info(String.format("Registered %s items.", customItems.size()));
+        data.test();
+        //createCustomItemInDatabase_OLD();
+        getLogger().info(String.format("Registered %s items.", customItems_OLD.size()));
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
         getCommand("reloadores").setExecutor(new Reload());
         getCommand("debugging").setExecutor(new Debugging());
+        getCommand("triedump").setExecutor(new trieDump());
         ores();
     }
 
@@ -123,19 +165,40 @@ public final class Main extends JavaPlugin {
         server.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         server.getPluginManager().registerEvents(new EntityTargetLivingEntity(), this);
         server.getPluginManager().registerEvents(new EntityExplode(), this);
+        server.getPluginManager().registerEvents(new AsyncChatListener(), this);
     }
 
     public void onDisable(){
+        try {
+            if (conn != null && conn.isValid(1))
+                conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         saveLocalConfig();
     }
 
-    public static Map<String, ItemStack> getCustomItems(){return customItems;}
+    public static Map<String, ItemStack> getCustomItems_OLD(){return customItems_OLD;}
+
+    public static Map<String, CustomItem> getDb_customItems_OLDv2(){return db_customItems_OLDv2;}
+
+    public static Map<String, CustomItem> getCustomItems(){
+        return customItems;
+    }
 
     Map<String, File> files3 = new HashMap<>();
     List<String> l = new ArrayList<>();
 
+    private void registerMySQLRecipes(){
+
+    }
+
+    public static DataSource getDataSource() {
+        return dataSource;
+    }
+
     @SuppressWarnings({"unchecked", "rawtypes", "ConstantConditions"})
-    private void registerItemRecipes(File itemFile){
+    private void registerItemJsonRecipes(File itemFile){
         try {
             if (itemFile.isDirectory()) return;
             Object jsonObject = new JSONParser().parse(new FileReader(itemFile));
@@ -146,9 +209,8 @@ public final class Main extends JavaPlugin {
 
             Map<String, String> ingredients = (Map) itemSection.get("ingredients");
             JSONArray recipe = (JSONArray) itemSection.get("recipe");
-
-            String fileName = ((String) itemSection.get("file_name")).trim().replaceAll("\\s", "_");
-            if (customItems.containsKey(fileName.toLowerCase())) {
+            String fileName = itemFile.getName().replaceAll(".json$", "").replaceAll("\\s", "_");
+            if (customItems_OLD.containsKey(fileName.toLowerCase())) {
                 return;
             }
 
@@ -157,12 +219,10 @@ public final class Main extends JavaPlugin {
                 if (requires != null) {
                     String[] require = requires.split(",");
                     for (String req : require) {
-
-
                         for (File file : PluginFiles.getItemFiles())
                             if (req.equalsIgnoreCase(file.getName().trim().replace(".json", "")))
-                                registerItemRecipes(file);
-                        if (!(customItems.containsKey(req))) {
+                                registerItemJsonRecipes(file);
+                        if (!(customItems_OLD.containsKey(req))) {
                             if (!files3.containsValue(itemFile))
                                 files3.put(fileName, itemFile);
                         }
@@ -187,8 +247,8 @@ public final class Main extends JavaPlugin {
                         shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key).toUpperCase()));
                     else if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), ingredients.get(key))) != null)
                         shapedRecipe.setIngredient(key.charAt(0), Bukkit.getRecipe(new NamespacedKey(getPlugin(), ingredients.get(key))).getResult());
-                    else if (customItems.containsKey(ingredients.get(key).toLowerCase())){
-                        shapedRecipe.setIngredient(key.charAt(0), customItems.get(ingredients.get(key).toLowerCase()));
+                    else if (customItems_OLD.containsKey(ingredients.get(key).toLowerCase())){
+                        shapedRecipe.setIngredient(key.charAt(0), customItems_OLD.get(ingredients.get(key).toLowerCase()));
                     }
                 }
                 if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), fileName)) == null) {
@@ -197,7 +257,7 @@ public final class Main extends JavaPlugin {
                     Bukkit.addRecipe(shapedRecipe);
                 }
             }
-            customItems.put(fileName.toLowerCase(), item);
+            customItems_OLD.put(fileName.toLowerCase(), item);
 
         }catch (IOException | ParseException | IllegalArgumentException | NullPointerException e){
             if (debug) getLogger().warning("Error: "+itemFile.getName());
@@ -206,6 +266,8 @@ public final class Main extends JavaPlugin {
     }
 
     public void registerGlow(){
+        glowKey = new NamespacedKey(plugin, "glow");
+        glow = new Glow(glowKey);
         try {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
@@ -215,10 +277,7 @@ public final class Main extends JavaPlugin {
                 e.printStackTrace();
         }
         try {
-            NamespacedKey key = new NamespacedKey(Main.getPlugin(), getDescription().getName());
-
-            Glow glow = new Glow(key);
-            if (Enchantment.getByKey(key) == null)
+            if (Enchantment.getByKey(glowKey) == null)
                 Enchantment.registerEnchantment(glow);
         } catch (Exception e) {
             if (debug)
@@ -228,7 +287,7 @@ public final class Main extends JavaPlugin {
 
     static Map<String, Integer> chances = new HashMap<>();
 
-    public static void loadConfig(){
+    public static void loadConfig() {
         customOreWorld = plugin.getConfig().getString("CustomOresWorld");
         chances.put(Material.COAL_ORE.name(), plugin.getConfig().getInt(Material.COAL_ORE.name()));
         chances.put(Material.DIAMOND_ORE.name(), plugin.getConfig().getInt(Material.DIAMOND_ORE.name()));
@@ -242,10 +301,124 @@ public final class Main extends JavaPlugin {
         debug = plugin.getConfig().getBoolean("IncreasedDebugging");
     }
 
+    void loadDatabase(){
+        database = new Database(plugin.getConfig().getString("database.host"),
+                plugin.getConfig().getInt("database.port"), plugin.getConfig().getString("database.database"),
+                plugin.getConfig().getString("database.user"), plugin.getConfig().getString("database.password"));
+        getLogger().info(database.host);
+        getLogger().info(String.valueOf(database.port));
+        getLogger().info(database.databaseName);
+        getLogger().info(database.user);
+        getLogger().info(database.password);
+    }
+
+    public DataSource initDataBase() throws SQLException {
+        MysqlDataSource dataSource = new MysqlConnectionPoolDataSource();
+        dataSource.setServerName(database.host);
+        dataSource.setPortNumber(database.port);
+        dataSource.setDatabaseName(database.databaseName);
+        dataSource.setUser(database.user);
+        dataSource.setPassword(database.password);
+        testDataSource(dataSource);
+        return dataSource;
+    }
+
+    private void testDataSource(DataSource dataSource) {
+        try {
+            if (conn != null && conn.isValid(1)) {
+                return;
+            }else if (conn == null || !conn.isValid(1)) {
+                conn = dataSource.getConnection();
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn = dataSource.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return;
+    }
+
+    private boolean createCustomItemInDatabase_OLD(){
+        try {
+            testDataSource(dataSource);
+            for (String key : db_customItems_OLDv2.keySet()) {
+                PreparedStatement stmt = conn.prepareStatement(
+                        "INSERT INTO CustomItems(UniqueName, ItemName, Material, Model, Damage, DamageSlot, Health, HealthSlot, " +
+                                "AttackSpeed, AttackSpeedSlot, Enchants, Unbreakable, Lore, Attributes, Requires, Ingredients, " +
+                                "Recipe) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                );
+                test(stmt, db_customItems_OLDv2.get(key));
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private PreparedStatement test(PreparedStatement stmt, CustomItem item){
+        try {
+            stmt.setObject(1, item.getUniqueName());
+            if (item.getItemName() != null)stmt.setObject(2, LegacyComponentSerializer.legacy('&').serialize(item.getItemName())); else stmt.setObject(2, null);
+            stmt.setObject(3, item.getMaterial().name());
+            if (item.getModel() != null)stmt.setObject(4, item.getModel()); else stmt.setObject(4, null);
+            if (item.getDamage() != null)stmt.setObject(5, item.getDamage()); else stmt.setObject(5, null);
+            if (item.getDamageSlot() != null)stmt.setObject(6, item.getDamageSlot().name()); else stmt.setObject(6, null);
+            if (item.getHealth() != null)stmt.setObject(7, item.getHealth()); else stmt.setObject(7, null);
+            if (item.getHealthSlot() != null)stmt.setObject(8, item.getHealthSlot().name()); else stmt.setObject(8, null);
+            if (item.getAttackSpeed() != null)stmt.setObject(9, item.getAttackSpeed()); else stmt.setObject(9, null);
+            if (item.getAttackSpeedSlot() != null)stmt.setObject(10, item.getAttackSpeedSlot().name()); else stmt.setObject(10, null);
+            if (item.getStringEnchants() != null)stmt.setObject(11, item.getStringEnchants()); else stmt.setObject(11, null);
+            if (item.isUnbreakable() != null)stmt.setObject(12, item.isUnbreakable()); else stmt.setObject(12, null);
+            if (item.getStringLore() != null)stmt.setObject(13, item.getStringLore()); else stmt.setObject(13, null);
+            if (item.getAttributes() != null)stmt.setObject(14, item.getAttributes()); else stmt.setObject(14, null);
+            if (item.getRequires() != null)stmt.setObject(15, item.getRequires()); else stmt.setObject(15, null);
+            if (item.getStringIngredients() != null)stmt.setObject(16, item.getStringIngredients()); else stmt.setObject(16, null);
+            if (item.getStringRecipe() != null)stmt.setObject(17, item.getStringRecipe()); else stmt.setObject(17, null);
+            stmt.execute();
+        } catch (SQLException e) {
+            getLogger().log(Level.SEVERE, "Unable to prepare SQL statement to save Custom item to database", e);
+        }
+        return stmt;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void initDb() throws IOException {
+        String setup;
+        try (InputStream in = getClassLoader().getResourceAsStream("dbsetup.sql")){
+            setup = new String(in.readAllBytes());
+        } catch (IOException e) {
+            getLogger().log(Level.SEVERE, "Could not read db setup file.",e);
+            throw e;
+        }
+
+        String[] queries = setup.split(";");
+        for (String query : queries){
+            if (query.isBlank()) continue;
+            try {
+                testDataSource(dataSource);
+                if (conn == null)
+                    throw new SQLException("Unable to connect to database");
+                PreparedStatement stmt = conn.prepareStatement(query);
+                stmt.execute();
+            } catch (SQLException e) {
+                getLogger().severe(query);
+                e.printStackTrace();
+            }
+        }
+        getLogger().info("Database setup complete.");
+    }
+
     private static void saveLocalConfig(){
         for (String s : chances.keySet()) {
             plugin.getConfig().set(s, chances.get(s));
         }
+        plugin.getConfig().set("IncreasedDebugging", debug);
     }
 
     public static Map<String, Integer> getChances(){
@@ -278,7 +451,7 @@ public final class Main extends JavaPlugin {
 
     static Map<Material, FoodDetails> foodMap = new HashMap<>();
 
-    public void registerFoods(){
+    void registerFoods(){
         Map<PotionEffect, Boolean> map = new HashMap<>();
         foodMap.put(Material.APPLE, new FoodDetails(4, 2.4f));
         foodMap.put(Material.BAKED_POTATO, new FoodDetails(5, 6));

@@ -13,7 +13,7 @@ public class CraftItemListener implements Listener {
     @EventHandler
     public void onCraftItem(CraftItemEvent e){
         for (ItemStack item : e.getInventory().getMatrix()) {
-            if (item == null) continue;
+            if (item == null || !item.hasItemMeta()) continue;
             Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(item.getItemMeta().getPersistentDataContainer());
             for (String attribute : attributeMap.keySet())
                 Attribute.invoke(attribute, e, attributeMap.get(attribute));
