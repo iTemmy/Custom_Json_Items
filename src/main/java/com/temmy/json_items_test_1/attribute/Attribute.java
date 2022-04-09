@@ -11,7 +11,7 @@ public final class Attribute {
     private static final Map<String, AttributeMethod> attributeMethods = new HashMap<>();
 
     public static List<String> getAttributeMethods(){
-        return new ArrayList<String>(Arrays.asList("AUTO_SMELT","ARMOREFFECTS","EFFECT","SPEEDFURNACE","PLACE","CRAFT",
+        return new ArrayList<>(Arrays.asList("AUTO_SMELT","ARMOREFFECTS","EFFECT","SPEEDFURNACE","PLACE","CRAFT",
                 "FULLSETARMOREFFECTS","ARMORATTRIBUTES","FULLSETARMORATTRIBUTES","ARROWATTRIBUTE","HELDITEM","GREEDSIN",
                 "PRIDESIN","SLOTHISIN","LUSTSIN","GLUTTONYSIN","AUTOFEED","REACH","NECROMANCER","FIREBALL","HOE"));
 
@@ -42,6 +42,7 @@ public final class Attribute {
         attributeMethods.put("NECROMANCER", MagicNecromancer::trigger);
         attributeMethods.put("FIREBALL", MagicFireball::trigger);
         attributeMethods.put("HOE", Hoe::trigger);
+        attributeMethods.put("MULTIPAGECHESTS", MultiPageChests::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){

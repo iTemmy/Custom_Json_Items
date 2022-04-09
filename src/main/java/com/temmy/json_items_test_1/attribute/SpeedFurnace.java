@@ -3,8 +3,8 @@ package com.temmy.json_items_test_1.attribute;
 import com.temmy.json_items_test_1.util.Convert;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Furnace;
+import org.bukkit.block.TileState;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class SpeedFurnace {
@@ -32,10 +33,9 @@ public class SpeedFurnace {
             for (ItemStack item : event.getBlock().getDrops(event.getPlayer().getInventory().getItemInMainHand())){
                 if (event.isDropItems())
                     event.setDropItems(false);
-                if (event.getBlock().getType() == Material.FURNACE) {
+                if (event.getBlock().getState() instanceof TileState state) {
                     ItemMeta meta = item.getItemMeta();
-                    Furnace furnace = (Furnace) event.getBlock().getState();
-                    meta.getPersistentDataContainer().set(Attribute.namespacedKey, PersistentDataType.STRING, furnace.getPersistentDataContainer().get(Attribute.namespacedKey, PersistentDataType.STRING));
+                    meta.getPersistentDataContainer().set(Attribute.namespacedKey, PersistentDataType.STRING, Objects.requireNonNull(state.getPersistentDataContainer().get(Attribute.namespacedKey, PersistentDataType.STRING)));
                     item.setItemMeta(meta);
                     event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), item);
                 }
@@ -46,12 +46,11 @@ public class SpeedFurnace {
 
     private static void blockPlace(Event e, String[] args){
         BlockPlaceEvent event = (BlockPlaceEvent) e;
-        if (event.getBlock().getType() != Material.FURNACE) return;
+        if (!(event.getBlock().getState() instanceof Furnace furnace)) return;
         for (String s : args) {
             if (s.contains("Multiplier")){
                 String[] multiplier = s.split(":");
                 multiplier[1] = multiplier[1].replace("}", "");
-                Furnace furnace = (Furnace) event.getBlock().getState();
                 furnace.setCookSpeedMultiplier(Integer.parseInt(multiplier[1]));
                 furnace.update();
                 furnace.getPersistentDataContainer().set(Attribute.namespacedKey, PersistentDataType.STRING, Convert.mapToString(ItemUtils.getItemAttributeMap(event.getItemInHand().getItemMeta().getPersistentDataContainer())));

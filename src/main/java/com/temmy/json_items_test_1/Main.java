@@ -13,10 +13,7 @@ import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
 import com.temmy.json_items_test_1.util.*;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Server;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -53,10 +50,10 @@ import java.util.logging.Level;
 // possibly have command to import .json files from the item folder for importing old items or creating items via json
 
 
+@SuppressWarnings("FieldMayBeFinal")
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
-    @SuppressWarnings("FieldMayBeFinal")
     private static Map<String, ItemStack> customItems_OLD = new HashMap<>();
     private static Map<String, CustomItem> db_customItems_OLDv2 = new HashMap<>();
     private static Map<String, CustomItem> customItems = new HashMap<>();
@@ -67,9 +64,9 @@ public final class Main extends JavaPlugin {
     public static StateFlag attributesEnabledFlag;
     public static Map<Player, UUID[]> allies = new HashMap<>();
     public static Map<Player, Boolean> activeEditors;
-    @SuppressWarnings("ConstantConditions")
     public static NamespacedKey glowKey;
     public static Glow glow;
+    public static Map<Location, ActiveInventory> newActiveInventories = new HashMap<>();
     static DataSource dataSource;
     Database database;
     Connection conn;
@@ -111,13 +108,13 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         registerGlow();
-        loadDatabase();
+        /*loadDatabase();
         try {
             dataSource = initDataBase();
             initDb();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-        }
+        }*/
         new Thread(this::registerFoods).start();
         registerEvents(getServer());
         PluginFiles.init();
@@ -134,7 +131,7 @@ public final class Main extends JavaPlugin {
         }
         for (String s : l)
             files3.remove(s);
-        data.test();
+        //data.test();
         //createCustomItemInDatabase_OLD();
         getLogger().info(String.format("Registered %s items.", customItems_OLD.size()));
         getCommand("giveitem").setExecutor(new GiveItem());
@@ -166,6 +163,9 @@ public final class Main extends JavaPlugin {
         server.getPluginManager().registerEvents(new EntityTargetLivingEntity(), this);
         server.getPluginManager().registerEvents(new EntityExplode(), this);
         server.getPluginManager().registerEvents(new AsyncChatListener(), this);
+        server.getPluginManager().registerEvents(new InventoryCloseListener(), this);
+        server.getPluginManager().registerEvents(new InventoryOpenListener(), this);
+        server.getPluginManager().registerEvents(new InventoryMoveItemListener(), this);
     }
 
     public void onDisable(){
@@ -447,6 +447,7 @@ public final class Main extends JavaPlugin {
         ores.put(Material.NETHER_QUARTZ_ORE.name(), zincKey);
         ores.put(Material.COPPER_ORE.name(), kaylaxKey);
     }
+
     public static Map<String, NamespacedKey> getOres(){return ores;}
 
     static Map<Material, FoodDetails> foodMap = new HashMap<>();
