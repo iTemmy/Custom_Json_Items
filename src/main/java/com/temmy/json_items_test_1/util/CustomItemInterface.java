@@ -1,7 +1,7 @@
 package com.temmy.json_items_test_1.util;
 
 
-public interface CustomItem {
+public interface CustomItemInterface {
   
   String name;
   Material material;
