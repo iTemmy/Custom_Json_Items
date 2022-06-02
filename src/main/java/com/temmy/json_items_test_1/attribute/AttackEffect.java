@@ -21,7 +21,7 @@ public class AttackEffect {
         if (!(e instanceof EntityDamageByEntityEvent event)) return;
         if (!(event.getDamager() instanceof LivingEntity damager)) return;
         if (Main.worldGuardEnabled)
-            worldGuard(event);
+            if (worldGuard(event)) return;
         LivingEntity damagee = (LivingEntity) event.getEntity();
 
         for (String s : args){
@@ -49,21 +49,23 @@ public class AttackEffect {
         }
     }
 
-    private static void worldGuard(EntityDamageByEntityEvent e){
+    private static boolean worldGuard(EntityDamageByEntityEvent e){
         WorldGuard worldGuard = Main.getWorldGuard();
         RegionContainer container = worldGuard.getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
-        if (set == null) return;
+        if (set == null) return false;
         if (!set.testState(null, Main.attributesEnabledFlag)) {
             e.setCancelled(true);
-            return;
+            return true;
         }
         set = query.getApplicableRegions(BukkitAdapter.adapt(e.getDamager().getLocation()));
-        if (set == null) return;
+        if (set == null) return false;
         if (!set.testState(null, Main.attributesEnabledFlag)) {
             e.setCancelled(true);
+            return true;
         }
+        return false;
     }
 
 }

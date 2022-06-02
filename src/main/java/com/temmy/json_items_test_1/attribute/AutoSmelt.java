@@ -39,17 +39,7 @@ public final class AutoSmelt {
         boolean dropped = false;
         for (Item item : event.getItems()){
             ItemStack droppedItem = item.getItemStack();
-            Iterator<Recipe> recipes = Bukkit.recipeIterator();
-            while (recipes.hasNext()) {
-                Recipe recipe = recipes.next();
-                if (!(recipe instanceof FurnaceRecipe furnaceRecipe)) continue;
-                if (furnaceRecipe.getInput().equals(droppedItem)) {
-                    droppedItem = furnaceRecipe.getResult();
 
-                    break;
-                }
-            }
-            //world.dropItem(item.getLocation(), droppedItem);
         }
         log.info(String.format("dropped: --> %s", dropped));
         //if (!dropped) return;
@@ -58,11 +48,8 @@ public final class AutoSmelt {
         boolean blacklisted = false;
         String blockName = block.name().toUpperCase();
         for (String s : args) {
-            log.info(String.format("s: --> %s",s));
             boolean blackList = s.charAt(0) == '!';
             boolean match = blockName.matches(String.format("(.*)%s(.*)$", s));
-            log.info(String.format("match: --> %s", match));
-            log.info(String.format("blacklist: --> %s", blackList));
             if (!blackList && match)
                 whitelisted = true;
             else if (blackList && match)

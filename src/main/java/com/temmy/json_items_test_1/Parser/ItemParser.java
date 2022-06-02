@@ -1,12 +1,15 @@
 package com.temmy.json_items_test_1.Parser;
 
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.util.Convert;
 import com.temmy.json_items_test_1.util.CustomDataTypes;
-import com.temmy.json_items_test_1.util.CustomItem;
+import com.temmy.json_items_test_1.util.customItems.CustomItem;
 import com.temmy.json_items_test_1.util.Glow;
+import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -41,7 +44,7 @@ public final class ItemParser {
     static final NamespacedKey vanillaAttributeContainerKey = new NamespacedKey(Main.getPlugin(), "vanillaAttributesContainer");
     static int length = 0;
 
-    @SuppressWarnings({"ConstantConditions", "unchecked", "ToArrayCallWithZeroLengthArrayArgument"})
+    /*@SuppressWarnings({"ConstantConditions", "unchecked", "ToArrayCallWithZeroLengthArrayArgument"})
     public static @Nullable ItemStack parseItem(@NotNull String item){
         ItemStack itemStack = null;
         String filename = item.toLowerCase();
@@ -54,8 +57,10 @@ public final class ItemParser {
         if (inputStream == null) {log.warning("Invalid input stream for file "+item);return null;}
 
         try {
+            Gson gson = new Gson();
             Object jsonObject = new JSONParser().parse(new InputStreamReader(inputStream));
             JSONObject itemJson = (JSONObject) jsonObject;
+            CustomItem test = gson.fromJson(itemJson.toJSONString(), CustomItem.class);
             Map<String, ?> itemSection = (Map<String, ?>) itemJson.get("ITEM");
             itemStack = new ItemStack(Material.valueOf((String)itemSection.get("material")));
             Map<String, JSONObject> attributesJson = (Map<String, JSONObject>) itemSection.get("attributes");
@@ -107,31 +112,37 @@ public final class ItemParser {
         }
 
         return itemStack;
-    }
+    }*/
 
     private static boolean getUnbreakable(@NotNull Map<String, ?> itemSection){
         if (itemSection.get("unbreakable") == null) return false;
         return ((boolean) itemSection.get("unbreakable"));
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+
     private static @NotNull Map<Enchantment, Integer> getEnchants(@NotNull Map<String, ?> itemSection){
-        if (itemSection.get("enchants") == null) return new HashMap<>();
         Map<Enchantment, Integer> finalEnchants = new HashMap<>();
-        JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
-        if (JSONEnchants == null) return new HashMap<>();
-        List<String> enchantsList = new ArrayList<>(JSONEnchants);
-        for (String s : enchantsList){
-            if (s.equals(null)||s.equals(""))continue;
-            String[] enchantsWithLevel = s.split(",");
-            for (String enchant : enchantsWithLevel){
-                String[] enchants = enchant.split(";");
-                if (enchants[0].equalsIgnoreCase("glow")){
-                    finalEnchants.put(glow, 1);
-                }else {
-                    finalEnchants.put(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]));
+        try {
+            if (itemSection.get("enchants") == null) return new HashMap<>();
+            JSONArray JSONEnchants = (JSONArray) itemSection.get("enchants");
+            if (JSONEnchants == null) return new HashMap<>();
+            List<String> enchantsList = new ArrayList<>(JSONEnchants);
+            for (int i = 0; i< enchantsList.size(); i++) {
+                String s = String.valueOf(enchantsList.get(i));
+                if (s.equals(null) || s.equals("")) continue;
+                s = s.replaceAll("[\\{\"\\}]", "");
+                String[] enchantsWithLevel = s.split(",");
+                for (String enchant : enchantsWithLevel) {
+                    String[] enchants = enchant.split(";");
+                    if (enchants[0].equalsIgnoreCase("glow")) {
+                        finalEnchants.put(glow, 1);
+                    } else {
+                        finalEnchants.put(Enchantment.getByKey(NamespacedKey.minecraft(enchants[0].toLowerCase())), Integer.parseInt(enchants[1]));
+                    }
                 }
             }
+        } catch (NumberFormatException | ClassCastException e) {
+            e.printStackTrace();
         }
         return finalEnchants;
     }
@@ -151,8 +162,8 @@ public final class ItemParser {
             return loreList;
     }
 
-    private static @NotNull Map<org.bukkit.attribute.Attribute, AttributeModifier> getAttributes(@NotNull Map<String, ?> itemSection){
-        Map<org.bukkit.attribute.Attribute, AttributeModifier> attributes = new HashMap<>();
+    private static @NotNull LinkedHashMultimap<org.bukkit.attribute.Attribute, AttributeModifier> getAttributes(@NotNull Map<String, ?> itemSection){
+        LinkedHashMultimap<org.bukkit.attribute.Attribute, AttributeModifier> attributes = LinkedHashMultimap.create();
         int health = 0;
         String healthSlot = null;
         try {
@@ -200,12 +211,64 @@ public final class ItemParser {
         return Integer.parseInt(itemSection.get("model").toString());
     }
 
+    public static ItemStack buildCustomItem(@NotNull String item){
+        return parseItem(item).build().getItemStack();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static @Nullable NewCustomItem parseItem(@NotNull String item){
+        log.info(String.format("Now registering %s", item));
+        NewCustomItem customItem = null;
+        String fileName = item.toLowerCase();
+        InputStream inputStream = null;
+        Item itemClass = new Item();
+        try {
+            inputStream = new FileInputStream(Main.getPlugin().getDataFolder()+String.format("/item/%s.json", item));
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        if (inputStream == null) {
+            log.warning("Invalid input stream for file "+item);
+            return null;
+        }
+        try {
+            Object jsonObject = new JSONParser().parse(new InputStreamReader(inputStream));
+            JSONObject itemJson = (JSONObject) jsonObject;
+            Map<String, ?> itemSection = (Map<String, ?>) itemJson.get("ITEM");
+            itemClass.create(item);
+            customItem = itemClass.getByName(item);
+            customItem.setMaterial(Material.valueOf((String) itemSection.get("material")));
+            Map<String, JSONObject> attributesJson = (Map<String, JSONObject>) itemSection.get("attributes");
+            Map<String, String[]> attributes = new HashMap<>();
+            if (attributesJson != null){
+                for (String key : attributesJson.keySet()){
+                    List<String> attributeList = new ArrayList<>(Collections.singleton(String.valueOf(attributesJson.get(key))));
+                    attributes.put(key, attributeList.toArray(new String[attributeList.size()]));
+                }
+            }
+            Map<Enchantment, Integer> enchants = getEnchants(itemSection);
+            customItem.setEnchants(enchants);
+            customItem.setLore(getLore(itemSection));
+            customItem.setUnbreakable(getUnbreakable(itemSection));
+            customItem.setCustomModelData(getCustomModelData(itemSection));
+            LinkedHashMultimap<org.bukkit.attribute.Attribute, AttributeModifier> attributeMap = getAttributes(itemSection);
+            customItem.setVanillaAttributes(attributeMap);
+            customItem.setCustomAttributes(Convert.mapToString(attributes));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return customItem;
+    }
+
+    /*
     @SuppressWarnings({"ConstantConditions", "unchecked", "rawtypes"})
     private static void convertFromJsonToCustomItem(ItemStack item, Map<String, ?> itemSection, String filename) {
         Integer model = null;
         if (item.hasItemMeta() && item.getItemMeta().hasCustomModelData())
             model = item.getItemMeta().getCustomModelData();
-        Map<org.bukkit.attribute.Attribute, AttributeModifier> vanillaAttributes = getAttributes(itemSection);
+        LinkedHashMultimap<org.bukkit.attribute.Attribute, AttributeModifier> vanillaAttributes = getAttributes(itemSection);
         Double damage = null;
         EquipmentSlot dmgSlot = null;
         if (vanillaAttributes.containsKey(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE)){
@@ -264,4 +327,5 @@ public final class ItemParser {
 
         Main.getDb_customItems_OLDv2().put(customItem.getUniqueName(), customItem);
     }
+     */
 }

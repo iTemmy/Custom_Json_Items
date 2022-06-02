@@ -45,12 +45,15 @@ public class MultiPageChests {
     }
 
     static final Logger log = Main.getPlugin().getLogger();
+    /**NamepsacedKey used to hold PersistentDataContainer with page inventories.*/
     public static final NamespacedKey pageContainerKey = new NamespacedKey(Main.getPlugin(), "pages_container");
+    /**NamespacedKey used to hold PersistentDataContainer with location data on page item.*/
     public static final NamespacedKey locationKey = new NamespacedKey(Main.getPlugin(), "location");
     public static final NamespacedKey worldKey = new NamespacedKey(Main.getPlugin(), "world");
     public static final NamespacedKey xKey = new NamespacedKey(Main.getPlugin(), "x");
     public static final NamespacedKey yKey = new NamespacedKey(Main.getPlugin(), "y");
     public static final NamespacedKey zKey = new NamespacedKey(Main.getPlugin(), "z");
+    /** NamespacedKey used to hold page number on page item in page Inventory.*/
     public static final NamespacedKey pageNumberKey = new NamespacedKey(Main.getPlugin(), "page");
 
     /**
@@ -109,63 +112,69 @@ public class MultiPageChests {
         if (!(location.getBlock().getState() instanceof TileState tilestate)) return;
         List<Integer> range = IntStream.rangeClosed(inv.getSize() - 9, inv.getSize()).boxed().toList();
         Integer page = pageItem.getItemMeta().getPersistentDataContainer().get(pageNumberKey, PersistentDataType.INTEGER);
-        if (range.contains(event.getSlot()))
+        if (range.contains(event.getSlot())) {
             event.setCancelled(true);
-            if (event.getSlot() == inv.getSize()-1){
+            /*
+              this is the section where the bottom row controls are processed e.g. changing to the next or previous page.
+             */
+            if (event.getSlot() == inv.getSize() - 1) {
                 PersistentDataContainer container = tilestate.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER);
                 tilestate.getPersistentDataContainer().set(
                         pageContainerKey, PersistentDataType.TAG_CONTAINER,
                         savePage(container, inv, page));
                 Player player = (Player) event.getWhoClicked();
-                if (tilestate.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER).has(new NamespacedKey(Main.getPlugin(), String.format("page_%d", page+1)), CustomDataTypes.Inventory)) {
+                if (tilestate.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER).has(new NamespacedKey(Main.getPlugin(), String.format("page_%d", page + 1)), CustomDataTypes.Inventory)) {
                     Inventory newInventory = recreateInventoryAndOpen(tilestate.getPersistentDataContainer().get(
                                     pageContainerKey, PersistentDataType.TAG_CONTAINER).
                             get(new NamespacedKey(Main.getPlugin(), String.format("page_%d",
-                                    page + 1)), CustomDataTypes.Inventory), player);
+                                    page + 1)), CustomDataTypes.Inventory));
 
                     page++;
 
-                    if (!Main.newActiveInventories.containsKey(location)){
+                    if (!Main.newActiveInventories.containsKey(location)) {
                         ActiveInventory activeInv = new ActiveInventory(location, (Player) event.getWhoClicked()).addInventory(newInventory, page);
                         Main.newActiveInventories.put(location, activeInv);
-                    }else{
+                    } else {
                         if (Main.newActiveInventories.get(location).getPages().containsKey(page)) {
                             Main.newActiveInventories.get(location).addViewer(player);
                             event.getWhoClicked().openInventory(Main.newActiveInventories.get(location).getPages().get(page));
-                        }else {
-                            Main.newActiveInventories.get(location).getPages().put(page, recreateInventoryAndOpen(newInventory, (Player) event.getWhoClicked()));
+                        } else {
+                            player.openInventory(newInventory);
+                            Main.newActiveInventories.get(location).getPages().put(page, newInventory);
                             Main.newActiveInventories.get(location).addViewer(player);
                         }
                     }
                 }
-            }else if (event.getSlot() == inv.getSize()-9){
+            } else if (event.getSlot() == inv.getSize() - 9) {
                 PersistentDataContainer container = tilestate.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER);
                 tilestate.getPersistentDataContainer().set(
                         pageContainerKey, PersistentDataType.TAG_CONTAINER,
                         savePage(container, inv, page));
                 Player player = (Player) event.getWhoClicked();
-                if (tilestate.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER).has(new NamespacedKey(Main.getPlugin(), String.format("page_%d", page-1)), CustomDataTypes.Inventory)) {
+                if (tilestate.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER).has(new NamespacedKey(Main.getPlugin(), String.format("page_%d", page - 1)), CustomDataTypes.Inventory)) {
                     Inventory newInventory = recreateInventoryAndOpen(tilestate.getPersistentDataContainer().get(
                                     pageContainerKey, PersistentDataType.TAG_CONTAINER).
                             get(new NamespacedKey(Main.getPlugin(), String.format("page_%d",
-                                    page - 1)), CustomDataTypes.Inventory), player);
+                                    page - 1)), CustomDataTypes.Inventory));
 
                     page--;
 
-                    if (!Main.newActiveInventories.containsKey(location)){
+                    if (!Main.newActiveInventories.containsKey(location)) {
                         ActiveInventory activeInv = new ActiveInventory(location, (Player) event.getWhoClicked()).addInventory(newInventory, page);
                         Main.newActiveInventories.put(location, activeInv);
-                    }else{
+                    } else {
                         if (Main.newActiveInventories.get(location).getPages().containsKey(page)) {
                             event.getWhoClicked().openInventory(Main.newActiveInventories.get(location).getPages().get(page));
                             Main.newActiveInventories.get(location).addViewer(player);
-                        }else {
-                            Main.newActiveInventories.get(location).getPages().put(page, recreateInventoryAndOpen(newInventory, (Player) event.getWhoClicked()));
+                        } else {
+                            player.openInventory(newInventory);
+                            Main.newActiveInventories.get(location).getPages().put(page, newInventory);
                             Main.newActiveInventories.get(location).addViewer(player);
                         }
                     }
                 }
             }
+        }
     }
 
     /**
@@ -180,18 +189,17 @@ public class MultiPageChests {
     /**
      * Used for changing the name of the inventory since the name isn't saved as part of the inventory but as part of the InventoryView.
      * @param inv Inventory to be recreated.
-     * @param player Player who is opening the inventory.
      * @return will return the new inventory.
      */
     @SuppressWarnings("ConstantConditions")
-    private static Inventory recreateInventoryAndOpen(Inventory inv, Player player){
+    private static Inventory recreateInventoryAndOpen(Inventory inv){
         try {
             Component comp = Component.text(String.format("Page %d", inv.getItem(inv.getSize()-5).getItemMeta()
                 .getPersistentDataContainer().get(pageNumberKey, PersistentDataType.INTEGER)+1));
             Location loc = getLocation(inv.getItem(inv.getSize()-5).getItemMeta().getPersistentDataContainer().get(locationKey, PersistentDataType.TAG_CONTAINER));
             Inventory tt = Bukkit.createInventory((InventoryHolder) loc.getBlock().getState(), inv.getSize(), comp);
             tt.setContents(inv.getContents());
-            player.openInventory(tt);
+            //player.openInventory(tt);
             return tt;
         } catch (InvalidLocationException | NullPointerException e) {
             e.printStackTrace();
@@ -271,15 +279,15 @@ public class MultiPageChests {
             }
             Location location = getLocation(inv.getItem(inv.getSize() - 5).getItemMeta().getPersistentDataContainer().get(locationKey, PersistentDataType.TAG_CONTAINER));
             int page = inv.getItem(inv.getSize()-5).getItemMeta().getPersistentDataContainer().get(pageNumberKey, PersistentDataType.INTEGER);
-
+            Inventory newInv = recreateInventoryAndOpen(inv);
             if (!Main.newActiveInventories.containsKey(location)){
-                ActiveInventory activeInv = new ActiveInventory(location, (Player) event.getPlayer()).addInventory(recreateInventoryAndOpen(inv, (Player) event.getPlayer()), page);
-                Main.newActiveInventories.put(location, activeInv);
+                Main.newActiveInventories.put(location, new ActiveInventory(location, (Player) event.getPlayer()).addInventory(newInv, page));
+                event.getPlayer().openInventory(newInv);
             }else{
                 if (Main.newActiveInventories.get(location).getPages().containsKey(page))
                     event.getPlayer().openInventory(Main.newActiveInventories.get(location).getPages().get(page));
                 else
-                    Main.newActiveInventories.get(location).getPages().put(page, recreateInventoryAndOpen(inv, (Player) event.getPlayer()));
+                    Main.newActiveInventories.get(location).getPages().put(page, newInv);
             }
         } catch (InvalidLocationException e) {
             e.printStackTrace();
@@ -362,27 +370,27 @@ public class MultiPageChests {
         PersistentDataContainer container = state.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER);
         event.setCancelled(true);
         assert container != null;
-        for (NamespacedKey key : container.getKeys()){
+        for (int i =0; i <= container.getKeys().size(); i++){
+            NamespacedKey key = new NamespacedKey(Main.getPlugin(), String.format("page_%s", i));
             int page = Integer.parseInt(key.getKey().replaceAll("page_", "").trim());
             if (!container.has(key, CustomDataTypes.Inventory)) continue;
             Inventory inv = container.get(key, CustomDataTypes.Inventory);
             assert inv != null;
+            if (isEmpty(inv)) continue;
             try {
-                ActiveInventory activeInv = inventoryAlreadyOpen(
-                        Objects.requireNonNull(getLocation(Objects.requireNonNull(
-                                Objects.requireNonNull(inv.getItem(inv.getSize() - 5)).
-                                        getPersistentDataContainer().get(locationKey, PersistentDataType.TAG_CONTAINER)))));
+                ActiveInventory activeInv = inventoryAlreadyOpen(getLocation(inv.getItem(inv.getSize() - 5)
+                        .getPersistentDataContainer().get(locationKey, PersistentDataType.TAG_CONTAINER)));
                 if (activeInv != null) {
-                    for (int i : activeInv.getPages().keySet())
-                        activeInv.getPages().get(i).close();
+                    for (int j : activeInv.getPages().keySet())
+                        activeInv.getPages().get(j).close();
 
                     activeInv.getViewers().clear();
+                    Main.newActiveInventories.remove(getLocation(inv.getItem(inv.getSize()-5).getPersistentDataContainer().get(locationKey, PersistentDataType.TAG_CONTAINER)));
                 }
             } catch (InvalidLocationException e) {
                 e.printStackTrace();
             }
-            if (isEmpty(inv)) continue;
-            inv = dropItems(inv, state.getLocation());
+            dropItems(inv, state.getLocation());
             container.set(key, CustomDataTypes.Inventory, inv);
             state.getPersistentDataContainer().set(pageContainerKey, PersistentDataType.TAG_CONTAINER, container);
             container = state.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER);
@@ -402,6 +410,7 @@ public class MultiPageChests {
             item.setItemMeta(meta);
             event.getBlock().getLocation().getWorld().dropItem(event.getBlock().getLocation(), item);
         }
+        Main.newActiveInventories.remove(event.getBlock().getLocation());
     }
 
     /**
@@ -409,15 +418,14 @@ public class MultiPageChests {
      * (The items used for changing page or page item).
      * @param inv Inventory to drop items from.
      * @param loc Location of the block to drop items from.
-     * @return will return the empty inventory to be saved onto the block.
      */
-    private static @NotNull Inventory dropItems(@NotNull Inventory inv, @NotNull Location loc){
+    @SuppressWarnings("ConstantConditions")
+    private static void dropItems(@NotNull Inventory inv, @NotNull Location loc){
         for (int i = 0; i < inv.getSize()-9; i++){
             if (inv.getItem(i) == null) continue;
-            loc.getWorld().dropItem(loc, Objects.requireNonNull(inv.getItem(i)));
+            loc.getWorld().dropItem(loc, inv.getItem(i));
             inv.setItem(i, null);
         }
-        return inv;
     }
 
     /**
@@ -428,8 +436,9 @@ public class MultiPageChests {
      */
     private static boolean isEmpty(@NotNull Inventory inv){
         for (int i = 0; i < inv.getSize()-9; i++){
-            if (inv.getItem(i) != null)
+            if (inv.getItem(i) != null) {
                 return false;
+            }
         }
         return true;
     }

@@ -1,6 +1,8 @@
 package com.temmy.json_items_test_1.command;
 
 import com.temmy.json_items_test_1.Main;
+import com.temmy.json_items_test_1.Parser.Item;
+import com.temmy.json_items_test_1.Parser.ItemRepoTest;
 import com.temmy.json_items_test_1.attribute.HeldItemEffects;
 import com.temmy.json_items_test_1.listener.PlayerSwapHandItemListener;
 import org.bukkit.Bukkit;
@@ -49,16 +51,20 @@ public class GiveItem implements CommandExecutor {
     }
 
     private boolean giveItem(Player player, String item, int amount){
-        if (Main.getCustomItems_OLD().containsKey(item)){
-            ItemStack itemstack = Main.getCustomItems_OLD().get(item);
+        ItemStack itemstack;
+        if (Main.getCustomItems().containsKey(item)){
+            itemstack = new Item().getByName(item).getItemStack();
+            if (itemstack == null) return false;
             itemstack.setAmount(amount);
             player.getInventory().addItem(itemstack);
         }else {
             player.sendMessage(ChatColor.YELLOW + String.format("Item '%s' doesn't exist", item));
             return false;
         }
-        PlayerSwapHandItemListener.removeHeldItemEffects(player, player.getInventory().getItemInMainHand());
-        HeldItemEffects.getItemEffects(player, player.getInventory().getItemInMainHand(), "main");
+        if (itemstack == player.getInventory().getItemInMainHand()) {
+            PlayerSwapHandItemListener.removeHeldItemEffects(player, player.getInventory().getItemInMainHand());
+            HeldItemEffects.getItemEffects(player, player.getInventory().getItemInMainHand(), "main");
+        }
         return true;
     }
 }

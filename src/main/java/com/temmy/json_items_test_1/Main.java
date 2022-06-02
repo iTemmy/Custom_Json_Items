@@ -12,6 +12,8 @@ import com.temmy.json_items_test_1.command.*;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
 import com.temmy.json_items_test_1.util.*;
+import com.temmy.json_items_test_1.util.customItems.CustomItem;
+import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -56,13 +58,12 @@ public final class Main extends JavaPlugin {
     public static JavaPlugin getPlugin(){return plugin;}
     private static Map<String, ItemStack> customItems_OLD = new HashMap<>();
     private static Map<String, CustomItem> db_customItems_OLDv2 = new HashMap<>();
-    private static Map<String, CustomItem> customItems = new HashMap<>();
+    private static Map<String, NewCustomItem> customItems = new HashMap<>();
     public static boolean debug;
     public static String customOreWorld;
     public static Boolean worldGuardEnabled = false;
     public static WorldGuard worldGuard = null;
     public static StateFlag attributesEnabledFlag;
-    public static Map<Player, UUID[]> allies = new HashMap<>();
     public static Map<Player, Boolean> activeEditors;
     public static NamespacedKey glowKey;
     public static Glow glow;
@@ -108,13 +109,6 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         registerGlow();
-        /*loadDatabase();
-        try {
-            dataSource = initDataBase();
-            initDb();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }*/
         new Thread(this::registerFoods).start();
         registerEvents(getServer());
         PluginFiles.init();
@@ -133,13 +127,14 @@ public final class Main extends JavaPlugin {
             files3.remove(s);
         //data.test();
         //createCustomItemInDatabase_OLD();
-        getLogger().info(String.format("Registered %s items.", customItems_OLD.size()));
+        getLogger().info(String.format("Registered %s items.", customItems.size()));
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
         getCommand("reloadores").setExecutor(new Reload());
         getCommand("debugging").setExecutor(new Debugging());
         getCommand("triedump").setExecutor(new trieDump());
         ores();
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, checkForActiveInventories(), 72000L, 72000L);
     }
 
     private void registerEvents(Server server){
@@ -182,7 +177,7 @@ public final class Main extends JavaPlugin {
 
     public static Map<String, CustomItem> getDb_customItems_OLDv2(){return db_customItems_OLDv2;}
 
-    public static Map<String, CustomItem> getCustomItems(){
+    public static Map<String, NewCustomItem> getCustomItems(){
         return customItems;
     }
 
@@ -210,7 +205,7 @@ public final class Main extends JavaPlugin {
             Map<String, String> ingredients = (Map) itemSection.get("ingredients");
             JSONArray recipe = (JSONArray) itemSection.get("recipe");
             String fileName = itemFile.getName().replaceAll(".json$", "").replaceAll("\\s", "_");
-            if (customItems_OLD.containsKey(fileName.toLowerCase())) {
+            if (customItems.containsKey(fileName.toLowerCase())) {
                 return;
             }
 
@@ -222,15 +217,15 @@ public final class Main extends JavaPlugin {
                         for (File file : PluginFiles.getItemFiles())
                             if (req.equalsIgnoreCase(file.getName().trim().replace(".json", "")))
                                 registerItemJsonRecipes(file);
-                        if (!(customItems_OLD.containsKey(req))) {
+                        if (!(customItems.containsKey(req))) {
                             if (!files3.containsValue(itemFile))
                                 files3.put(fileName, itemFile);
                         }
                     }
                 }
             }
-
-            ItemStack item = ItemParser.parseItem(fileName);
+            NewCustomItem customItem = ItemParser.parseItem(fileName);
+            ItemStack item = customItem.build().getItemStack();
             if (item == null) {
                 if (debug)
                     getLogger().info("Error "+fileName+" is null.");
@@ -247,8 +242,8 @@ public final class Main extends JavaPlugin {
                         shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key).toUpperCase()));
                     else if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), ingredients.get(key))) != null)
                         shapedRecipe.setIngredient(key.charAt(0), Bukkit.getRecipe(new NamespacedKey(getPlugin(), ingredients.get(key))).getResult());
-                    else if (customItems_OLD.containsKey(ingredients.get(key).toLowerCase())){
-                        shapedRecipe.setIngredient(key.charAt(0), customItems_OLD.get(ingredients.get(key).toLowerCase()));
+                    else if (customItems.containsKey(ingredients.get(key).toLowerCase())){
+                        shapedRecipe.setIngredient(key.charAt(0), customItems.get(ingredients.get(key).toLowerCase()).getItemStack());
                     }
                 }
                 if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), fileName)) == null) {
@@ -257,7 +252,7 @@ public final class Main extends JavaPlugin {
                     Bukkit.addRecipe(shapedRecipe);
                 }
             }
-            customItems_OLD.put(fileName.toLowerCase(), item);
+            customItems.put(fileName.toLowerCase(), customItem);
 
         }catch (IOException | ParseException | IllegalArgumentException | NullPointerException e){
             if (debug) getLogger().warning("Error: "+itemFile.getName());
@@ -379,7 +374,7 @@ public final class Main extends JavaPlugin {
             if (item.getAttributes() != null)stmt.setObject(14, item.getAttributes()); else stmt.setObject(14, null);
             if (item.getRequires() != null)stmt.setObject(15, item.getRequires()); else stmt.setObject(15, null);
             if (item.getStringIngredients() != null)stmt.setObject(16, item.getStringIngredients()); else stmt.setObject(16, null);
-            if (item.getStringRecipe() != null)stmt.setObject(17, item.getStringRecipe()); else stmt.setObject(17, null);
+            if (item.getShapedStringRecipe() != null)stmt.setObject(17, item.getShapedStringRecipe()); else stmt.setObject(17, null);
             stmt.execute();
         } catch (SQLException e) {
             getLogger().log(Level.SEVERE, "Unable to prepare SQL statement to save Custom item to database", e);
@@ -536,5 +531,15 @@ public final class Main extends JavaPlugin {
 
     public static Map<Material, FoodDetails> getFoodMap(){
         return foodMap;
+    }
+
+    public static Runnable checkForActiveInventories(){
+        return () -> {
+            for (Location loc : newActiveInventories.keySet()){
+                if (!newActiveInventories.get(loc).getViewers().isEmpty())
+                    continue;
+                newActiveInventories.remove(loc);
+            }
+        };
     }
 }

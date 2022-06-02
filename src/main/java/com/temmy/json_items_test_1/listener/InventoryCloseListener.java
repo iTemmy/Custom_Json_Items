@@ -25,6 +25,7 @@ public class InventoryCloseListener implements Listener {
     @SuppressWarnings("ConstantConditions")
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e){
+        log.warning("closed inventory");
         if (e.getInventory().getType() != InventoryType.CHEST) return;
         ItemStack pageItem = e.getInventory().getItem(e.getInventory().getSize()-5);
         if (pageItem == null) return;

@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class Glow extends Enchantment {
@@ -84,10 +85,10 @@ public class Glow extends Enchantment {
         return 0;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public @NotNull Set<EquipmentSlot> getActiveSlots() {
-        Set<EquipmentSlot> slots = (Set<EquipmentSlot>) Arrays.asList(EquipmentSlot.HAND);
-        return slots;
+        return (Set<EquipmentSlot>) List.of(EquipmentSlot.HAND);
     }
 
     @Override

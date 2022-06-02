@@ -2,6 +2,8 @@ package com.temmy.json_items_test_1.util;
 
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
+import com.temmy.json_items_test_1.util.customItems.CustomItem;
+import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -40,30 +42,30 @@ public class data {
 
     public static void test(){
         dataSource = Main.getDataSource();
-        //getDatabaseItem();
+        getDatabaseItem();
         customAttributes(checkCustomAttributesDatabase());
         enchants(checkEnchantmentTable());
         vanillaAttributes(checkVanillaAttributes());
     }
 
-    static Map<String, CustomItem> dbCustomitems = Main.getCustomItems();
+    static Map<String, NewCustomItem> dbCustomitems = Main.getCustomItems();
 
     static void getDatabaseItem(){
 
-        CustomItem item;
+        NewCustomItem item;
         try {
             testDatabaseConnection(dataSource);
             PreparedStatement stmt = conn.prepareStatement(
                     "SELECT ID, UniqueName, ItemName, Material, Lore, Model FROM item;");
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()){
-                item = new CustomItem(resultSet.getString("UniqueName")).
+                /*item = new CustomItem(resultSet.getString("UniqueName")).
                         setStringItemName(resultSet.getString("ItemName")).
                         setMaterial(Material.valueOf(resultSet.getString("Material"))).
                         setStringLore(resultSet.getString("Lore")).
                         setModel(resultSet.getInt("Model")).
                         setItem_ID(resultSet.getInt("ID"));
-                dbCustomitems.put(item.getUniqueName(), item);
+                dbCustomitems.put(item.getUniqueName(), item);*/
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,7 +117,6 @@ public class data {
         return false;
     }
 
-    @SuppressWarnings("RedundantCollectionOperation")
     static List<String> checkCustomAttributesDatabase(){
         List<String> attributes = new ArrayList<>();
         try {
@@ -258,9 +259,9 @@ public class data {
             }
         }catch (SQLException e){
             if (Main.debug)
-                log.log(Level.WARNING, String.format("Unable to register %s's attribute %s", item.uniqueName, vanillaAttributes.attribute.name()), e);
+                log.log(Level.WARNING, String.format("Unable to register %s's attribute %s", item.getUniqueName(), vanillaAttributes.attribute.name()), e);
             else
-                log.warning(String.format("Unable to register %s attributes", item.uniqueName));
+                log.warning(String.format("Unable to register %s attributes", item.getUniqueName()));
         }
     }
 

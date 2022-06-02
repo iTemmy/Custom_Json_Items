@@ -1,15 +1,17 @@
-package com.temmy.json_items_test_1.util;
+package com.temmy.json_items_test_1.util.customItems;
 
+import com.temmy.json_items_test_1.Main;
+import com.temmy.json_items_test_1.util.Trie;
+import com.temmy.json_items_test_1.util.VanillaAttributes;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.*;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +20,78 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+enum RecipeType{
+    ShapedRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    FurnaceRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    BlastingRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    CampfireRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    CookingRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    MerchantRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    ShapelessRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    SmithingRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    SmokingRecipe{
+        @Override
+        void setRecipe(Recipe recipe) {
+            super.setRecipe(recipe);
+        }
+    },
+    StonecuttingRecipe{
+        @Override
+        void setRecipe(Recipe recipe){
+            super.setRecipe(recipe);
+        }
+    };
+
+
+    void setRecipe(Recipe recipe){
+        this.recipe = recipe;
+    }
+    Recipe recipe;
+    Recipe getRecipe(){
+        return recipe;
+    }
+}
 
 public class CustomItem {
     String uniqueName = null;
@@ -37,12 +111,26 @@ public class CustomItem {
     String requires = "";
     Map<Character, Material> materialIngredients = new HashMap<>();
     Map<Character, ItemStack> itemstackIngredients = new HashMap<>();
-    ShapedRecipe recipe = null;
+    RecipeType recipeType;
     ItemStack customItem = null;
     int itemID;
 
+    public RecipeType getRecipeType() {
+        return recipeType;
+    }
+
+    public CustomItem setRecipeType(RecipeType recipeType) {
+        this.recipeType = recipeType;
+        return this;
+    }
+
+    public void test(){
+        org.bukkit.inventory.Recipe recipe = this.recipeType.getRecipe();
+        RecipeChoice choice = new RecipeChoice.ExactChoice(new ItemStack(Material.STRUCTURE_VOID, 5));
+        this.recipeType.setRecipe(new FurnaceRecipe(new NamespacedKey(Main.getPlugin(), "testrecipe"), new ItemStack(Material.BARRIER), new RecipeChoice.ExactChoice(new ItemStack(Material.STRUCTURE_VOID, 5)), 5f, 5));
+    }
+
     /**
-     * @Deprecated
      * Creates new Custom items with the variables provided
      * @param itemName
      * @param material
@@ -84,11 +172,10 @@ public class CustomItem {
         if (requires != null)this.requires = requires;
         if (itemstackIngredients != null)this.itemstackIngredients = itemstackIngredients;
         if (materialIngredients != null)this.materialIngredients = materialIngredients;
-        if (recipe != null)this.recipe = recipe;
+        if (recipe != null)this.recipeType.setRecipe(recipe);
     }
 
     /**
-     * @Deprecated
      * @param itemName
      * @param material
      * @param lore
@@ -103,7 +190,6 @@ public class CustomItem {
     }
 
     /**
-     * @Deprecated
      * Internal testing only
      */
     @Deprecated
@@ -120,85 +206,80 @@ public class CustomItem {
     }
 
     public CustomItem setUniqueName(String uniqueName){
-        Validate.notNull(uniqueName);
+        assert uniqueName != null;
         this.uniqueName = uniqueName;
         return this;
     }
 
     public CustomItem setStringItemName(String stringItemName){
-        Validate.notNull(stringItemName);
+        assert stringItemName != null;
         itemName = LegacyComponentSerializer.legacy('&').deserialize(stringItemName);
         return this;
     }
 
     public CustomItem setComponentItemName(Component comp){
-        Validate.notNull(comp);
+        assert comp != null;
         itemName = comp;
         return this;
     }
 
     public CustomItem setMaterial(Material mat){
-        Validate.notNull(mat);
+        assert mat != null;
         material = mat;
         return this;
     }
 
     public CustomItem setModel(int model){
-        Validate.notNull(model);
         this.model = model;
         return this;
     }
 
     public CustomItem setDamage(double damage){
-        Validate.notNull(damage);
         this.damage = damage;
         return this;
     }
 
     public CustomItem setDamageSlot(EquipmentSlot slot){
-        Validate.notNull(slot);
+        assert slot != null;
         damageSlot = slot;
         return this;
     }
 
     public CustomItem setHealth(double health){
-        Validate.notNull(health);
         this.health = health;
         return this;
     }
 
     public CustomItem setHealthSlot(EquipmentSlot slot){
-        Validate.notNull(slot);
+        assert slot != null;
         healthSlot = slot;
         return this;
     }
 
     public CustomItem setAttackSpeed(double attackSpeed){
-        Validate.notNull(attackSpeed);
         this.attackSpeed = attackSpeed;
         return this;
     }
 
     public CustomItem setAttackSpeedSlot(EquipmentSlot slot){
-        Validate.notNull(slot);
+        assert slot != null;
         attackSpeedSlot = slot;
         return this;
     }
 
     public CustomItem setEnchants(Map<Enchantment, Integer> enchants){
-        Validate.notNull(enchants);
+        assert enchants != null;
         this.enchants = enchants;
         return this;
     }
 
     public CustomItem setUnbreakable(boolean unbreakable){
-        Validate.notNull(unbreakable);
         this.unbreakable = unbreakable;
         return this;
     }
 
     public CustomItem setStringLore(List<String> stringLore){
-        Validate.notNull(stringLore);
+        assert  stringLore != null;
         List<Component> lore = new ArrayList<>();
         for (String string : stringLore)
             lore.add(LegacyComponentSerializer.legacy('&').deserialize(string));
@@ -207,7 +288,7 @@ public class CustomItem {
     }
 
     public CustomItem setStringLore(String lore){
-        Validate.notNull(lore);
+        assert lore != null;
         String[] s = lore.split(";");
         List<Component> compLore = new ArrayList<>();
         for (String ss : s){
@@ -218,31 +299,31 @@ public class CustomItem {
     }
 
     public CustomItem setComponentLore(List<Component> lore){
-        Validate.notNull(lore);
+        assert lore != null;
         this.lore = lore;
         return this;
     }
 
     public CustomItem setAttributes(String attributes){
-        Validate.notNull(attributes);
+        assert attributes != null;
         this.attributes = attributes;
         return this;
     }
 
     public CustomItem setRequires(String requires){
-        Validate.notNull(requires);
+        assert requires != null;
         this.requires = requires;
         return this;
     }
 
     public CustomItem setItemstackIngredients(Map<Character, ItemStack> itemstackIngredients){
-        Validate.notNull(itemstackIngredients);
+        assert itemstackIngredients != null;
         this.itemstackIngredients = itemstackIngredients;
         return this;
     }
 
     public CustomItem setMaterialIngredients(Map<Character, Material> materialIngredients){
-        Validate.notNull(materialIngredients);
+        assert materialIngredients != null;
         this.materialIngredients = materialIngredients;
         return this;
     }
@@ -303,8 +384,8 @@ public class CustomItem {
         return unbreakable;
     }
 
-    public ShapedRecipe getRecipe() {
-        return recipe;
+    public Recipe getRecipe() {
+        return this.recipeType.getRecipe();
     }
 
     public List<Component> getLore() {
@@ -341,25 +422,37 @@ public class CustomItem {
         return t.toString().trim();
     }
 
-    public String getStringRecipe(){
+    @SuppressWarnings("ConstantConditions")
+    public String getShapedStringRecipe(){
         StringBuilder t = new StringBuilder();
-        if (recipe == null) return null;
-        for (String s : recipe.getShape())
+        if (recipeType.getRecipe() == null || recipeType.getRecipe() instanceof ShapedRecipe) return null;
+        for (String s : ((ShapedRecipe) recipeType.getRecipe()).getShape())
             t.append(String.format("\"%s\"", s));
         return t.toString().trim();
     }
 
+    public @Nullable String getShapelessStringRecipe(){
+        StringBuilder t = new StringBuilder();
+        if (recipeType.getRecipe() == null || !(recipeType.getRecipe() instanceof ShapelessRecipe)) return null;
+        for (ItemStack s : ((ShapelessRecipe) recipeType.getRecipe()).getIngredientList())
+            t.append(String.format("\"%s\"", PlainTextComponentSerializer.plainText().serialize(s.getItemMeta().displayName())));
+        return t.toString().trim();
+    }
+
     public void addMaterialIngredient(char character, Material mat){
+        assert mat != null;
         materialIngredients.put(character, mat);
     }
 
-    public void addItemStackIngredient(char charater, ItemStack itemStack){
-        itemstackIngredients.put(charater, itemStack);
+    public void addItemStackIngredient(char character, ItemStack itemStack){
+        assert itemStack != null;
+        itemstackIngredients.put(character, itemStack);
     }
 
-    public CustomItem setRecipe(ShapedRecipe recipe){
-        Validate.notNull(recipe);
-        this.recipe = recipe;
+    public CustomItem setRecipe(org.bukkit.inventory.Recipe recipe){
+        assert recipe != null;
+        this.recipeType.setRecipe(recipe);
+        //this.recipe = recipe;
         return this;
     }
 
@@ -380,7 +473,6 @@ public class CustomItem {
     }
 
     public CustomItem setItem_ID(int id){
-        Validate.notNull(id);
         itemID = id;
         return this;
     }

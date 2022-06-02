@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS recipe (
 	Line2 VARCHAR(3),
 	Line3 VARCHAR(3),
 	PRIMARY KEY (ID),
-	FOREIGN KEY (UniqueName) REFERENCES Item(UniqueName)
+	FOREIGN KEY (UniqueName) REFERENCES item(UniqueName)
 );
 CREATE TABLE IF NOT EXISTS ingredients (
 	ID INT NOT NULL AUTO_INCREMENT,
@@ -32,10 +32,12 @@ CREATE TABLE IF NOT EXISTS enchantments (
 	PRIMARY KEY(ID)
 );
 CREATE TABLE IF NOT EXISTS item_enchants (
-	item_id INT NOT NULL REFERENCES item(id),
-	enchantment_id INT NOT NULL REFERENCES Enchantments(id),
+	item_id INT NOT NULL,
+	enchantment_id INT NOT NULL,
 	level INT NOT NULL,
-	PRIMARY KEY(item_id, enchantment_id)
+	PRIMARY KEY(item_id, enchantment_id),
+	FOREIGN KEY (item_id) REFERENCES item(id),
+	FOREIGN KEY (enchantment_id) REFERENCES enchantments(id)
 );
 CREATE TABLE IF NOT EXISTS vanilla_attributes (
 	ID INT NOT NULL AUTO_INCREMENT,
