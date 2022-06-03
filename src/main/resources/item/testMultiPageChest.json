@@ -1,0 +1,14 @@
+{
+  "ITEM": {
+    "file_name": "testMultiPageChest.json",
+    "name": "&5&lMulti page Chest",
+    "material": "CHEST",
+    "lore": [],
+    "attributes": {
+      "MULTIPAGECHESTS": {
+        "size": 27,
+        "pages": 3
+      }
+    }
+  }
+}
