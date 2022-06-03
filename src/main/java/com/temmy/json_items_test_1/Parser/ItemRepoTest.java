@@ -1,6 +1,6 @@
 package com.temmy.json_items_test_1.Parser;
 
-import com.temmy.json_items_test_1.util.customItems.CustomItem;
+import java.util.Set;
 
 public interface ItemRepoTest {
 
@@ -11,6 +11,8 @@ public interface ItemRepoTest {
     void delete(String id);
 
     Object getByName(String name);
+
+    Set<String> getAllItems();
 }
 
 

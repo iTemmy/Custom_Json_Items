@@ -12,15 +12,17 @@
         "INCREASE_DAMAGE": "3"
       }
     },
-    "ingredients": {
-      "A": "AMETHYST_SHARD",
-      "N": "NETHER_STAR",
-      "S": "STICK"
-    },
-    "recipe": [
-      " A ",
-      "ANA",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "A": "AMETHYST_SHARD",
+        "N": "NETHER_STAR",
+        "S": "STICK"
+      },
+      "shape": [
+        " A ",
+        "ANA",
+        " S "
+      ]
+    }
   }
 }

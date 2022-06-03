@@ -64,4 +64,6 @@ public interface CustomItemInterface {
   List<Component> getLore();
 
   ItemStack getItemStack();
+
+  RecipeInterface getRecipe();
 }

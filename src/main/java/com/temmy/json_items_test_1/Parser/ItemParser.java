@@ -1,18 +1,12 @@
 package com.temmy.json_items_test_1.Parser;
 
 import com.google.common.collect.LinkedHashMultimap;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.temmy.json_items_test_1.Main;
-import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.util.Convert;
-import com.temmy.json_items_test_1.util.CustomDataTypes;
-import com.temmy.json_items_test_1.util.customItems.CustomItem;
 import com.temmy.json_items_test_1.util.Glow;
 import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,12 +14,6 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataAdapterContext;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONArray;
@@ -211,10 +199,6 @@ public final class ItemParser {
         return Integer.parseInt(itemSection.get("model").toString());
     }
 
-    public static ItemStack buildCustomItem(@NotNull String item){
-        return parseItem(item).build().getItemStack();
-    }
-
     @SuppressWarnings("ConstantConditions")
     public static @Nullable NewCustomItem parseItem(@NotNull String item){
         log.info(String.format("Now registering %s", item));
@@ -236,8 +220,9 @@ public final class ItemParser {
             JSONObject itemJson = (JSONObject) jsonObject;
             Map<String, ?> itemSection = (Map<String, ?>) itemJson.get("ITEM");
             itemClass.create(item);
-            customItem = itemClass.getByName(item);
+            customItem = itemClass.getByName(item.toLowerCase());
             customItem.setMaterial(Material.valueOf((String) itemSection.get("material")));
+            customItem.setDisplayName(getName(itemSection));
             Map<String, JSONObject> attributesJson = (Map<String, JSONObject>) itemSection.get("attributes");
             Map<String, String[]> attributes = new HashMap<>();
             if (attributesJson != null){
@@ -254,9 +239,7 @@ public final class ItemParser {
             LinkedHashMultimap<org.bukkit.attribute.Attribute, AttributeModifier> attributeMap = getAttributes(itemSection);
             customItem.setVanillaAttributes(attributeMap);
             customItem.setCustomAttributes(Convert.mapToString(attributes));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
         return customItem;

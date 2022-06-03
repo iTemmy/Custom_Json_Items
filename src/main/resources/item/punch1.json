@@ -8,16 +8,18 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "S": "STRING",
-      "P": "PISTON",
-      "B": "BOW",
-      "E": "BASEENCHANT"
-    },
-    "recipe": [
-      "SPS",
-      "BEB",
-      "SPS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "STRING",
+        "P": "PISTON",
+        "B": "BOW",
+        "E": "BASEENCHANT"
+      },
+      "shape": [
+        "SPS",
+        "BEB",
+        "SPS"
+      ]
+    }
   }
 }

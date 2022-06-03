@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,lureEssence",
     "attributes": {},
-    "ingredients": {
-      "L": "LUREESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " L ",
-      " B ",
-      " L "
-    ]
+    "shaped": {
+      "ingredients": {
+        "L": "LUREESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " L ",
+        " B ",
+        " L "
+      ]
+    }
   }
 }

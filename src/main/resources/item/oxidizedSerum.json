@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "oxidisedEssence",
-    "ingredients": {
-      "F": "OXIDISEDESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "OXIDISEDESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

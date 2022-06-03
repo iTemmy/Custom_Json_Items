@@ -9,13 +9,15 @@
     "attributes": {
     },
     "requires": "projectileScraps",
-    "ingredients": {
-      "F": "PROJECTILESCRAPS"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "PROJECTILESCRAPS"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

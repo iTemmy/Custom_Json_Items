@@ -180,4 +180,9 @@ public class NewCustomItem implements CustomItemInterface {
     public ItemStack getItemStack() {
         return item!=null?item:null;
     }
+
+    @Override
+    public RecipeInterface getRecipe(){
+        return recipeInterface;
+    }
 }

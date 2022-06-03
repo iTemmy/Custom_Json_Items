@@ -6,17 +6,18 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "A": "ARROW",
-      "R": "REDSTONE",
-      "E": "ENDER_PEARL"
-    },
-    "recipe": [
-      "ARA",
-      "RER",
-      "ARA"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "A": "ARROW",
+        "R": "REDSTONE",
+        "E": "ENDER_PEARL"
+      },
+      "shape": [
+        "ARA",
+        "RER",
+        "ARA"
+      ]
+    }
   }
 }

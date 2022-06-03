@@ -6,17 +6,18 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "S": "STRING",
-      "s": "STICK",
-      "G": "TROPICAL_FISH"
-    },
-    "recipe": [
-      "SSS",
-      "sGs",
-      "sss"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "S": "STRING",
+        "s": "STICK",
+        "G": "TROPICAL_FISH"
+      },
+      "shape": [
+        "SSS",
+        "sGs",
+        "sss"
+      ]
+    }
   }
 }

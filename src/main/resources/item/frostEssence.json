@@ -7,14 +7,16 @@
     "enchants": ["GLOW;1"],
     "lore": [],
     "attributes": {},
-    "ingredients": {
-      "I": "ICE",
-      "R": "REDSTONE_BLOCK"
-    },
-    "recipe": [
-      "III",
-      "IRI",
-      "III"
-    ]
+    "shaped": {
+      "ingredients": {
+        "I": "ICE",
+        "R": "REDSTONE_BLOCK"
+      },
+      "shape": [
+        "III",
+        "IRI",
+        "III"
+      ]
+    }
   }
 }

@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "soulSpeed2,netherShard",
     "attributes": {},
-    "ingredients": {
-      "N": "NETHERSHARD",
-      "B": "SOULSPEED2"
-    },
-    "recipe": [
-      "N N",
-      " B ",
-      "N N"
-    ]
+    "shaped": {
+      "ingredients": {
+        "N": "NETHERSHARD",
+        "B": "SOULSPEED2"
+      },
+      "shape": [
+        "N N",
+        " B ",
+        "N N"
+      ]
+    }
   }
 }

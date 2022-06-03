@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "combustibleScraps",
-    "ingredients": {
-      "F": "COMBUSTIBLESCRAPS"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "COMBUSTIBLESCRAPS"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

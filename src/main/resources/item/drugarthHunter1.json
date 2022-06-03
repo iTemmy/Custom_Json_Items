@@ -8,17 +8,19 @@
     "lore": [],
     "attributes": {},
     "requires": "MOBESSENCE,BLAZEESSENCE,ARACHNIDESSENCE,UNDEADESSENCE",
-    "ingredients": {
-      "M": "MOBESSENCE",
-      "B": "BLAZEESSENCE",
-      "A": "ARACHNIDESSENCE",
-      "U": "UNDEADESSENCE",
-      "G": "GOLDEN_SWORD"
-    },
-    "recipe": [
-      " M ",
-      "BGA",
-      " U "
-    ]
+    "shaped": {
+      "ingredients": {
+        "M": "MOBESSENCE",
+        "B": "BLAZEESSENCE",
+        "A": "ARACHNIDESSENCE",
+        "U": "UNDEADESSENCE",
+        "G": "GOLDEN_SWORD"
+      },
+      "shape": [
+        " M ",
+        "BGA",
+        " U "
+      ]
+    }
   }
 }

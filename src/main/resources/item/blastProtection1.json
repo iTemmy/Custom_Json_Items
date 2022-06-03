@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,combustibleScraps",
     "attributes": {},
-    "ingredients": {
-      "C": "COMBUSTIBLESCRAPS",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " C ",
-      " B ",
-      " C "
-    ]
+    "shaped": {
+      "ingredients": {
+        "C": "COMBUSTIBLESCRAPS",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " C ",
+        " B ",
+        " C "
+      ]
+    }
   }
 }

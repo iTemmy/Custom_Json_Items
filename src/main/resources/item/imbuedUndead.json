@@ -9,13 +9,15 @@
     "attributes": {
     },
     "requires": "undeadEssence",
-    "ingredients": {
-      "F": "UNDEADESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "UNDEADESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

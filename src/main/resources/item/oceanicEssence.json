@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "striderEssence",
-    "ingredients": {
-      "F": "STRIDERESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "STRIDERESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

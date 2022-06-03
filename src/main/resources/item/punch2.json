@@ -8,16 +8,18 @@
     "lore": [],
     "requires": "punch1",
     "attributes": {},
-    "ingredients": {
-      "S": "STRING",
-      "P": "PISTON",
-      "B": "BOW",
-      "E": "PUNCH1"
-    },
-    "recipe": [
-      "SPS",
-      "BEB",
-      "SPS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "STRING",
+        "P": "PISTON",
+        "B": "BOW",
+        "E": "PUNCH1"
+      },
+      "shape": [
+        "SPS",
+        "BEB",
+        "SPS"
+      ]
+    }
   }
 }

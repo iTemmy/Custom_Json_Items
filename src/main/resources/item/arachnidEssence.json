@@ -7,14 +7,16 @@
     "enchants": ["GLOW;1"],
     "lore": [],
     "attributes": {},
-    "ingredients": {
-      "T": "STRING",
-      "S": "SPIDER_EYE"
-    },
-    "recipe": [
-      "SSS",
-      "STS",
-      "SSS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "T": "STRING",
+        "S": "SPIDER_EYE"
+      },
+      "shape": [
+        "SSS",
+        "STS",
+        "SSS"
+      ]
+    }
   }
 }

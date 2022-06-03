@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "H": "HEART_OF_THE_SEA",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " H ",
-      " B ",
-      " H "
-    ]
+    "shaped": {
+      "ingredients": {
+        "H": "HEART_OF_THE_SEA",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " H ",
+        " B ",
+        " H "
+      ]
+    }
   }
 }

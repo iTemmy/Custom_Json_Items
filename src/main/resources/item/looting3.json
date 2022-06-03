@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "looting2,mobEssence",
     "attributes": {},
-    "ingredients": {
-      "M": "MOBESSENCE",
-      "L": "looting2"
-    },
-    "recipe": [
-      "MMM",
-      "MLM",
-      "MMM"
-    ]
+    "shaped": {
+      "ingredients": {
+        "M": "MOBESSENCE",
+        "L": "looting2"
+      },
+      "shape": [
+        "MMM",
+        "MLM",
+        "MMM"
+      ]
+    }
   }
 }

@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "fortune2,luckEssence",
     "attributes": {},
-    "ingredients": {
-      "L": "LUCKESSENCE",
-      "E": "FORTUNE2"
-    },
-    "recipe": [
-      " L ",
-      "LEL",
-      " L "
-    ]
+    "shaped": {
+      "ingredients": {
+        "L": "LUCKESSENCE",
+        "E": "FORTUNE2"
+      },
+      "shape": [
+        " L ",
+        "LEL",
+        " L "
+      ]
+    }
   }
 }

@@ -5,6 +5,7 @@ import com.temmy.json_items_test_1.Parser.Item;
 import com.temmy.json_items_test_1.Parser.ItemRepoTest;
 import com.temmy.json_items_test_1.attribute.HeldItemEffects;
 import com.temmy.json_items_test_1.listener.PlayerSwapHandItemListener;
+import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -52,8 +53,10 @@ public class GiveItem implements CommandExecutor {
 
     private boolean giveItem(Player player, String item, int amount){
         ItemStack itemstack;
-        if (Main.getCustomItems().containsKey(item)){
-            itemstack = new Item().getByName(item).getItemStack();
+        if (new Item().read(item) != null){
+            NewCustomItem i = new Item().getByName(item);
+            if (i == null) return false;
+            itemstack = i.build().getItemStack();
             if (itemstack == null) return false;
             itemstack.setAmount(amount);
             player.getInventory().addItem(itemstack);

@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "silkyJewel",
-    "ingredients": {
-      "F": "SILKYJEWEL"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "SILKYJEWEL"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

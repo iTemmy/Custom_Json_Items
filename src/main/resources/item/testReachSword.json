@@ -11,15 +11,17 @@
         "distance": 10
       }
     },
-    "ingredients": {
-      "A": "DIAMOND",
-      "N": "NETHER_STAR",
-      "S": "STICK"
-    },
-    "recipe": [
-      " A ",
-      "ANA",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "A": "DIAMOND",
+        "N": "NETHER_STAR",
+        "S": "STICK"
+      },
+      "shape": [
+        " A ",
+        "ANA",
+        " S "
+      ]
+    }
   }
 }

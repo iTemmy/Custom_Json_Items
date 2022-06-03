@@ -1,12 +1,21 @@
 package com.temmy.json_items_test_1.util.newCustomItem.recipe;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 public class CampfireRecipe implements RecipeInterface{
     ItemStack result;
     RecipeInput input;
     float experience;
     int cookingTime;
+
+    public CampfireRecipe(RecipeInput input, ItemStack result, float experience, int cookingTime){
+        this.input = input;
+        this.result = result;
+        this.experience = experience;
+        this.cookingTime = cookingTime;
+    }
 
     public void setResult(ItemStack result){
         this.result = result;
@@ -39,5 +48,10 @@ public class CampfireRecipe implements RecipeInterface{
     @Override
     public ItemStack getResult() {
         return null;
+    }
+
+    @Override
+    public Recipe getRecipe(NamespacedKey key) {
+        return new org.bukkit.inventory.CampfireRecipe(key, result, input.getItem(), experience ,cookingTime);
     }
 }

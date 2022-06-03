@@ -8,15 +8,17 @@
     "lore": [],
     "attributes": {
     },
-    "ingredients": {
-      "G": "GOLD_INGOT",
-      "S": "STRING",
-      "E": "EMERALD"
-    },
-    "recipe": [
-      "GSG",
-      "SES",
-      "GSG"
-    ]
+    "shaped": {
+      "ingredients": {
+        "G": "GOLD_INGOT",
+        "S": "STRING",
+        "E": "EMERALD"
+      },
+      "shape": [
+        "GSG",
+        "SES",
+        "GSG"
+      ]
+    }
   }
 }

@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant,quickeningEssence",
     "attributes": {},
-    "ingredients": {
-      "G": "GOLD_INGOT",
-      "R": "QUICKENINGESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " R ",
-      "GBG",
-      " R "
-    ]
+    "shaped": {
+      "ingredients": {
+        "G": "GOLD_INGOT",
+        "R": "QUICKENINGESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " R ",
+        "GBG",
+        " R "
+      ]
+    }
   }
 }

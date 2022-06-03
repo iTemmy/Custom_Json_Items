@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,skeletonEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "SKELETONESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " S ",
-      " B ",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "SKELETONESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " S ",
+        " B ",
+        " S "
+      ]
+    }
   }
 }

@@ -1,6 +1,7 @@
 package com.temmy.json_items_test_1.attribute;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import com.temmy.json_items_test_1.util.Convert;
 import com.temmy.json_items_test_1.util.Queue;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -44,18 +45,18 @@ public class FullSetArmorEffects {
             if (!(item.hasItemMeta())) return;
             if (!(item.getItemMeta().getPersistentDataContainer().has(Attribute.namespacedKey, PersistentDataType.STRING))) return;
             PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
-            String[] attributes = data.get(Attribute.namespacedKey, PersistentDataType.STRING).split(",");
+            String[] attributes = Convert.stringToMap(data.get(Attribute.namespacedKey, PersistentDataType.STRING)).get("FULLSETARMOREFFECTS");
             for (String s : attributes){
                 String[] attribute = s.split(":");
                 for (String a : attribute){
                     if (!(a.contains(setName)))
-                        if (armorType(item.getType()) == 1)
+                        if (armorType(item.getType()) == 1 && checkSet(setName, s))
                             helmet = true;
-                        else if (armorType(item.getType()) == 2)
+                        else if (armorType(item.getType()) == 2 && checkSet(setName, s))
                             chestplate = true;
-                        else if (armorType(item.getType()) == 3)
+                        else if (armorType(item.getType()) == 3 && checkSet(setName, s))
                             leggings = true;
-                        else if (armorType(item.getType()) == 4)
+                        else if (armorType(item.getType()) == 4 && checkSet(setName, s))
                             boots = true;
                         else return;
                 }
@@ -108,5 +109,17 @@ public class FullSetArmorEffects {
         else if (mat == Material.CHAINMAIL_BOOTS || mat == Material.IRON_BOOTS || mat == Material.GOLDEN_BOOTS
                 || mat == Material.DIAMOND_BOOTS || mat == Material.LEATHER_BOOTS || mat == Material.NETHERITE_BOOTS) return 4;
         else return -99;
+    }
+
+    private static boolean checkSet(String setName, String attribute){
+        String[] s = attribute.replaceAll("FULLSETARMOREFFECTS:\\[\\{", "").replaceAll("[\"]", "").split("\n");
+        for (String ss : s) {
+            for (String sss : ss.split(",")) {
+                if (setName.equals(sss.split(":")[1])) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

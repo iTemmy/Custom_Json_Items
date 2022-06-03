@@ -6,16 +6,17 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "requires": "pricklyEssence",
-    "ingredients": {
-      "F": "PRICKLYESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "attributes": {},
+    "shaped": {
+      "requires": "pricklyEssence",
+      "ingredients": {
+        "F": "PRICKLYESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "hardeningEssence",
-    "ingredients": {
-      "F": "HARDENINGESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "HARDENINGESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,quickeningEssence",
     "attributes": {},
-    "ingredients": {
-      "Q": "QUICKENINGESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " Q ",
-      " B ",
-      " Q "
-    ]
+    "shaped": {
+      "ingredients": {
+        "Q": "QUICKENINGESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " Q ",
+        " B ",
+        " Q "
+      ]
+    }
   }
 }

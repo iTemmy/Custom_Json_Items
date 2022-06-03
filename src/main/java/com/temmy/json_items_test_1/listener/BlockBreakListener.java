@@ -25,11 +25,9 @@ public class BlockBreakListener implements Listener {
         }
 
         if (ItemUtils.isOre(e.getBlock().getType())) {
-            if (e.getPlayer().getInventory().getItemInMainHand().hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
-                if (CustomOre.customOre(e.getBlock(), e.getPlayer(), true, amount))
-                    e.setDropItems(false);
-            } else if (CustomOre.customOre(e.getBlock(), e.getPlayer(), false, amount))
-                    e.setDropItems(false);
+            if (CustomOre.customOre(e.getBlock(), e.getPlayer(), amount))
+                e.setDropItems(false);
+
         }
     }
 

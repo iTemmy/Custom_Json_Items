@@ -8,13 +8,15 @@
     "lore": [],
     "attributes": {
     },
-    "ingredients": {
-      "S": "SEAGRASS"
-    },
-    "recipe": [
-      "SSS",
-      "SSS",
-      "SSS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "SEAGRASS"
+      },
+      "shape": [
+        "SSS",
+        "SSS",
+        "SSS"
+      ]
+    }
   }
 }

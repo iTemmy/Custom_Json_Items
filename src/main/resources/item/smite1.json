@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,undeadEssence",
     "attributes": {},
-    "ingredients": {
-      "U": "UNDEADESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " U ",
-      " B ",
-      " U "
-    ]
+    "shaped": {
+      "ingredients": {
+        "U": "UNDEADESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " U ",
+        " B ",
+        " U "
+      ]
+    }
   }
 }

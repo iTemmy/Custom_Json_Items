@@ -6,16 +6,17 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "L": "LAPIS_LAZULI",
-      "G": "GOLD_INGOT"
-    },
-    "recipe": [
-      "LLL",
-      "LGL",
-      "LLL"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "L": "LAPIS_LAZULI",
+        "G": "GOLD_INGOT"
+      },
+      "shape": [
+        "LLL",
+        "LGL",
+        "LLL"
+      ]
+    }
   }
 }

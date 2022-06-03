@@ -1,6 +1,8 @@
 package com.temmy.json_items_test_1.util.newCustomItem.recipe;
 
+import com.temmy.json_items_test_1.Main;
 import org.bukkit.Material;
+import org.bukkit.inventory.RecipeChoice;
 
 import javax.annotation.Nullable;
 
@@ -8,15 +10,19 @@ public class MaterialInput implements RecipeInput{
 
     Material input;
 
-    @Override
-    public void setItem(Object item) {
+    public MaterialInput setItem(Material item) {
         if (item instanceof Material)
             input = (Material) item;
+        else {
+            Main.getPlugin().getLogger().severe("Invalid Material input!");
+            return null;
+        }
+        return this;
     }
 
     @Override
     @Nullable
-    public Object getItem() {
-        return input;
+    public RecipeChoice getItem() {
+        return new RecipeChoice.MaterialChoice(input);
     }
 }

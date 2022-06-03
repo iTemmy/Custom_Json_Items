@@ -8,16 +8,18 @@
     "lore": [],
     "requires": "baseEnchant,silkyJewel",
     "attributes": {},
-    "ingredients": {
-      "J": "SILKYJEWEL",
-      "B": "BASEENCHANT",
-      "G": "GHAST_TEAR",
-      "S": "STRING"
-    },
-    "recipe": [
-      "JSJ",
-      "GBG",
-      "JSJ"
-    ]
+    "shaped": {
+      "ingredients": {
+        "J": "SILKYJEWEL",
+        "B": "BASEENCHANT",
+        "G": "GHAST_TEAR",
+        "S": "STRING"
+      },
+      "shape": [
+        "JSJ",
+        "GBG",
+        "JSJ"
+      ]
+    }
   }
 }

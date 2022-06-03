@@ -7,14 +7,16 @@
     "enchants": ["GLOW;1"],
     "lore": [],
     "attributes": {},
-    "ingredients": {
-      "B": "IRON_BARS",
-      "I": "IRON_BLOCK"
-    },
-    "recipe": [
-      "BBB",
-      "BIB",
-      "BBB"
-    ]
+    "shaped": {
+      "ingredients": {
+        "B": "IRON_BARS",
+        "I": "IRON_BLOCK"
+      },
+      "shape": [
+        "BBB",
+        "BIB",
+        "BBB"
+      ]
+    }
   }
 }

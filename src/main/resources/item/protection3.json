@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "protection2,protectionScraps",
     "attributes": {},
-    "ingredients": {
-      "P": "PROTECTIONSCRAPS",
-      "B": "protection2"
-    },
-    "recipe": [
-      "PPP",
-      " B ",
-      "PPP"
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PROTECTIONSCRAPS",
+        "B": "protection2"
+      },
+      "shape": [
+        "PPP",
+        " B ",
+        "PPP"
+      ]
+    }
   }
 }

@@ -18,15 +18,17 @@
       }
     },
     "requires":  "imbuedProjectile,imbuedQuickening,redstoneCustomOre",
-    "ingredients": {
-      "P": "IMBUEDPROJECTILE",
-      "Q": "IMBUEDQUICKENING",
-      "T": "redstoneCustomOre"
-    },
-    "recipe": [
-      "T T",
-      "PQP",
-      "PPP"
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "IMBUEDPROJECTILE",
+        "Q": "IMBUEDQUICKENING",
+        "T": "redstoneCustomOre"
+      },
+      "shape": [
+        "T T",
+        "PQP",
+        "PPP"
+      ]
+    }
   }
 }

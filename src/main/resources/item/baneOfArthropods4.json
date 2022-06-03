@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baneOfArthropods3,arachnidEssence",
     "attributes": {},
-    "ingredients": {
-      "A": "ARACHNIDESSENCE",
-      "B": "BANEOFARTHROPODS3"
-    },
-    "recipe": [
-      "AAA",
-      " B ",
-      "AAA"
-    ]
+    "shaped": {
+      "ingredients": {
+        "A": "ARACHNIDESSENCE",
+        "B": "BANEOFARTHROPODS3"
+      },
+      "shape": [
+        "AAA",
+        " B ",
+        "AAA"
+      ]
+    }
   }
 }

@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,cushionEssence",
     "attributes": {},
-    "ingredients": {
-      "F": "CUSHIONESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " F ",
-      " B ",
-      " F "
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "CUSHIONESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " F ",
+        " B ",
+        " F "
+      ]
+    }
   }
 }

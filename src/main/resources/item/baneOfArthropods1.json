@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,arachnidEssence",
     "attributes": {},
-    "ingredients": {
-      "A": "ARACHNIDESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " A ",
-      " B ",
-      " A "
-    ]
+    "shaped": {
+      "ingredients": {
+        "A": "ARACHNIDESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " A ",
+        " B ",
+        " A "
+      ]
+    }
   }
 }

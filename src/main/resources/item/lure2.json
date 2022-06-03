@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "lure1,lureEssence",
     "attributes": {},
-    "ingredients": {
-      "L": "LUREESSENCE",
-      "B": "LURE1"
-    },
-    "recipe": [
-      " L ",
-      " B ",
-      "L L"
-    ]
+    "shaped": {
+      "ingredients": {
+        "L": "LUREESSENCE",
+        "B": "LURE1"
+      },
+      "shape": [
+        " L ",
+        " B ",
+        "L L"
+      ]
+    }
   }
 }

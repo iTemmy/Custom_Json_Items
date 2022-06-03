@@ -7,14 +7,16 @@
     "enchants": ["GLOW;1"],
     "lore": [],
     "attributes": {},
-    "ingredients": {
-      "G": "GOLD_NUGGET",
-      "B": "BOOK"
-    },
-    "recipe": [
-      "GGG",
-      "GBG",
-      "GGG"
-    ]
+    "shaped": {
+      "ingredients": {
+        "G": "GOLD_NUGGET",
+        "B": "BOOK"
+      },
+      "shape": [
+        "GGG",
+        "GBG",
+        "GGG"
+      ]
+    }
   }
 }

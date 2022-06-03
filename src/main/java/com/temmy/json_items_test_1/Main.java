@@ -1,44 +1,35 @@
 package com.temmy.json_items_test_1;
 
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
-import com.mysql.cj.jdbc.MysqlDataSource;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
+import com.temmy.json_items_test_1.Parser.Item;
 import com.temmy.json_items_test_1.Parser.ItemParser;
 import com.temmy.json_items_test_1.command.*;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
 import com.temmy.json_items_test_1.util.*;
-import com.temmy.json_items_test_1.util.customItems.CustomItem;
 import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import com.temmy.json_items_test_1.util.newCustomItem.recipe.*;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
 
 //TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
 //TODO: REMEMBER CHANGED THE SEPARATOR BETWEEN ATTRIBUTES TO ~ FROM ; TO ALLOW LISTING OF BLOCKS WITH THE ; AS THE SEPARATOR
@@ -56,8 +47,6 @@ import java.util.logging.Level;
 public final class Main extends JavaPlugin {
     private static JavaPlugin plugin;
     public static JavaPlugin getPlugin(){return plugin;}
-    private static Map<String, ItemStack> customItems_OLD = new HashMap<>();
-    private static Map<String, CustomItem> db_customItems_OLDv2 = new HashMap<>();
     private static Map<String, NewCustomItem> customItems = new HashMap<>();
     public static boolean debug;
     public static String customOreWorld;
@@ -68,13 +57,12 @@ public final class Main extends JavaPlugin {
     public static NamespacedKey glowKey;
     public static Glow glow;
     public static Map<Location, ActiveInventory> newActiveInventories = new HashMap<>();
-    static DataSource dataSource;
-    Database database;
-    Connection conn;
 
     public static WorldGuard getWorldGuard(){
         return worldGuard;
     }
+    private Map<String, File> files3 = new HashMap<>();
+    private List<String> l = new ArrayList<>();
 
     public static void registerCustomFlag(){
         FlagRegistry registry = worldGuard.getFlagRegistry();
@@ -125,9 +113,7 @@ public final class Main extends JavaPlugin {
         }
         for (String s : l)
             files3.remove(s);
-        //data.test();
-        //createCustomItemInDatabase_OLD();
-        getLogger().info(String.format("Registered %s items.", customItems.size()));
+        getLogger().info(String.format("Registered %s items.", new Item().getAllItems().size()));
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
         getCommand("reloadores").setExecutor(new Reload());
@@ -157,42 +143,20 @@ public final class Main extends JavaPlugin {
         server.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         server.getPluginManager().registerEvents(new EntityTargetLivingEntity(), this);
         server.getPluginManager().registerEvents(new EntityExplode(), this);
-        server.getPluginManager().registerEvents(new AsyncChatListener(), this);
         server.getPluginManager().registerEvents(new InventoryCloseListener(), this);
         server.getPluginManager().registerEvents(new InventoryOpenListener(), this);
         server.getPluginManager().registerEvents(new InventoryMoveItemListener(), this);
     }
 
     public void onDisable(){
-        try {
-            if (conn != null && conn.isValid(1))
-                conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         saveLocalConfig();
     }
-
-    public static Map<String, ItemStack> getCustomItems_OLD(){return customItems_OLD;}
-
-    public static Map<String, CustomItem> getDb_customItems_OLDv2(){return db_customItems_OLDv2;}
 
     public static Map<String, NewCustomItem> getCustomItems(){
         return customItems;
     }
 
-    Map<String, File> files3 = new HashMap<>();
-    List<String> l = new ArrayList<>();
-
-    private void registerMySQLRecipes(){
-
-    }
-
-    public static DataSource getDataSource() {
-        return dataSource;
-    }
-
-    @SuppressWarnings({"unchecked", "rawtypes", "ConstantConditions"})
+    @SuppressWarnings({"rawtypes"})
     private void registerItemJsonRecipes(File itemFile){
         try {
             if (itemFile.isDirectory()) return;
@@ -202,10 +166,8 @@ public final class Main extends JavaPlugin {
             Map itemSection = (Map) itemJson.get("ITEM");
             if (itemSection == null) return;
 
-            Map<String, String> ingredients = (Map) itemSection.get("ingredients");
-            JSONArray recipe = (JSONArray) itemSection.get("recipe");
             String fileName = itemFile.getName().replaceAll(".json$", "").replaceAll("\\s", "_");
-            if (customItems.containsKey(fileName.toLowerCase())) {
+            if (new Item().getByName(fileName.toLowerCase()) != null){
                 return;
             }
 
@@ -217,47 +179,192 @@ public final class Main extends JavaPlugin {
                         for (File file : PluginFiles.getItemFiles())
                             if (req.equalsIgnoreCase(file.getName().trim().replace(".json", "")))
                                 registerItemJsonRecipes(file);
-                        if (!(customItems.containsKey(req))) {
-                            if (!files3.containsValue(itemFile))
+                        if (new Item().getByName(req) == null){
+                            if (!files3.containsValue(itemFile)) {
                                 files3.put(fileName, itemFile);
+                            }
                         }
                     }
                 }
             }
+
             NewCustomItem customItem = ItemParser.parseItem(fileName);
-            ItemStack item = customItem.build().getItemStack();
-            if (item == null) {
-                if (debug)
-                    getLogger().info("Error "+fileName+" is null.");
-                return;}
 
-            if (ingredients != null && recipe != null){
-                ShapedRecipe shapedRecipe = new ShapedRecipe(new NamespacedKey(Main.getPlugin(), fileName), item);
-
-                List<String> recipeLine = new ArrayList<String>(recipe);
-                shapedRecipe.shape(recipeLine.toArray(new String[0]));
-
-                for (String key : ingredients.keySet()) {
-                    if (Material.matchMaterial(ingredients.get(key)) != null)
-                        shapedRecipe.setIngredient(key.charAt(0), Material.valueOf(ingredients.get(key).toUpperCase()));
-                    else if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), ingredients.get(key))) != null)
-                        shapedRecipe.setIngredient(key.charAt(0), Bukkit.getRecipe(new NamespacedKey(getPlugin(), ingredients.get(key))).getResult());
-                    else if (customItems.containsKey(ingredients.get(key).toLowerCase())){
-                        shapedRecipe.setIngredient(key.charAt(0), customItems.get(ingredients.get(key).toLowerCase()).getItemStack());
-                    }
-                }
-                if (Bukkit.getRecipe(new NamespacedKey(Main.getPlugin(), fileName)) == null) {
-                    if (debug)
-                        getLogger().info("Registering "+fileName);
-                    Bukkit.addRecipe(shapedRecipe);
-                }
-            }
-            customItems.put(fileName.toLowerCase(), customItem);
+            recipe(itemSection, customItem);
 
         }catch (IOException | ParseException | IllegalArgumentException | NullPointerException e){
             if (debug) getLogger().warning("Error: "+itemFile.getName());
             e.printStackTrace();
         }
+    }
+
+    private void recipe(Map itemSeciton, NewCustomItem customItem){
+        if (itemSeciton.containsKey("smoking"))
+            smoking(itemSeciton, customItem, "smoking");
+        if (itemSeciton.containsKey("campfire"))
+            smoking(itemSeciton, customItem, "campfire");
+        if (itemSeciton.containsKey("furnace"))
+            smoking(itemSeciton, customItem, "furnace");
+        if (itemSeciton.containsKey("blasting"))
+            smoking(itemSeciton, customItem, "blasting");
+        if (itemSeciton.containsKey("merchant"))
+            merchant(itemSeciton, customItem);
+        if (itemSeciton.containsKey("shaped"))
+            shaped(itemSeciton, customItem);
+        if (itemSeciton.containsKey("shapeless"))
+            shapeless(itemSeciton, customItem);
+        if (itemSeciton.containsKey("smithing"))
+            smithing(itemSeciton, customItem);
+        if (itemSeciton.containsKey("stonecutting"))
+            stonecutting(itemSeciton, customItem);
+    }
+
+    private void stonecutting(Map<String, Object> itemSection, NewCustomItem customItem){
+        Map<String, Object> map = (Map<String, Object>) itemSection.get("stonecutting");
+
+        RecipeInput input = null;
+        if (Material.matchMaterial((String) map.get("input")) != null)
+            input = new MaterialInput().setItem(Material.matchMaterial((String) map.get("input")));
+        else if (new Item().getByName(((String) map.get("input")).toLowerCase()) != null)
+            input = new ItemStackInput().setItem(new Item().getByName(((String) map.get("input")).toLowerCase()).build().getItemStack());
+        else {
+            getLogger().warning(String.format("Invalid input %s for %s for stonecutting recipe", map.get("input"), customItem.getName()));
+            return;
+        }
+
+        customItem.setRecipe(new StonecuttingRecipe(input, customItem.build().getItemStack()));
+        Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"stonecutting")));
+    }
+
+    private void smithing(Map<String, ?> itemSection, NewCustomItem customItem){
+        Map<String, Object> map = (Map<String, Object>) itemSection.get("smithing");
+
+        RecipeInput input = null;
+        if (Material.matchMaterial((String) map.get("input")) != null)
+            input = new MaterialInput().setItem(Material.matchMaterial((String) map.get("input")));
+        else if (new Item().getByName(((String) map.get("input")).toLowerCase()) != null)
+            input = new ItemStackInput().setItem(new Item().getByName(((String) map.get("input")).toLowerCase()).build().getItemStack());
+        else {
+            getLogger().warning(String.format("Invalid input %s for %s for smithing recipe", map.get("input"), customItem.getName()));
+            return;
+        }
+
+        RecipeInput addition = null;
+        if (Material.matchMaterial((String) map.get("addition")) != null)
+            addition = new MaterialInput().setItem(Material.matchMaterial((String) map.get("addition")));
+        else if (new Item().getByName(((String) map.get("addition")).toLowerCase()) != null)
+            addition = new ItemStackInput().setItem(new Item().getByName(((String) map.get("addition")).toLowerCase()).build().getItemStack());
+        else {
+            getLogger().warning(String.format("Invalid addition %s for %s for smithing recipe", map.get("addition"), customItem.getName()));
+            return;
+        }
+
+        customItem.setRecipe(new SmithingRecipe(input, addition, customItem.build().getItemStack()));
+        Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"smithing")));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void shapeless(Map<String, ?> itemSection, NewCustomItem customItem){
+        Map<String, Object> map = (Map<String, Object>) itemSection.get("shapeless");
+
+        JSONArray ingredientsJson = (JSONArray) map.get("ingredients");
+        List<RecipeInput> ingredients = new ArrayList<>();
+        for (int i = 0; i < ingredientsJson.size(); i++)
+            if (Material.matchMaterial(String.valueOf(ingredientsJson.get(i))) != null)
+                ingredients.add(new MaterialInput().setItem(Material.matchMaterial(String.valueOf(ingredientsJson.get(i)))));
+            else if (new Item().getByName(String.valueOf(ingredientsJson.get(i)).toLowerCase()) != null)
+                ingredients.add(new ItemStackInput().setItem(new Item().getByName(String.valueOf(ingredientsJson.get(i)).toLowerCase()).build().getItemStack()));
+            else {
+                getLogger().warning(String.format("Invalid ingredient %s for %s for shapeless recipe", ingredients.get(i), customItem.getName()));
+                return;
+            }
+
+        customItem.setRecipe(new ShapelessRecipe(ingredients, customItem.build().getItemStack()));
+        Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"shaped")));
+    }
+
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    private void shaped(@NotNull Map<String, ?> itemSection, NewCustomItem customItem){
+        Map<String, Object> map = (Map<String, Object>) itemSection.get("shaped");
+
+        JSONArray shapeJson = (JSONArray) map.get("shape");
+        String[] shape = new String[3];
+        for (int i = 0; i < shapeJson.size(); i++)
+            shape[i] = shapeJson.get(i).toString();
+
+        Map<String, String> ingredientsJsonMap = (Map<String, String>) map.get("ingredients");
+        Map<Character, RecipeInput> ingredientsMap = new HashMap<>();
+        for (String key : ingredientsJsonMap.keySet()) {
+            if (Material.matchMaterial(ingredientsJsonMap.get(key)) != null)
+                ingredientsMap.put(key.charAt(0), new MaterialInput().setItem(Material.matchMaterial(ingredientsJsonMap.get(key))));
+            else if (new Item().getByName(ingredientsJsonMap.get(key).toLowerCase()) != null)
+                ingredientsMap.put(key.charAt(0), new ItemStackInput().setItem(new Item().getByName(ingredientsJsonMap.get(key).toLowerCase()).build().getItemStack()));
+            else {
+                getLogger().warning(String.format("Invalid ingredient %s for %s for shaped recipe", ingredientsMap.get(key), customItem.getName()));
+                return;
+            }
+        }
+        customItem.setRecipe(new ShapedRecipe(shape, customItem.build().getItemStack(), ingredientsMap));
+        Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"shaped")));
+    }
+
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    private void merchant(Map<String, ?> itemSection, NewCustomItem customItem){
+        Map<String, Object> map = (Map<String, Object>) itemSection.get("merchant");
+
+        List<RecipeInput> input = new ArrayList<>();
+
+        JSONArray ingredients = (JSONArray) map.get("ingredients");
+        for (Object ingredient : ingredients) {
+            if (Material.matchMaterial(ingredient.toString()) != null)
+                input.add(new MaterialInput().setItem(Material.matchMaterial((String) ingredient)));
+            else if (new Item().getByName(((String) ingredient).toLowerCase()) != null)
+                input.add(new ItemStackInput().setItem(new Item().getByName(((String) ingredient).toLowerCase()).build().getItemStack()));
+            else {
+                getLogger().warning(String.format("Invalid ingredient %s for %s for merchant recipe", ingredient, customItem.getName()));
+                return;
+            }
+        }
+
+        int uses = Integer.parseInt(String.valueOf(map.get("uses")));
+        int maxUses = Integer.parseInt(String.valueOf(map.get("maxUses")));
+        boolean experienceReward = (boolean) map.get("experienceReward");
+        int villagerExperience = Integer.parseInt(String.valueOf(map.get("villagerExperience")));
+        float priceMultiplier = Float.parseFloat(String.valueOf(map.get("priceMultiplier")));
+        int demand = Integer.parseInt(String.valueOf(map.get("demand")));
+        int specialPrice = Integer.parseInt(String.valueOf(map.get("specialPrice")));
+        boolean ignoreDiscounts = (boolean) map.get("ignoreDiscounts");
+
+        customItem.setRecipe(new MerchantRecipe(input, customItem.build().getItemStack(), uses, maxUses,experienceReward, villagerExperience, priceMultiplier, demand, specialPrice, ignoreDiscounts));
+        Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"merchant")));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private void smoking(Map<String, ?> itemSection, NewCustomItem customItem, String recipeType){
+        Map<String, Object> map = (Map<String, Object>) itemSection.get(recipeType);
+
+        RecipeInput inputChoice = null;
+        if (Material.matchMaterial((String) map.get("input")) != null)
+            inputChoice = new MaterialInput().setItem(Material.matchMaterial((String) map.get("input")));
+        else if (new Item().getByName(((String) map.get("input")).toLowerCase()) != null)
+            inputChoice = new ItemStackInput().setItem(new Item().getByName(((String) map.get("input")).toLowerCase()).build().getItemStack());
+        else  {
+            getLogger().warning(String.format("Invalid input %s for %s for %s", map.get("input"), customItem.getName(), recipeType));
+            return;
+        }
+
+
+
+        float experience = Float.parseFloat(String.valueOf(map.get("experience")));
+        int cookingTime = Integer.parseInt(String.valueOf(map.get("cookingTime")));
+
+        switch (recipeType) {
+            case "smoking" -> customItem.setRecipe(new SmokingRecipe(inputChoice, customItem.getItemStack(), experience, cookingTime));
+            case "campfire" -> customItem.setRecipe(new CampfireRecipe(inputChoice, customItem.getItemStack(), experience, cookingTime));
+            case "furnace" -> customItem.setRecipe(new FurnaceRecipe(inputChoice, customItem.getItemStack(), experience, cookingTime));
+            case "blasting" -> customItem.setRecipe(new BlastingRecipe(inputChoice, customItem.getItemStack(), experience, cookingTime));
+        }
+        Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+recipeType)));
     }
 
     public void registerGlow(){
@@ -294,119 +401,6 @@ public final class Main extends JavaPlugin {
         chances.put(Material.NETHER_QUARTZ_ORE.name(), plugin.getConfig().getInt(Material.NETHER_QUARTZ_ORE.name()));
         chances.put(Material.COPPER_ORE.name(), plugin.getConfig().getInt(Material.COPPER_ORE.name()));
         debug = plugin.getConfig().getBoolean("IncreasedDebugging");
-    }
-
-    void loadDatabase(){
-        database = new Database(plugin.getConfig().getString("database.host"),
-                plugin.getConfig().getInt("database.port"), plugin.getConfig().getString("database.database"),
-                plugin.getConfig().getString("database.user"), plugin.getConfig().getString("database.password"));
-        getLogger().info(database.host);
-        getLogger().info(String.valueOf(database.port));
-        getLogger().info(database.databaseName);
-        getLogger().info(database.user);
-        getLogger().info(database.password);
-    }
-
-    public DataSource initDataBase() throws SQLException {
-        MysqlDataSource dataSource = new MysqlConnectionPoolDataSource();
-        dataSource.setServerName(database.host);
-        dataSource.setPortNumber(database.port);
-        dataSource.setDatabaseName(database.databaseName);
-        dataSource.setUser(database.user);
-        dataSource.setPassword(database.password);
-        testDataSource(dataSource);
-        return dataSource;
-    }
-
-    private void testDataSource(DataSource dataSource) {
-        try {
-            if (conn != null && conn.isValid(1)) {
-                return;
-            }else if (conn == null || !conn.isValid(1)) {
-                conn = dataSource.getConnection();
-                return;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                conn = dataSource.getConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return;
-    }
-
-    private boolean createCustomItemInDatabase_OLD(){
-        try {
-            testDataSource(dataSource);
-            for (String key : db_customItems_OLDv2.keySet()) {
-                PreparedStatement stmt = conn.prepareStatement(
-                        "INSERT INTO CustomItems(UniqueName, ItemName, Material, Model, Damage, DamageSlot, Health, HealthSlot, " +
-                                "AttackSpeed, AttackSpeedSlot, Enchants, Unbreakable, Lore, Attributes, Requires, Ingredients, " +
-                                "Recipe) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-                );
-                test(stmt, db_customItems_OLDv2.get(key));
-            }
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private PreparedStatement test(PreparedStatement stmt, CustomItem item){
-        try {
-            stmt.setObject(1, item.getUniqueName());
-            if (item.getItemName() != null)stmt.setObject(2, LegacyComponentSerializer.legacy('&').serialize(item.getItemName())); else stmt.setObject(2, null);
-            stmt.setObject(3, item.getMaterial().name());
-            if (item.getModel() != null)stmt.setObject(4, item.getModel()); else stmt.setObject(4, null);
-            if (item.getDamage() != null)stmt.setObject(5, item.getDamage()); else stmt.setObject(5, null);
-            if (item.getDamageSlot() != null)stmt.setObject(6, item.getDamageSlot().name()); else stmt.setObject(6, null);
-            if (item.getHealth() != null)stmt.setObject(7, item.getHealth()); else stmt.setObject(7, null);
-            if (item.getHealthSlot() != null)stmt.setObject(8, item.getHealthSlot().name()); else stmt.setObject(8, null);
-            if (item.getAttackSpeed() != null)stmt.setObject(9, item.getAttackSpeed()); else stmt.setObject(9, null);
-            if (item.getAttackSpeedSlot() != null)stmt.setObject(10, item.getAttackSpeedSlot().name()); else stmt.setObject(10, null);
-            if (item.getStringEnchants() != null)stmt.setObject(11, item.getStringEnchants()); else stmt.setObject(11, null);
-            if (item.isUnbreakable() != null)stmt.setObject(12, item.isUnbreakable()); else stmt.setObject(12, null);
-            if (item.getStringLore() != null)stmt.setObject(13, item.getStringLore()); else stmt.setObject(13, null);
-            if (item.getAttributes() != null)stmt.setObject(14, item.getAttributes()); else stmt.setObject(14, null);
-            if (item.getRequires() != null)stmt.setObject(15, item.getRequires()); else stmt.setObject(15, null);
-            if (item.getStringIngredients() != null)stmt.setObject(16, item.getStringIngredients()); else stmt.setObject(16, null);
-            if (item.getShapedStringRecipe() != null)stmt.setObject(17, item.getShapedStringRecipe()); else stmt.setObject(17, null);
-            stmt.execute();
-        } catch (SQLException e) {
-            getLogger().log(Level.SEVERE, "Unable to prepare SQL statement to save Custom item to database", e);
-        }
-        return stmt;
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private void initDb() throws IOException {
-        String setup;
-        try (InputStream in = getClassLoader().getResourceAsStream("dbsetup.sql")){
-            setup = new String(in.readAllBytes());
-        } catch (IOException e) {
-            getLogger().log(Level.SEVERE, "Could not read db setup file.",e);
-            throw e;
-        }
-
-        String[] queries = setup.split(";");
-        for (String query : queries){
-            if (query.isBlank()) continue;
-            try {
-                testDataSource(dataSource);
-                if (conn == null)
-                    throw new SQLException("Unable to connect to database");
-                PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.execute();
-            } catch (SQLException e) {
-                getLogger().severe(query);
-                e.printStackTrace();
-            }
-        }
-        getLogger().info("Database setup complete.");
     }
 
     private static void saveLocalConfig(){

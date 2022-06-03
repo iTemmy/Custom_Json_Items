@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "impaling3,oxidisedEssence",
     "attributes": {},
-    "ingredients": {
-      "O": "OXIDISEDESSENCE",
-      "B": "IMPALING3",
-      "A": "ARROW"
-    },
-    "recipe": [
-      "OAO",
-      "OBO",
-      "OAO"
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "OXIDISEDESSENCE",
+        "B": "IMPALING3",
+        "A": "ARROW"
+      },
+      "shape": [
+        "OAO",
+        "OBO",
+        "OAO"
+      ]
+    }
   }
 }

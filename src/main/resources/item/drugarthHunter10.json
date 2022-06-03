@@ -9,18 +9,20 @@
     "lore": [],
     "attributes": {},
     "requires": "IMBUEDMOBESSENCE,IMBUEDBLAZE,IMBUEDARACHNIDESSENCE,IMBUEDUNDEAD,drugarthHunter5,IMBUEDHARDENING",
-    "ingredients": {
-      "M": "IMBUEDMOBESSENCE",
-      "B": "IMBUEDBLAZE",
-      "A": "IMBUEDARACHNIDESSENCE",
-      "U": "IMBUEDUNDEAD",
-      "G": "DRUGARTHHUNTER5",
-      "H": "IMBUEDHARDENING"
-    },
-    "recipe": [
-      "UMU",
-      "BGB",
-      "AHA"
-    ]
+    "shaped": {
+      "ingredients": {
+        "M": "IMBUEDMOBESSENCE",
+        "B": "IMBUEDBLAZE",
+        "A": "IMBUEDARACHNIDESSENCE",
+        "U": "IMBUEDUNDEAD",
+        "G": "DRUGARTHHUNTER5",
+        "H": "IMBUEDHARDENING"
+      },
+      "shape": [
+        "UMU",
+        "BGB",
+        "AHA"
+      ]
+    }
   }
 }

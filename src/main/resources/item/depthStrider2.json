@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "depthStrider1,StriderEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "STRIDERESSENCE",
-      "B": "DEPTHSTRIDER1"
-    },
-    "recipe": [
-      "SSS",
-      " B ",
-      "SSS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "STRIDERESSENCE",
+        "B": "DEPTHSTRIDER1"
+      },
+      "shape": [
+        "SSS",
+        " B ",
+        "SSS"
+      ]
+    }
   }
 }

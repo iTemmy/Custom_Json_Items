@@ -11,14 +11,16 @@
       }
     },
     "requires": "coalCustomOre",
-    "ingredients": {
-      "B": "coalCustomOre",
-      "D": "BARRIER"
-    },
-    "recipe": [
-      "DBD",
-      "BBD",
-      "DDB"
-    ]
+    "shaped": {
+      "ingredients": {
+        "B": "coalCustomOre",
+        "D": "BARRIER"
+      },
+      "shape": [
+        "DBD",
+        "BBD",
+        "DDB"
+      ]
+    }
   }
 }

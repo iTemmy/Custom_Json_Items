@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "luckOfTheSea1,treasureEssence",
     "attributes": {},
-    "ingredients": {
-      "T": "TREASUREESSENCE",
-      "L": "LUCKOFTHESEA1"
-    },
-    "recipe": [
-      " T ",
-      " L ",
-      "T T"
-    ]
+    "shaped": {
+      "ingredients": {
+        "T": "TREASUREESSENCE",
+        "L": "LUCKOFTHESEA1"
+      },
+      "shape": [
+        " T ",
+        " L ",
+        "T T"
+      ]
+    }
   }
 }

@@ -19,16 +19,18 @@
       }
     },
     "requires":  "imbuedHardening,emeraldCustomOre,otherworldlyTrophy,scaleHelmet",
-    "ingredients": {
-      "H": "IMBUEDHARDENING",
-      "E": "emeraldCustomOre",
-      "O": "OTHERWORLDLYTROPHY",
-      "S": "SCALEHELMET"
-    },
-    "recipe": [
-      "HOH",
-      "ESE",
-      "   "
-    ]
+    "shaped": {
+      "ingredients": {
+        "H": "IMBUEDHARDENING",
+        "E": "emeraldCustomOre",
+        "O": "OTHERWORLDLYTROPHY",
+        "S": "SCALEHELMET"
+      },
+      "shape": [
+        "HOH",
+        "ESE",
+        "   "
+      ]
+    }
   }
 }

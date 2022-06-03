@@ -9,13 +9,15 @@
     "attributes": {
     },
     "requires": "mobEssence",
-    "ingredients": {
-      "F": "MOBESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "MOBESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

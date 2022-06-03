@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,splicingEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "SPLICINGESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " S ",
-      " B ",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "SPLICINGESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " S ",
+        " B ",
+        " S "
+      ]
+    }
   }
 }

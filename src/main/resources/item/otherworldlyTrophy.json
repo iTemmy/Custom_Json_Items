@@ -9,17 +9,19 @@
     "attributes": {
       "PLACE": {"PLACE": false}
     },
-    "ingredients": {
-      "G": "GHAST_TEAR",
-      "S": "NETHER_STAR",
-      "N": "NETHERITE_SCRAP",
-      "E": "ENDER_EYE",
-      "D": "DRAGON_EGG"
-    },
-    "recipe": [
-      "NSN",
-      "GEG",
-      "NDN"
-    ]
+    "shaped": {
+      "ingredients": {
+        "G": "GHAST_TEAR",
+        "S": "NETHER_STAR",
+        "N": "NETHERITE_SCRAP",
+        "E": "ENDER_EYE",
+        "D": "DRAGON_EGG"
+      },
+      "shape": [
+        "NSN",
+        "GEG",
+        "NDN"
+      ]
+    }
   }
 }

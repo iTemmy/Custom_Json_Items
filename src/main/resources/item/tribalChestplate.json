@@ -18,15 +18,17 @@
       }
     },
     "requires":  "imbuedCushion,imbuedSilk,quartzCustomOre",
-    "ingredients": {
-      "C": "IMBUEDCUSHION",
-      "S": "IMBUEDSILK",
-      "Z": "quartzCustomOre"
-    },
-    "recipe": [
-      "Z Z",
-      "CSC",
-      "CCC"
-    ]
+    "shaped": {
+      "ingredients": {
+        "C": "IMBUEDCUSHION",
+        "S": "IMBUEDSILK",
+        "Z": "quartzCustomOre"
+      },
+      "shape": [
+        "Z Z",
+        "CSC",
+        "CCC"
+      ]
+    }
   }
 }

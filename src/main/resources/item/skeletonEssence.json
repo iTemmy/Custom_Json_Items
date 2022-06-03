@@ -6,16 +6,17 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "B": "BONE",
-      "O": "BOW"
-    },
-    "recipe": [
-      "BBB",
-      "BOB",
-      "BBB"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "B": "BONE",
+        "O": "BOW"
+      },
+      "shape": [
+        "BBB",
+        "BOB",
+        "BBB"
+      ]
+    }
   }
 }

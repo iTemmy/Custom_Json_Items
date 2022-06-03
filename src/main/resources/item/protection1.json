@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,protectionScraps",
     "attributes": {},
-    "ingredients": {
-      "P": "PROTECTIONSCRAPS",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " P ",
-      " B ",
-      " P "
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PROTECTIONSCRAPS",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " P ",
+        " B ",
+        " P "
+      ]
+    }
   }
 }

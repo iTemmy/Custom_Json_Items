@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,StriderEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "STRIDERESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " S ",
-      "SBS",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "STRIDERESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " S ",
+        "SBS",
+        " S "
+      ]
+    }
   }
 }
