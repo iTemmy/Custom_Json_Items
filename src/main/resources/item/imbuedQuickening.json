@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "quickeningEssence",
-    "ingredients": {
-      "F": "QUICKENINGESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "QUICKENINGESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

@@ -6,16 +6,17 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "S": "SUGAR",
-      "B": "WATER_BUCKET"
-    },
-    "recipe": [
-      "SSS",
-      "SBS",
-      "SSS"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "S": "SUGAR",
+        "B": "WATER_BUCKET"
+      },
+      "shape": [
+        "SSS",
+        "SBS",
+        "SSS"
+      ]
+    }
   }
 }

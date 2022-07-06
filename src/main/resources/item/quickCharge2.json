@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "quickCharge1,quickeningEssence",
     "attributes": {},
-    "ingredients": {
-      "G": "GOLD_INGOT",
-      "R": "QUICKENINGESSENCE",
-      "B": "QUICKCHARGE1"
-    },
-    "recipe": [
-      "GRG",
-      " B ",
-      "GRG"
-    ]
+    "shaped": {
+      "ingredients": {
+        "G": "GOLD_INGOT",
+        "R": "QUICKENINGESSENCE",
+        "B": "QUICKCHARGE1"
+      },
+      "shape": [
+        "GRG",
+        " B ",
+        "GRG"
+      ]
+    }
   }
 }

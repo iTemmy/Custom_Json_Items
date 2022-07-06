@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,frostEssence",
     "attributes": {},
-    "ingredients": {
-      "I": "FROSTESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " I ",
-      "IBI",
-      " I "
-    ]
+    "shaped": {
+      "ingredients": {
+        "I": "FROSTESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " I ",
+        "IBI",
+        " I "
+      ]
+    }
   }
 }

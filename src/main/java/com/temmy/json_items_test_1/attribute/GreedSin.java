@@ -27,7 +27,7 @@ public class GreedSin {
         if (!(e.getEntity() instanceof Player player)) return;
         if (!(e.getProjectile() instanceof Arrow arrow)) return;
         if (Main.worldGuardEnabled)
-            worldGuard(e);
+            if (worldGuard(e)) return;
         double level = -99;
         double baseDamage = -99;
         double damage;
@@ -75,13 +75,17 @@ public class GreedSin {
             return (long) (4.5*Math.pow(level, 2) - 162.5*level + 2220.0);
     }
 
-    private static void worldGuard(EntityShootBowEvent e){
+    private static boolean worldGuard(EntityShootBowEvent e){
         WorldGuard worldGuard = Main.getWorldGuard();
         RegionContainer container = worldGuard.getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
-        if (set == null) return;
-        if (!set.testState(null, Main.attributesEnabledFlag)) e.setCancelled(true);
+        if (set == null) return false;
+        if (!set.testState(null, Main.attributesEnabledFlag)) {
+            e.setCancelled(true);
+            return true;
+        }
+        return false;
     }
 
 }

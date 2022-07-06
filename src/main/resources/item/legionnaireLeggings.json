@@ -13,15 +13,17 @@
       }
     },
     "requires":  "pricklyEssence,imbuedProtection,coalCustomOre",
-    "ingredients": {
-      "P": "PRICKLYESSENCE",
-      "I": "IMBUEDPROTECTION",
-      "C": "coalCustomOre"
-    },
-    "recipe": [
-      "CPC",
-      "I I",
-      "I I"
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PRICKLYESSENCE",
+        "I": "IMBUEDPROTECTION",
+        "C": "coalCustomOre"
+      },
+      "shape": [
+        "CPC",
+        "I I",
+        "I I"
+      ]
+    }
   }
 }

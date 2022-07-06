@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "power3,skeletonEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "SKELETONESSENCE",
-      "P": "POWER3"
-    },
-    "recipe": [
-      "SSS",
-      " P ",
-      "SSS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "SKELETONESSENCE",
+        "P": "POWER3"
+      },
+      "shape": [
+        "SSS",
+        " P ",
+        "SSS"
+      ]
+    }
   }
 }

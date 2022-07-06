@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "flameScraps",
-    "ingredients": {
-      "F": "FLAMESCRAPS"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "FLAMESCRAPS"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

@@ -8,16 +8,18 @@
     "lore": [],
     "requires": "riptide1,oxidisedEssence",
     "attributes": {},
-    "ingredients": {
-      "O": "OXIDISEDESSENCE",
-      "B": "riptide1",
-      "R": "REDSTONE",
-      "S": "SCUTE"
-    },
-    "recipe": [
-      "OOO",
-      "RBR",
-      "RSR"
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "OXIDISEDESSENCE",
+        "B": "riptide1",
+        "R": "REDSTONE",
+        "S": "SCUTE"
+      },
+      "shape": [
+        "OOO",
+        "RBR",
+        "RSR"
+      ]
+    }
   }
 }

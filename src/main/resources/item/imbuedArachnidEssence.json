@@ -8,13 +8,15 @@
     "lore": [],
     "attributes": {},
     "requires": "arachnidEssence",
-    "ingredients": {
-      "F": "ARACHNIDESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "ARACHNIDESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

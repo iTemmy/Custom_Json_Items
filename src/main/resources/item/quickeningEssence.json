@@ -6,16 +6,17 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "R": "REDSTONE",
-      "G": "GOLD_NUGGET"
-    },
-    "recipe": [
-      "RRR",
-      "RGR",
-      "RRR"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "R": "REDSTONE",
+        "G": "GOLD_NUGGET"
+      },
+      "shape": [
+        "RRR",
+        "RGR",
+        "RRR"
+      ]
+    }
   }
 }

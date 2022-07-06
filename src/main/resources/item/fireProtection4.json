@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "fireProtection3,flameScraps",
     "attributes": {},
-    "ingredients": {
-      "F": "FLAMESCRAPS",
-      "B": "FIREPROTECTION3"
-    },
-    "recipe": [
-      "FFF",
-      "FBF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "FLAMESCRAPS",
+        "B": "FIREPROTECTION3"
+      },
+      "shape": [
+        "FFF",
+        "FBF",
+        "FFF"
+      ]
+    }
   }
 }

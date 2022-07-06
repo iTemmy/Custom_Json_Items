@@ -6,16 +6,17 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "R": "ROTTEN_FLESH",
-      "I": "IRON_INGOT"
-    },
-    "recipe": [
-      "RRR",
-      "RIR",
-      "RRR"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "R": "ROTTEN_FLESH",
+        "I": "IRON_INGOT"
+      },
+      "shape": [
+        "RRR",
+        "RIR",
+        "RRR"
+      ]
+    }
   }
 }

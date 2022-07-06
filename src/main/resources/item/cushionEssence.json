@@ -7,14 +7,16 @@
     "enchants": ["GLOW;1"],
     "lore": [],
     "attributes": {},
-    "ingredients": {
-      "F": "FEATHER",
-      "S": "SLIME_BALL"
-    },
-    "recipe": [
-      "FFF",
-      "FSF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "FEATHER",
+        "S": "SLIME_BALL"
+      },
+      "shape": [
+        "FFF",
+        "FSF",
+        "FFF"
+      ]
+    }
   }
 }

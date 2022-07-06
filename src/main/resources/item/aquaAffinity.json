@@ -4,21 +4,25 @@
     "name": "&eEnchanted Book",
     "material": "ENCHANTED_BOOK",
     "model": 0,
-    "enchants": ["AQUA_AFFINITY;1"],
+    "enchants": [
+      "AQUA_AFFINITY;1"
+    ],
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "T": "SEAGRASS",
-      "S": "SCUTE",
-      "W": "WATER_BUCKET",
-      "B": "BASEENCHANT",
-      "K": "KELP"
-    },
-    "recipe": [
-      "TTT",
-      "SBS",
-      "KWK"
-    ]
+    "shaped": {
+      "ingredients": {
+        "T": "SEAGRASS",
+        "S": "SCUTE",
+        "W": "WATER_BUCKET",
+        "B": "BASEENCHANT",
+        "K": "KELP"
+      },
+      "shape": [
+        "TTT",
+        "SBS",
+        "KWK"
+      ]
+    }
   }
 }

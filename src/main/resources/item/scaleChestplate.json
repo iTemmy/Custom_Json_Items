@@ -17,15 +17,17 @@
       }
     },
     "requires":  "imbuedHardening,diamondCustomOre,imbuedProtection",
-    "ingredients": {
-      "H": "IMBUEDHARDENING",
-      "J": "diamondCustomOre",
-      "P": "IMBUEDPROTECTION"
-    },
-    "recipe": [
-      "J J",
-      "PHP",
-      "PPP"
-    ]
+    "shaped": {
+      "ingredients": {
+        "H": "IMBUEDHARDENING",
+        "J": "diamondCustomOre",
+        "P": "IMBUEDPROTECTION"
+      },
+      "shape": [
+        "J J",
+        "PHP",
+        "PPP"
+      ]
+    }
   }
 }

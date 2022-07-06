@@ -10,14 +10,16 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "emeraldCustomOre",
-    "ingredients": {
-      "E": "emeraldCustomOre",
-      "O": "OBSIDIAN"
-    },
-    "recipe": [
-      "OOO",
-      "OEO",
-      "OOO"
-    ]
+    "shaped": {
+      "ingredients": {
+        "E": "emeraldCustomOre",
+        "O": "OBSIDIAN"
+      },
+      "shape": [
+        "OOO",
+        "OEO",
+        "OOO"
+      ]
+    }
   }
 }

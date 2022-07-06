@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,projectileScraps",
     "attributes": {},
-    "ingredients": {
-      "P": "PROJECTILESCRAPS",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " P ",
-      " B ",
-      " P "
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PROJECTILESCRAPS",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " P ",
+        " B ",
+        " P "
+      ]
+    }
   }
 }

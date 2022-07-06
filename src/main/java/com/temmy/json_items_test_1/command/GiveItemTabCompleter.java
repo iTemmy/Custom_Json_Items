@@ -1,6 +1,6 @@
 package com.temmy.json_items_test_1.command;
 
-import com.temmy.json_items_test_1.Main;
+import com.temmy.json_items_test_1.Parser.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,9 +16,7 @@ public class GiveItemTabCompleter implements TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (sender instanceof Player) {
-            List<String> tabComplete = new ArrayList<>();
-            for (String s : Main.getCustomItems().keySet())
-                tabComplete.add(s);
+            List<String> tabComplete = new ArrayList<>(new Item().getAllItems());
             if (args.length == 1)
                 for (Player p : Bukkit.getOnlinePlayers())
                     tabComplete.add(p.getName());

@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "unbreaking1,hardeningEssence",
     "attributes": {},
-    "ingredients": {
-      "H": "HARDENINGESSENCE",
-      "B": "UNBREAKING1"
-    },
-    "recipe": [
-      " H ",
-      " B ",
-      "H H"
-    ]
+    "shaped": {
+      "ingredients": {
+        "H": "HARDENINGESSENCE",
+        "B": "UNBREAKING1"
+      },
+      "shape": [
+        " H ",
+        " B ",
+        "H H"
+      ]
+    }
   }
 }

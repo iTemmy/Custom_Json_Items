@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "sweepingEdge1,splicingEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "SPLICINGESSENCE",
-      "B": "SWEEPINGEDGE1"
-    },
-    "recipe": [
-      " S ",
-      " B ",
-      "S S"
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "SPLICINGESSENCE",
+        "B": "SWEEPINGEDGE1"
+      },
+      "shape": [
+        " S ",
+        " B ",
+        "S S"
+      ]
+    }
   }
 }

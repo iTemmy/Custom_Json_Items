@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "blastProtection3,combustibleScraps",
     "attributes": {},
-    "ingredients": {
-      "C": "COMBUSTIBLESCRAPS",
-      "B": "BLASTPROTECTION3"
-    },
-    "recipe": [
-      "CCC",
-      "CBC",
-      "CCC"
-    ]
+    "shaped": {
+      "ingredients": {
+        "C": "COMBUSTIBLESCRAPS",
+        "B": "BLASTPROTECTION3"
+      },
+      "shape": [
+        "CCC",
+        "CBC",
+        "CCC"
+      ]
+    }
   }
 }

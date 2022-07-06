@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "E": "ENDER_EYE",
-      "B": "BASEENCHANT",
-      "G": "GOLD_NUGGET"
-    },
-    "recipe": [
-      "GGG",
-      "EBE",
-      "GGG"
-    ]
+    "shaped": {
+      "ingredients": {
+        "E": "ENDER_EYE",
+        "B": "BASEENCHANT",
+        "G": "GOLD_NUGGET"
+      },
+      "shape": [
+        "GGG",
+        "EBE",
+        "GGG"
+      ]
+    }
   }
 }

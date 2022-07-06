@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "efficiency4,quickeningEssence",
     "attributes": {},
-    "ingredients": {
-      "Q": "QUICKENINGESSENCE",
-      "E": "EFFICIENCY4"
-    },
-    "recipe": [
-      "QQQ",
-      "QEQ",
-      "QQQ"
-    ]
+    "shaped": {
+      "ingredients": {
+        "Q": "QUICKENINGESSENCE",
+        "E": "EFFICIENCY4"
+      },
+      "shape": [
+        "QQQ",
+        "QEQ",
+        "QQQ"
+      ]
+    }
   }
 }

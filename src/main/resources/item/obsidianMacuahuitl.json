@@ -10,14 +10,16 @@
     "attributes": {
     },
     "requires": "ShatteredObsidian",
-    "ingredients": {
-      "O": "SHATTEREDOBSIDIAN",
-      "S": "STICK"
-    },
-    "recipe": [
-      "OSO",
-      "OSO",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "SHATTEREDOBSIDIAN",
+        "S": "STICK"
+      },
+      "shape": [
+        "OSO",
+        "OSO",
+        " S "
+      ]
+    }
   }
 }

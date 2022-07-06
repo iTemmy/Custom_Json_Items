@@ -8,16 +8,18 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "E": "EMERALD",
-      "B": "BASEENCHANT",
-      "C": "END_CRYSTAL",
-      "P": "PHANTOM_MEMBRANE"
-    },
-    "recipe": [
-      "ECE",
-      "PBP",
-      "ECE"
-    ]
+    "shaped": {
+      "ingredients": {
+        "E": "EMERALD",
+        "B": "BASEENCHANT",
+        "C": "END_CRYSTAL",
+        "P": "PHANTOM_MEMBRANE"
+      },
+      "shape": [
+        "ECE",
+        "PBP",
+        "ECE"
+      ]
+    }
   }
 }

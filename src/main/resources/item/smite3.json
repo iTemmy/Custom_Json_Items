@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "smite2,undeadEssence",
     "attributes": {},
-    "ingredients": {
-      "U": "UNDEADESSENCE",
-      "B": "SMITE2"
-    },
-    "recipe": [
-      " U ",
-      "UBU",
-      " U "
-    ]
+    "shaped": {
+      "ingredients": {
+        "U": "UNDEADESSENCE",
+        "B": "SMITE2"
+      },
+      "shape": [
+        " U ",
+        "UBU",
+        " U "
+      ]
+    }
   }
 }

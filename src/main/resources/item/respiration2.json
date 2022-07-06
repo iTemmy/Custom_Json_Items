@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "respiration1,oxidisedEssence",
     "attributes": {},
-    "ingredients": {
-      "O": "OXIDISEDESSENCE",
-      "R": "RESPIRATION1"
-    },
-    "recipe": [
-      " O ",
-      " R ",
-      "O O"
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "OXIDISEDESSENCE",
+        "R": "RESPIRATION1"
+      },
+      "shape": [
+        " O ",
+        " R ",
+        "O O"
+      ]
+    }
   }
 }

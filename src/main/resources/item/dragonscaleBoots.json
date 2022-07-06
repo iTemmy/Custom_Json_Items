@@ -19,16 +19,18 @@
       }
     },
     "requires":  "imbuedHardening,emeraldCustomOre,otherworldlyTrophy,scaleBoots",
-    "ingredients": {
-      "H": "IMBUEDHARDENING",
-      "E": "emeraldCustomOre",
-      "O": "OTHERWORLDLYTROPHY",
-      "S": "SCALEBOOTS"
-    },
-    "recipe": [
-      "   ",
-      "HSH",
-      "EOE"
-    ]
+    "shaped": {
+      "ingredients": {
+        "H": "IMBUEDHARDENING",
+        "E": "emeraldCustomOre",
+        "O": "OTHERWORLDLYTROPHY",
+        "S": "SCALEBOOTS"
+      },
+      "shape": [
+        "   ",
+        "HSH",
+        "EOE"
+      ]
+    }
   }
 }

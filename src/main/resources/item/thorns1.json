@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,pricklyEssence",
     "attributes": {},
-    "ingredients": {
-      "P": "PRICKLYESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " P ",
-      " B ",
-      " P "
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PRICKLYESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " P ",
+        " B ",
+        " P "
+      ]
+    }
   }
 }

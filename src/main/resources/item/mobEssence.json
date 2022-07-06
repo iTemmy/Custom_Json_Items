@@ -9,15 +9,17 @@
     "attributes": {
       "CRAFT": {"CRAFT": false}
     },
-    "ingredients": {
-      "R": "ROTTEN_FLESH",
-      "B": "BONE",
-      "L": "LAPIS_LAZULI"
-    },
-    "recipe": [
-      "BRB",
-      "RLR",
-      "BRB"
-    ]
+    "shaped": {
+      "ingredients": {
+        "R": "ROTTEN_FLESH",
+        "B": "BONE",
+        "L": "LAPIS_LAZULI"
+      },
+      "shape": [
+        "BRB",
+        "RLR",
+        "BRB"
+      ]
+    }
   }
 }

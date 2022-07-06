@@ -18,16 +18,18 @@
       }
     },
     "requires":  "oxidizedSerum,oceanicEssence,imbuedFlame,lapisCustomOre",
-    "ingredients": {
-      "O": "OXIDIZEDSERUM",
-      "0": "OCEANICESSENCE",
-      "S": "lapisCustomOre",
-      "F": "IMBUEDFLAME"
-    },
-    "recipe": [
-      "O O",
-      "0S0",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "OXIDIZEDSERUM",
+        "0": "OCEANICESSENCE",
+        "S": "lapisCustomOre",
+        "F": "IMBUEDFLAME"
+      },
+      "shape": [
+        "O O",
+        "0S0",
+        "FFF"
+      ]
+    }
   }
 }

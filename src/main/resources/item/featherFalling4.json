@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "featherFalling3,cushionEssence",
     "attributes": {},
-    "ingredients": {
-      "F": "CUSHIONESSENCE",
-      "B": "featherFalling3"
-    },
-    "recipe": [
-      "FFF",
-      "FBF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "CUSHIONESSENCE",
+        "B": "featherFalling3"
+      },
+      "shape": [
+        "FFF",
+        "FBF",
+        "FFF"
+      ]
+    }
   }
 }

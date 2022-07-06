@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "thorns2,pricklyEssence",
     "attributes": {},
-    "ingredients": {
-      "P": "PRICKLYESSENCE",
-      "B": "THORNS2"
-    },
-    "recipe": [
-      " P ",
-      "PBP",
-      " P "
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PRICKLYESSENCE",
+        "B": "THORNS2"
+      },
+      "shape": [
+        " P ",
+        "PBP",
+        " P "
+      ]
+    }
   }
 }

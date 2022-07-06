@@ -4,12 +4,18 @@ import com.temmy.json_items_test_1.Main;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class Attribute {
     public static final NamespacedKey namespacedKey = new NamespacedKey(Main.getPlugin(), "attributes");
     private static final Map<String, AttributeMethod> attributeMethods = new HashMap<>();
+
+    public static List<String> getAttributeMethods(){
+        return new ArrayList<>(Arrays.asList("AUTO_SMELT","ARMOREFFECTS","EFFECT","SPEEDFURNACE","PLACE","CRAFT",
+                "FULLSETARMOREFFECTS","ARMORATTRIBUTES","FULLSETARMORATTRIBUTES","ARROWATTRIBUTE","HELDITEM","GREEDSIN",
+                "PRIDESIN","SLOTHISIN","LUSTSIN","GLUTTONYSIN","AUTOFEED","REACH","NECROMANCER","FIREBALL","HOE"));
+
+    }
 
     //TODO: Create Attribute for hoes that when used to break crops they will auto replant and
     // possibly have a chance to drop extra crops from harvest
@@ -35,6 +41,8 @@ public final class Attribute {
         attributeMethods.put("REACH", Reach::trigger);
         attributeMethods.put("NECROMANCER", MagicNecromancer::trigger);
         attributeMethods.put("FIREBALL", MagicFireball::trigger);
+        attributeMethods.put("HOE", Hoe::trigger);
+        attributeMethods.put("MULTIPAGECHESTS", MultiPageChests::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){

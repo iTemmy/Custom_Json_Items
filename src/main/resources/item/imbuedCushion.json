@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "cushionEssence",
-    "ingredients": {
-      "F": "CUSHIONESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "CUSHIONESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

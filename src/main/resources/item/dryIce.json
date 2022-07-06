@@ -8,13 +8,15 @@
     "lore": [],
     "requires": "frostEssence",
     "attributes": {},
-    "ingredients": {
-      "F": "FROSTESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "FROSTESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

@@ -10,13 +10,15 @@
       "PLACE": {"PLACE": false}
     },
     "requires": "protectionScraps",
-    "ingredients": {
-      "F": "PROTECTIONSCRAPS"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "PROTECTIONSCRAPS"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

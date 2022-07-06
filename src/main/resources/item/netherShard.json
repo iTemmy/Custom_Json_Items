@@ -6,17 +6,18 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "S": "SOUL_LANTERN",
-      "M": "MAGMA_CREAM",
-      "B": "BLACKSTONE"
-    },
-    "recipe": [
-      "S S",
-      " M ",
-      "BBB"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "S": "SOUL_LANTERN",
+        "M": "MAGMA_CREAM",
+        "B": "BLACKSTONE"
+      },
+      "shape": [
+        "S S",
+        " M ",
+        "BBB"
+      ]
+    }
   }
 }

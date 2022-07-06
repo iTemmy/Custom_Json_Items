@@ -1,11 +1,23 @@
 package com.temmy.json_items_test_1.listener;
 
+import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
+import com.temmy.json_items_test_1.attribute.AutoFeed;
+import com.temmy.json_items_test_1.util.CustomDataTypes;
 import com.temmy.json_items_test_1.util.ItemUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BundleMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,11 +47,68 @@ public class PlayerInteractListener implements Listener {
             Material.STONECUTTER, Material.BEACON, Material.BREWING_STAND));
 
     @EventHandler
-    public static void onPlayerInteract(PlayerInteractEvent e){
+    public static void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getClickedBlock() != null && blocks.contains(e.getClickedBlock().getType())) return;
+
+        if (test(e.getPlayer(), e.getAction())){
+            e.setCancelled(true);
+            return;
+        }
         if (e.getItem() == null || e.getItem().getItemMeta() == null) return;
         Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(e.getItem().getItemMeta().getPersistentDataContainer());
         for (String attribute : attributeMap.keySet())
             Attribute.invoke(attribute, e, attributeMap.get(attribute));
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private static boolean test(Player player, Action action){
+        ItemStack itemstack = null;
+        BundleMeta meta = null;
+        for (ItemStack item : player.getInventory().getContents()){
+            if (item == null || item.getType() != Material.BUNDLE || !item.hasItemMeta()) continue;
+            ItemMeta iMeta = item.getItemMeta();
+            if (iMeta.getPersistentDataContainer().has(Attribute.namespacedKey, PersistentDataType.STRING)){
+                Map<String, String[]> attributeMap = ItemUtils.getItemAttributeMap(iMeta.getPersistentDataContainer());
+                if (attributeMap.containsKey("AUTOFEED")) {
+                    itemstack = item;
+                    meta = (BundleMeta) itemstack.getItemMeta();
+                    break;
+                }
+            }
+        }
+        if (meta == null)
+            return false;
+        if (action.isRightClick() && player.isSneaking()) {
+            if (meta.getPersistentDataContainer().has(AutoFeed.activeBundle, CustomDataTypes.Boolean))
+                meta.getPersistentDataContainer().set(AutoFeed.activeBundle, CustomDataTypes.Boolean,
+                        !meta.getPersistentDataContainer().get(AutoFeed.activeBundle, CustomDataTypes.Boolean));
+            else
+                meta.getPersistentDataContainer().set(AutoFeed.activeBundle, CustomDataTypes.Boolean, true);
+            itemstack.setItemMeta(meta);
+            if (meta.getPersistentDataContainer().get(AutoFeed.activeBundle, CustomDataTypes.Boolean))
+                ff(player, itemstack, 1200L);//meta.getPersistentDataContainer().get(AutoFeed.taskDelayKey, PersistentDataType.LONG));
+            return true;
+        }
+        return false;
+    }
+
+    static final NamespacedKey autofeedTaskKey = new NamespacedKey(Main.getPlugin(), "taskid");
+
+    public static void ff(Player player, ItemStack bundle, long delay){
+        BundleMeta meta = (BundleMeta) bundle.getItemMeta();
+        ItemStack food = null;
+        for (ItemStack item : meta.getItems())
+            if (item.getType().isEdible())
+                food = item;
+        final ItemStack finalFood = food;
+        meta.getPersistentDataContainer().set(autofeedTaskKey, PersistentDataType.INTEGER, Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->{
+            if (!Bukkit.getOnlinePlayers().contains(player)) return;
+            if (player.getFoodLevel() < 20)
+                if (finalFood != null) {
+                    new PlayerItemConsumeEvent(player, finalFood);
+                }
+            ff(player, bundle, delay);
+        }, delay));
+        bundle.setItemMeta(meta);
     }
 }

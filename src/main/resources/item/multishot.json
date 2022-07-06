@@ -8,16 +8,18 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "A": "ARROW",
-      "B": "BASEENCHANT",
-      "I": "IRON_INGOT",
-      "R": "REDSTONE"
-    },
-    "recipe": [
-      "AAA",
-      "IBI",
-      "RIR"
-    ]
+    "shaped": {
+      "ingredients": {
+        "A": "ARROW",
+        "B": "BASEENCHANT",
+        "I": "IRON_INGOT",
+        "R": "REDSTONE"
+      },
+      "shape": [
+        "AAA",
+        "IBI",
+        "RIR"
+      ]
+    }
   }
 }

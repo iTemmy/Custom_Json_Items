@@ -8,13 +8,15 @@
     "lore": [],
     "attributes": {},
     "requires": "blazeEssence",
-    "ingredients": {
-      "F": "BLAZEESSENCE"
-    },
-    "recipe": [
-      "FFF",
-      "FFF",
-      "FFF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "BLAZEESSENCE"
+      },
+      "shape": [
+        "FFF",
+        "FFF",
+        "FFF"
+      ]
+    }
   }
 }

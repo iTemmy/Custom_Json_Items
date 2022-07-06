@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "L": "SLIME_BALL",
-      "B": "BASEENCHANT",
-      "S": "STRING"
-    },
-    "recipe": [
-      "SLS",
-      "SBS",
-      "SSS"
-    ]
+    "shaped": {
+      "ingredients": {
+        "L": "SLIME_BALL",
+        "B": "BASEENCHANT",
+        "S": "STRING"
+      },
+      "shape": [
+        "SLS",
+        "SBS",
+        "SSS"
+      ]
+    }
   }
 }

@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,treasureEssence",
     "attributes": {},
-    "ingredients": {
-      "T": "TREASUREESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " T ",
-      " B ",
-      " T "
-    ]
+    "shaped": {
+      "ingredients": {
+        "T": "TREASUREESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " T ",
+        " B ",
+        " T "
+      ]
+    }
   }
 }

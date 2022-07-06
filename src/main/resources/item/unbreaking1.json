@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,hardeningEssence",
     "attributes": {},
-    "ingredients": {
-      "H": "HARDENINGESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " H ",
-      " B ",
-      " H "
-    ]
+    "shaped": {
+      "ingredients": {
+        "H": "HARDENINGESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " H ",
+        " B ",
+        " H "
+      ]
+    }
   }
 }

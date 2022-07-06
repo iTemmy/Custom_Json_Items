@@ -37,7 +37,7 @@ public class GluttonySin {
         if (!(e.getDamager() instanceof Trident trident)) return;
         if (!(e.getEntity() instanceof LivingEntity livingEntity)) return;
         if (Main.worldGuardEnabled)
-            worldGuard(e);
+            if (worldGuard(e)) return;
         PersistentDataContainer data = trident.getPersistentDataContainer();
         if (!data.has(effectKey, PersistentDataType.STRING) || !data.has(timeLevelKey, PersistentDataType.INTEGER)
                 || !data.has(effectLevelKey, PersistentDataType.INTEGER)) return;
@@ -52,7 +52,7 @@ public class GluttonySin {
         if (!(event.getEntity() instanceof Trident trident)) return;
         if (!(event.getEntity().getShooter() instanceof Player player)) return;
         if (Main.worldGuardEnabled)
-            worldGuard(event);
+            if (worldGuard(event)) return;
         ItemStack tridentI = trident.getItemStack();
         if (!tridentI.hasItemMeta()) return;
         PotionEffectType type = null;
@@ -96,30 +96,36 @@ public class GluttonySin {
         }
     }
 
-    private static void worldGuard(EntityDamageByEntityEvent e) {
+    private static boolean worldGuard(EntityDamageByEntityEvent e) {
         WorldGuard worldGuard = Main.getWorldGuard();
         RegionContainer container = worldGuard.getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
-        if (set == null) return;
+        if (set == null) return false;
         if (!set.testState(null, Main.attributesEnabledFlag)){
             e.setCancelled(true);
-            return;
+            return true;
         }
         set = query.getApplicableRegions(BukkitAdapter.adapt(e.getDamager().getLocation()));
-        if (set == null) return;
+        if (set == null) return false;
         if (!set.testState(null, Main.attributesEnabledFlag)) {
             e.setCancelled(true);
+            return true;
         }
+        return false;
     }
 
-    private static void worldGuard(ProjectileLaunchEvent e){
+    private static boolean worldGuard(ProjectileLaunchEvent e){
         WorldGuard worldGuard = Main.getWorldGuard();
         RegionContainer container = worldGuard.getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set = query.getApplicableRegions(BukkitAdapter.adapt(e.getEntity().getLocation()));
-        if (set == null) return;
-        if (!set.testState(null, Main.attributesEnabledFlag)) e.setCancelled(true);
+        if (set == null) return false;
+        if (!set.testState(null, Main.attributesEnabledFlag)){
+            e.setCancelled(true);
+            return true;
+        }
+        return false;
     }
 
 }

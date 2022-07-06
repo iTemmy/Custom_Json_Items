@@ -6,16 +6,18 @@
     "model": 0,
     "enchants": ["FIRE_ASPECT;1"],
     "lore": [],
-    "requires": "baseEnchant,imbuedFlame",
+    "requires": "baseEnchant,imbuedBlaze",
     "attributes": {},
-    "ingredients": {
-      "F": "IMBUEDBLAZE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      "  F",
-      " B ",
-      "F  "
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "imbuedBlaze",
+        "B": "baseEnchant"
+      },
+      "shape": [
+        "  F",
+        " B ",
+        "F  "
+      ]
+    }
   }
 }

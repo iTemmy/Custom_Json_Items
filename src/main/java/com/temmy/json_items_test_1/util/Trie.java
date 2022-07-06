@@ -1,6 +1,4 @@
-package com.temmy.json_items_test_1.util.trie;
-
-import com.temmy.json_items_test_1.util.Queue;
+package com.temmy.json_items_test_1.util;
 
 public class Trie<Value> {
     private static final int R = 256;

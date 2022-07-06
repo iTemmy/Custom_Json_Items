@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "F": "BLAZE_POWDER",
-      "A": "ARROW",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      "FAF",
-      "ABA",
-      "FAF"
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "BLAZE_POWDER",
+        "A": "ARROW",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        "FAF",
+        "ABA",
+        "FAF"
+      ]
+    }
   }
 }

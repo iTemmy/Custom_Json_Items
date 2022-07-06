@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant,oxidisedEssence",
     "attributes": {},
-    "ingredients": {
-      "O": "OXIDISEDESSENCE",
-      "B": "BASEENCHANT",
-      "G": "GOLD_INGOT"
-    },
-    "recipe": [
-      "GGG",
-      "OBO",
-      "GGG"
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "OXIDISEDESSENCE",
+        "B": "BASEENCHANT",
+        "G": "GOLD_INGOT"
+      },
+      "shape": [
+        "GGG",
+        "OBO",
+        "GGG"
+      ]
+    }
   }
 }

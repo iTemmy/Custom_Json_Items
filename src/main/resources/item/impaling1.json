@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant,oxidisedEssence",
     "attributes": {},
-    "ingredients": {
-      "O": "OXIDISEDESSENCE",
-      "B": "BASEENCHANT",
-      "A": "ARROW"
-    },
-    "recipe": [
-      " O ",
-      "ABA",
-      " O "
-    ]
+    "shaped": {
+      "ingredients": {
+        "O": "OXIDISEDESSENCE",
+        "B": "BASEENCHANT",
+        "A": "ARROW"
+      },
+      "shape": [
+        " O ",
+        "ABA",
+        " O "
+      ]
+    }
   }
 }

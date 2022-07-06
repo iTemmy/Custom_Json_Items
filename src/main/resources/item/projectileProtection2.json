@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "projectileProtection1,projectileScraps",
     "attributes": {},
-    "ingredients": {
-      "P": "PROJECTILESCRAPS",
-      "B": "PROJECTILEPROTECTION1"
-    },
-    "recipe": [
-      " P ",
-      "PBP",
-      " P "
-    ]
+    "shaped": {
+      "ingredients": {
+        "P": "PROJECTILESCRAPS",
+        "B": "PROJECTILEPROTECTION1"
+      },
+      "shape": [
+        " P ",
+        "PBP",
+        " P "
+      ]
+    }
   }
 }

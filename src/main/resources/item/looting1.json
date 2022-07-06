@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,mobEssence",
     "attributes": {},
-    "ingredients": {
-      "M": "MOBESSENCE",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " M ",
-      " B ",
-      " M "
-    ]
+    "shaped": {
+      "ingredients": {
+        "M": "MOBESSENCE",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " M ",
+        " B ",
+        " M "
+      ]
+    }
   }
 }

@@ -1,0 +1,27 @@
+{
+  "ITEM": {
+    "file_name": "testReachSword",
+    "name": "&bReach Sword",
+    "material": "DIAMOND_SWORD",
+    "model": 2,
+    "enchants": ["SHARPNESS;4,LOOTING;2,MENDING;1"],
+    "lore": [],
+    "attributes": {
+      "REACH": {
+        "distance": 10
+      }
+    },
+    "shaped": {
+      "ingredients": {
+        "A": "DIAMOND",
+        "N": "NETHER_STAR",
+        "S": "STICK"
+      },
+      "shape": [
+        " A ",
+        "ANA",
+        " S "
+      ]
+    }
+  }
+}

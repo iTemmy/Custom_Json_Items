@@ -8,15 +8,17 @@
     "lore": [],
     "requires": "baseEnchant",
     "attributes": {},
-    "ingredients": {
-      "E": "EMERALD",
-      "B": "BASEENCHANT",
-      "A": "ARROW"
-    },
-    "recipe": [
-      "EAE",
-      "ABA",
-      "EAE"
-    ]
+    "shaped": {
+      "ingredients": {
+        "E": "EMERALD",
+        "B": "BASEENCHANT",
+        "A": "ARROW"
+      },
+      "shape": [
+        "EAE",
+        "ABA",
+        "EAE"
+      ]
+    }
   }
 }

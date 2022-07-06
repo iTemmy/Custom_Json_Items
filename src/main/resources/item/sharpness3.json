@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "sharpness2,blazeEssence",
     "attributes": {},
-    "ingredients": {
-      "E": "BLAZEESSENCE",
-      "S": "SHARPNESS2"
-    },
-    "recipe": [
-      " E ",
-      "ESE",
-      " E "
-    ]
+    "shaped": {
+      "ingredients": {
+        "E": "BLAZEESSENCE",
+        "S": "SHARPNESS2"
+      },
+      "shape": [
+        " E ",
+        "ESE",
+        " E "
+      ]
+    }
   }
 }

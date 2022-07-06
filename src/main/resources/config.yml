@@ -12,3 +12,9 @@ IncreasedDebugging: false
 # This is the world that the custom ores will drop in.
 # The ores that only drop in the nether will just be this followed by "_nether".
 CustomOresWorld: resource_world
+database:
+  host: localhost
+  port: 3306
+  database: db
+  user: username
+  password: password

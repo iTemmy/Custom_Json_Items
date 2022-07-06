@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "piercing2,splicingEssence",
     "attributes": {},
-    "ingredients": {
-      "S": "SPLICINGESSENCE",
-      "P": "PIERCING2"
-    },
-    "recipe": [
-      " S ",
-      "SPS",
-      " S "
-    ]
+    "shaped": {
+      "ingredients": {
+        "S": "SPLICINGESSENCE",
+        "P": "PIERCING2"
+      },
+      "shape": [
+        " S ",
+        "SPS",
+        " S "
+      ]
+    }
   }
 }

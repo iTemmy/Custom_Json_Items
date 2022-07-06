@@ -8,14 +8,16 @@
     "lore": [],
     "requires": "baseEnchant,flameScraps",
     "attributes": {},
-    "ingredients": {
-      "F": "FLAMESCRAPS",
-      "B": "BASEENCHANT"
-    },
-    "recipe": [
-      " F ",
-      " B ",
-      " F "
-    ]
+    "shaped": {
+      "ingredients": {
+        "F": "FLAMESCRAPS",
+        "B": "BASEENCHANT"
+      },
+      "shape": [
+        " F ",
+        " B ",
+        " F "
+      ]
+    }
   }
 }

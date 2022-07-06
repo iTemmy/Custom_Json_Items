@@ -6,17 +6,18 @@
     "model": 0,
     "enchants": ["GLOW;1"],
     "lore": [],
-    "attributes": {
-    },
-    "ingredients": {
-      "L": "LAPIS_LAZULI",
-      "G": "GOLD_NUGGET",
-      "P": "PUFFERFISH"
-    },
-    "recipe": [
-      "GLG",
-      "LPL",
-      "GLG"
-    ]
+    "attributes": {},
+    "shaped": {
+      "ingredients": {
+        "L": "LAPIS_LAZULI",
+        "G": "GOLD_NUGGET",
+        "P": "PUFFERFISH"
+      },
+      "shape": [
+        "GLG",
+        "LPL",
+        "GLG"
+      ]
+    }
   }
 }
