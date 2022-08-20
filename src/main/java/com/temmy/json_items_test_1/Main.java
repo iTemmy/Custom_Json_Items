@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.temmy.json_items_test_1.Parser.Item;
 import com.temmy.json_items_test_1.Parser.ItemParser;
+import com.temmy.json_items_test_1.attribute.MultiPageChests;
 import com.temmy.json_items_test_1.command.*;
 import com.temmy.json_items_test_1.file.PluginFiles;
 import com.temmy.json_items_test_1.listener.*;
@@ -14,8 +15,12 @@ import com.temmy.json_items_test_1.util.*;
 import com.temmy.json_items_test_1.util.newCustomItem.NewCustomItem;
 import com.temmy.json_items_test_1.util.newCustomItem.recipe.*;
 import org.bukkit.*;
+import org.bukkit.block.TileState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -53,7 +58,6 @@ public final class Main extends JavaPlugin {
     public static Boolean worldGuardEnabled = false;
     public static WorldGuard worldGuard = null;
     public static StateFlag attributesEnabledFlag;
-    public static Map<Player, Boolean> activeEditors;
     public static NamespacedKey glowKey;
     public static Glow glow;
     public static Map<Location, ActiveInventory> newActiveInventories = new HashMap<>();
@@ -94,16 +98,18 @@ public final class Main extends JavaPlugin {
             getLogger().warning("WorldGuard not detected, players will be able to use attributes anywhere!");
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         registerGlow();
         new Thread(this::registerFoods).start();
         registerEvents(getServer());
         PluginFiles.init();
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
-        loadConfig();
-
+        new Thread( () -> {
+            getConfig().options().copyDefaults();
+            saveDefaultConfig();
+            loadConfig();
+        }).start();
         getLogger().info("Registering Custom Items.");
         for (File item : PluginFiles.getItemFiles())
             registerItemJsonRecipes(item);
@@ -150,6 +156,26 @@ public final class Main extends JavaPlugin {
 
     public void onDisable(){
         saveLocalConfig();
+        saveActiveInventories();
+    }
+
+    private void saveActiveInventories(){
+        for (Location loc : newActiveInventories.keySet()){
+            ActiveInventory activeInv = newActiveInventories.get(loc);
+            for (Player player : activeInv.getViewers()){
+                player.closeInventory();
+            }
+            Map<Integer, Inventory> map = activeInv.getPages();
+            for (int i : map.keySet()){
+                map.get(i);
+                if (loc.getBlock().getState() instanceof TileState chest){
+                    PersistentDataContainer container = chest.getPersistentDataContainer().get(MultiPageChests.pageContainerKey, PersistentDataType.TAG_CONTAINER);
+                    assert container != null;
+                    MultiPageChests.savePage(container, map.get(i), i);
+                }else getLogger().warning(String.format("Unable to save active Inventory for inventory located at %sx, %sy, %sz in world %s", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), loc.getWorld().getName()));
+
+            }
+        }
     }
 
     public static Map<String, NewCustomItem> getCustomItems(){
@@ -198,25 +224,26 @@ public final class Main extends JavaPlugin {
         }
     }
 
-    private void recipe(Map itemSeciton, NewCustomItem customItem){
-        if (itemSeciton.containsKey("smoking"))
-            smoking(itemSeciton, customItem, "smoking");
-        if (itemSeciton.containsKey("campfire"))
-            smoking(itemSeciton, customItem, "campfire");
-        if (itemSeciton.containsKey("furnace"))
-            smoking(itemSeciton, customItem, "furnace");
-        if (itemSeciton.containsKey("blasting"))
-            smoking(itemSeciton, customItem, "blasting");
-        if (itemSeciton.containsKey("merchant"))
-            merchant(itemSeciton, customItem);
-        if (itemSeciton.containsKey("shaped"))
-            shaped(itemSeciton, customItem);
-        if (itemSeciton.containsKey("shapeless"))
-            shapeless(itemSeciton, customItem);
-        if (itemSeciton.containsKey("smithing"))
-            smithing(itemSeciton, customItem);
-        if (itemSeciton.containsKey("stonecutting"))
-            stonecutting(itemSeciton, customItem);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void recipe(Map itemSection, NewCustomItem customItem){
+        if (itemSection.containsKey("smoking"))
+            smoking(itemSection, customItem, "smoking");
+        if (itemSection.containsKey("campfire"))
+            smoking(itemSection, customItem, "campfire");
+        if (itemSection.containsKey("furnace"))
+            smoking(itemSection, customItem, "furnace");
+        if (itemSection.containsKey("blasting"))
+            smoking(itemSection, customItem, "blasting");
+        if (itemSection.containsKey("merchant"))
+            merchant(itemSection, customItem);
+        if (itemSection.containsKey("shaped"))
+            shaped(itemSection, customItem);
+        if (itemSection.containsKey("shapeless"))
+            shapeless(itemSection, customItem);
+        if (itemSection.containsKey("smithing"))
+            smithing(itemSection, customItem);
+        if (itemSection.containsKey("stonecutting"))
+            stonecutting(itemSection, customItem);
     }
 
     private void stonecutting(Map<String, Object> itemSection, NewCustomItem customItem){
@@ -236,6 +263,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"stonecutting")));
     }
 
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     private void smithing(Map<String, ?> itemSection, NewCustomItem customItem){
         Map<String, Object> map = (Map<String, Object>) itemSection.get("smithing");
 
@@ -263,7 +291,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"smithing")));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     private void shapeless(Map<String, ?> itemSection, NewCustomItem customItem){
         Map<String, Object> map = (Map<String, Object>) itemSection.get("shapeless");
 
@@ -339,7 +367,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getServer().addRecipe(customItem.getRecipe().getRecipe(new NamespacedKey(plugin, customItem.getName()+"merchant")));
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     private void smoking(Map<String, ?> itemSection, NewCustomItem customItem, String recipeType){
         Map<String, Object> map = (Map<String, Object>) itemSection.get(recipeType);
 

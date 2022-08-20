@@ -214,7 +214,7 @@ public class MultiPageChests {
      * @param page Page number of the inventory to be saved.
      * @return Will return updated PersistentDataContainer.
      */
-    private static @NotNull PersistentDataContainer savePage(@NotNull PersistentDataContainer pageContainer, @NotNull Inventory inv, int page){
+    public static @NotNull PersistentDataContainer savePage(@NotNull PersistentDataContainer pageContainer, @NotNull Inventory inv, int page){
         pageContainer.set(new NamespacedKey(Main.getPlugin(), String.format("page_%d", page)), CustomDataTypes.Inventory, inv);
         return pageContainer;
     }
@@ -393,7 +393,6 @@ public class MultiPageChests {
             dropItems(inv, state.getLocation());
             container.set(key, CustomDataTypes.Inventory, inv);
             state.getPersistentDataContainer().set(pageContainerKey, PersistentDataType.TAG_CONTAINER, container);
-            container = state.getPersistentDataContainer().get(pageContainerKey, PersistentDataType.TAG_CONTAINER);
             state.update();
             if (isEmpty(inv))
                 return;
@@ -447,7 +446,7 @@ public class MultiPageChests {
      * Used to create all the Inventories that will be saved on a block when it is placed.
      * @param size The size of the Inventories to be created.
      * @param pages The amount of Inventories to br created.
-     * @param block The Block the Inventories till be saved on.
+     * @param block The Block the Inventories will be saved on.
      * @return will return a List of Inventories to be saved on the Block.
      */
     private static @NotNull List<Inventory> createInventories(int size, int pages, @NotNull Block block){

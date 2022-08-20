@@ -15,33 +15,33 @@ import java.util.Map;
 
 public interface CustomItemInterface {
 
-  NewCustomItem setName(String name);
+  CustomItemInterface setName(String name);
 
-  NewCustomItem setMaterial(Material material);
+  CustomItemInterface setMaterial(Material material);
 
-  NewCustomItem setDisplayName(Component displayName);
+  CustomItemInterface setDisplayName(Component displayName);
 
-  NewCustomItem setRecipe(RecipeInterface recipe);
+  CustomItemInterface setRecipe(RecipeInterface recipe);
 
-  NewCustomItem setCustomAttributes(String attributes);
+  CustomItemInterface setCustomAttributes(String attributes);
 
-  NewCustomItem setVanillaAttributes(LinkedHashMultimap<Attribute, AttributeModifier> attributes);
+  CustomItemInterface setVanillaAttributes(LinkedHashMultimap<Attribute, AttributeModifier> attributes);
 
-  NewCustomItem addVanillaAttributes(Attribute attribute, AttributeModifier attributeModifier);
+  CustomItemInterface addVanillaAttributes(Attribute attribute, AttributeModifier attributeModifier);
 
-  NewCustomItem setCustomModelData(int data);
+  CustomItemInterface setCustomModelData(int data);
 
-  NewCustomItem setEnchants(Map<Enchantment, Integer> enchants);
+  CustomItemInterface setEnchants(Map<Enchantment, Integer> enchants);
 
-  NewCustomItem addEnchant(Enchantment enchant, int level);
+  CustomItemInterface addEnchant(Enchantment enchant, int level);
 
-  NewCustomItem setUnbreakable(boolean unbreakable);
+  CustomItemInterface setUnbreakable(boolean unbreakable);
 
-  NewCustomItem setLore(List<Component> lore);
+  CustomItemInterface setLore(List<Component> lore);
 
-  NewCustomItem addLore(Component lore);
+  CustomItemInterface addLore(Component lore);
 
-  NewCustomItem build();
+  CustomItemInterface build();
 
   Material getMaterial();
 
