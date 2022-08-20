@@ -3,13 +3,15 @@ version: ${project.version}
 main: com.temmy.json_items_test_1.Main
 api-version: 1.18
 authors: [ iTemmy ]
-depend:  [WorldGuard]
+softdepend: [WorldGuard]
 commands:
   giveitem:
     description: Spawn a custom item for the given player, or to the executor if none is provided.
   reloadores:
     description: reloads the ore drop chances from the config file.
   debugging:
-    description: Toggles addtional debugging information to console.
+    description: Toggles additional debugging information to console.
   triedump:
     description: internal testing
+  listitem:
+    description: Lists every item that has been loaded.

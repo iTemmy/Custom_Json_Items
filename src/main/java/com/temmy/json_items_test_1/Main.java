@@ -124,7 +124,7 @@ public final class Main extends JavaPlugin {
         getCommand("giveitem").setTabCompleter(new GiveItemTabCompleter());
         getCommand("reloadores").setExecutor(new Reload());
         getCommand("debugging").setExecutor(new Debugging());
-        getCommand("triedump").setExecutor(new trieDump());
+        getCommand("listItem").setExecutor(new ListItems());
         ores();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, checkForActiveInventories(), 72000L, 72000L);
     }
@@ -246,6 +246,7 @@ public final class Main extends JavaPlugin {
             stonecutting(itemSection, customItem);
     }
 
+    @SuppressWarnings({"ConstantConditions", "unchecked"})
     private void stonecutting(Map<String, Object> itemSection, NewCustomItem customItem){
         Map<String, Object> map = (Map<String, Object>) itemSection.get("stonecutting");
 
