@@ -12,8 +12,8 @@ public class Debugging implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!sender.hasPermission("jsonitems.debugging")) return false;
         Main.debug = !Main.debug;
-        sender.sendMessage(Main.debug?ChatColor.GREEN+String.format("[Json Items] Debugging now %s", Main.debug?"Enabled":"Disabled")
-                :ChatColor.DARK_RED+String.format("[Json Items] Debugging now %s", Main.debug?"Enabled":"Disabled"));
+        sender.sendMessage(Main.debug?ChatColor.GREEN+String.format("[Json Items] Debugging now %s", "Enabled")
+                :ChatColor.DARK_RED+String.format("[Json Items] Debugging now %s", "Disabled"));
         return true;
     }
 }
