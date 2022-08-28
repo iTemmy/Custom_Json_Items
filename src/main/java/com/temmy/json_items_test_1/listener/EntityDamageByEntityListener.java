@@ -3,7 +3,7 @@ package com.temmy.json_items_test_1.listener;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.attribute.GluttonySin;
 import com.temmy.json_items_test_1.attribute.MagicFireball;
-import com.temmy.json_items_test_1.util.CustomDataTypes;
+import com.temmy.json_items_test_1.util.PersistentDataTypes.CustomDataTypes;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;

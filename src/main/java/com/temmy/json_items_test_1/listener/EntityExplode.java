@@ -4,7 +4,7 @@ import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.attribute.MagicFireball;
 import com.temmy.json_items_test_1.attribute.MultiPageChests;
-import com.temmy.json_items_test_1.util.CustomDataTypes;
+import com.temmy.json_items_test_1.util.PersistentDataTypes.CustomDataTypes;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;

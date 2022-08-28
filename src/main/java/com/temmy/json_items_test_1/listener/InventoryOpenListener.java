@@ -25,7 +25,11 @@ public class InventoryOpenListener implements Listener {
     @EventHandler
     public static void onInventoryOpenEvent(InventoryOpenEvent e){
         if (checkForBottomRow(e.getInventory())) return;
-        if (e.getInventory().getLocation() == null) return;
+        if (e.getInventory().getLocation() != null) multiPageChest(e);
+
+    }
+
+    private static void multiPageChest(InventoryOpenEvent e){
         Block b = e.getInventory().getLocation().getBlock();
         if (!b.isEmpty() && b.getType() == Material.CHEST){
             Chest chest = (Chest) b.getState();

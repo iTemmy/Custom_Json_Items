@@ -43,6 +43,7 @@ public final class Attribute {
         attributeMethods.put("FIREBALL", MagicFireball::trigger);
         attributeMethods.put("HOE", Hoe::trigger);
         attributeMethods.put("MULTIPAGECHESTS", MultiPageChests::trigger);
+        attributeMethods.put("DANK", Dank::trigger);
     }
 
     public static void invoke(String attribute, Event event, String[] args){

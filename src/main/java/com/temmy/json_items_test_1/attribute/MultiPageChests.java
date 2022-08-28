@@ -2,7 +2,7 @@ package com.temmy.json_items_test_1.attribute;
 
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.util.ActiveInventory;
-import com.temmy.json_items_test_1.util.CustomDataTypes;
+import com.temmy.json_items_test_1.util.PersistentDataTypes.CustomDataTypes;
 import com.temmy.json_items_test_1.util.InvalidInventoryException;
 import com.temmy.json_items_test_1.util.InvalidLocationException;
 import net.kyori.adventure.text.Component;
@@ -199,7 +199,6 @@ public class MultiPageChests {
             Location loc = getLocation(inv.getItem(inv.getSize()-5).getItemMeta().getPersistentDataContainer().get(locationKey, PersistentDataType.TAG_CONTAINER));
             Inventory tt = Bukkit.createInventory((InventoryHolder) loc.getBlock().getState(), inv.getSize(), comp);
             tt.setContents(inv.getContents());
-            //player.openInventory(tt);
             return tt;
         } catch (InvalidLocationException | NullPointerException e) {
             e.printStackTrace();

@@ -3,7 +3,7 @@ package com.temmy.json_items_test_1.listener;
 import com.temmy.json_items_test_1.Main;
 import com.temmy.json_items_test_1.attribute.Attribute;
 import com.temmy.json_items_test_1.attribute.AutoFeed;
-import com.temmy.json_items_test_1.util.CustomDataTypes;
+import com.temmy.json_items_test_1.util.PersistentDataTypes.CustomDataTypes;
 import com.temmy.json_items_test_1.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -50,7 +50,7 @@ public class PlayerInteractListener implements Listener {
     public static void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getClickedBlock() != null && blocks.contains(e.getClickedBlock().getType())) return;
 
-        if (test(e.getPlayer(), e.getAction())){
+        if (autoFeed(e.getPlayer(), e.getAction())){
             e.setCancelled(true);
             return;
         }
@@ -61,7 +61,7 @@ public class PlayerInteractListener implements Listener {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private static boolean test(Player player, Action action){
+    private static boolean autoFeed(Player player, Action action){
         ItemStack itemstack = null;
         BundleMeta meta = null;
         for (ItemStack item : player.getInventory().getContents()){
@@ -86,7 +86,7 @@ public class PlayerInteractListener implements Listener {
                 meta.getPersistentDataContainer().set(AutoFeed.activeBundle, CustomDataTypes.Boolean, true);
             itemstack.setItemMeta(meta);
             if (meta.getPersistentDataContainer().get(AutoFeed.activeBundle, CustomDataTypes.Boolean))
-                ff(player, itemstack, 1200L);//meta.getPersistentDataContainer().get(AutoFeed.taskDelayKey, PersistentDataType.LONG));
+                bundleTask(player, itemstack, 1200L);//meta.getPersistentDataContainer().get(AutoFeed.taskDelayKey, PersistentDataType.LONG));
             return true;
         }
         return false;
@@ -94,21 +94,26 @@ public class PlayerInteractListener implements Listener {
 
     static final NamespacedKey autofeedTaskKey = new NamespacedKey(Main.getPlugin(), "taskid");
 
-    public static void ff(Player player, ItemStack bundle, long delay){
+    public static void bundleTask(Player player, ItemStack bundle, long delay){
         BundleMeta meta = (BundleMeta) bundle.getItemMeta();
         ItemStack food = null;
         for (ItemStack item : meta.getItems())
             if (item.getType().isEdible())
                 food = item;
         final ItemStack finalFood = food;
-        meta.getPersistentDataContainer().set(autofeedTaskKey, PersistentDataType.INTEGER, Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->{
-            if (!Bukkit.getOnlinePlayers().contains(player)) return;
+        meta.getPersistentDataContainer().set(autofeedTaskKey, PersistentDataType.INTEGER, Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ()->{
+            if (!Bukkit.getOnlinePlayers().contains(player)) {
+                Bukkit.getScheduler().cancelTask(meta.getPersistentDataContainer().get(autofeedTaskKey, PersistentDataType.INTEGER));
+                meta.getPersistentDataContainer().remove(autofeedTaskKey);
+                meta.getPersistentDataContainer().remove(AutoFeed.activeBundle);
+                bundle.setItemMeta(meta);
+                return;
+            }
             if (player.getFoodLevel() < 20)
                 if (finalFood != null) {
                     new PlayerItemConsumeEvent(player, finalFood);
                 }
-            ff(player, bundle, delay);
-        }, delay));
+        }, delay, delay));
         bundle.setItemMeta(meta);
     }
 }

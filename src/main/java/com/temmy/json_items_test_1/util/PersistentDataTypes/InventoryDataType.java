@@ -1,4 +1,4 @@
-package com.temmy.json_items_test_1.util;
+package com.temmy.json_items_test_1.util.PersistentDataTypes;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
