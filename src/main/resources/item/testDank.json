@@ -1,0 +1,29 @@
+{
+  "ITEM": {
+    "name": "Dank tier I",
+    "material": "CONDUIT",
+    "model": 1,
+    "enchants": [],
+    "unbreakable": true,
+    "lore": ["Nigh unlimited storage!"],
+    "attributes": {
+      "DANK": {
+        "level": 1,
+        "per-stack": 128,
+        "invsize": 5
+      }
+    },
+    "requires":  "emeraldCustomOre,otherworldlyTrophy",
+    "shaped": {
+      "ingredients": {
+        "E": "emeraldCustomOre",
+        "O": "OTHERWORLDLYTROPHY"
+      },
+      "shape": [
+        "EEE",
+        "EOE",
+        "EEE"
+      ]
+    }
+  }
+}

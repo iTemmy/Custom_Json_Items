@@ -76,6 +76,10 @@ public class Dank {
         Inventory topInv = e.getView().getTopInventory();
         ItemStack item = bottomInv.getItem(e.getSlot());
         if (item == null) return;
+        ItemStack dank;
+        for (int i = 0; i <=8; i++) {
+            if ()
+        }
         for (int i = 0; i < e.getView().getTopInventory().getSize(); i++) {
             ItemStack dankItemStack = topInv.getItem(i);
             if (!dankItemStack.hasItemMeta()) continue;
@@ -93,6 +97,7 @@ public class Dank {
             }else {
                 DankItem dankItem = new DankItem(item);
                 topInv.setItem(i, dankItem.getDankItemStack());
+
                 dankItem.writeDankItemData();
             }
         }

@@ -1,0 +1,38 @@
+{
+  "ITEM": {
+    "name": "&2&oExample item 1",
+    "material": "DIAMOND_SWORD",
+    "model": 1,
+    "damage": 5,
+    "damageslot": "HAND",
+    "health": 5,
+    "healthslot": "HAND",
+    "attackspeed": 6,
+    "attackspeedslot": "HAND",
+    "enchants": ["SHARPNESS;4,LOOTING;2,MENDING;1"],
+    "unbreakable": true,
+    "lore": ["&5The is the first line of lore","&b&lThis is the second line of lore","&e&kThis is the third line of lore"],
+    "attributes": {
+      "HELDITEM": {
+        "hand": "main",
+        "INCREASE_DAMAGE": "3"
+      }
+    },
+    "requires": "drugarthhunter1,dragonscalehelmet",
+    "smithing": {
+      "input": "EMERALD_ORE",
+      "addition": "dragonscalehelmet"
+    },
+    "shaped": {
+      "ingredients": {
+        "A": "EMERALD_ORE",
+        "B": "dragonscalehelmet"
+      },
+      "shape": [
+        "AAA",
+        "ABA",
+        "AAA"
+      ]
+    }
+  }
+}

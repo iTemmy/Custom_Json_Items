@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,9 +16,10 @@ public class DankItem {
     private ItemStack originalItem;
     private int amount;
     private final NamespacedKey nameKey = new NamespacedKey(Main.getPlugin(), "displayname");
-    private final NamespacedKey dankItemAmount = new NamespacedKey(Main.getPlugin(), "amount");
+    private final NamespacedKey dankItemAmountKey = new NamespacedKey(Main.getPlugin(), "amount");
     private int max;
     private ItemStack dankItemStack;
+    private final TextColor numberColor = TextColor.fromHexString("FFFF55");
 
     public DankItem(ItemStack item){
         originalItem = item;
@@ -36,11 +38,11 @@ public class DankItem {
             display = LegacyComponentSerializer.legacy('&').serialize(dankItemStack.getItemMeta().displayName());
         else
             display = dankItemStack.getType().name();
-        Component comp = Component.text(display).append(Component.text(String.format("x%d", amount)).color(TextColor.fromHexString("#FFFF55")));
+        Component comp = Component.text(display).append(Component.text(String.format("x%d", amount)).color(numberColor));
         ItemMeta dankItemMeta = dankItemStack.getItemMeta();
         dankItemMeta.displayName(comp);
         dankItemMeta.getPersistentDataContainer().set(com.temmy.json_items_test_1.attribute.Dank.getDankItemItemStackKey(), CustomDataTypes.ItemStack, originalItem);
-        dankItemMeta.getPersistentDataContainer().set(dankItemAmount, PersistentDataType.INTEGER, amount);
+        dankItemMeta.getPersistentDataContainer().set(dankItemAmountKey, PersistentDataType.INTEGER, amount);
         dankItemStack.setItemMeta(dankItemMeta);
         dankItemStack.setAmount(1);
         return dankItemStack;
@@ -50,8 +52,21 @@ public class DankItem {
      * @implNote Should only be used in the {@link org.bukkit.event.inventory.InventoryClickEvent} InventoryClickEvent
      * Used to write the data of the DankItem in the Dank Inventory to the DankItemStack in the player's Inventory
      */
-    public void writeDankItemData(){
+    public void writeDankItemData(ItemStack dank){
+        ItemMeta meta = dank.getItemMeta();
+        //meta.getPersistentDataContainer().get();
 
+    }
+
+    public void updateDisplayName(){
+        ItemMeta meta = dankItemStack.getItemMeta();
+        String display;
+        if (meta.hasDisplayName())
+            display = LegacyComponentSerializer.legacy('&').serialize(dankItemStack.getItemMeta().displayName());
+        else
+            display = dankItemStack.getType().name();
+        meta.displayName(Component.text(display).append(Component.text(String.format("x%d", amount)).color(numberColor)));
+        dankItemStack.setItemMeta(meta);
     }
 
     public ItemStack getOriginalItem(){
@@ -77,6 +92,7 @@ public class DankItem {
         } else {
             amount = amount+item.getAmount();
         }
+        dankItemStack.getItemMeta().getPersistentDataContainer().set(dankItemAmountKey, PersistentDataType.INTEGER, amount);
         return this;
     }
 
