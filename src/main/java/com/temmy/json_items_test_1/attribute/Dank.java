@@ -78,7 +78,7 @@ public class Dank {
         if (item == null) return;
         ItemStack dank;
         for (int i = 0; i <=8; i++) {
-            if ()
+            //if ()
         }
         for (int i = 0; i < e.getView().getTopInventory().getSize(); i++) {
             ItemStack dankItemStack = topInv.getItem(i);
@@ -98,7 +98,7 @@ public class Dank {
                 DankItem dankItem = new DankItem(item);
                 topInv.setItem(i, dankItem.getDankItemStack());
 
-                dankItem.writeDankItemData();
+                //dankItem.writeDankItemData();
             }
         }
     }
@@ -114,7 +114,7 @@ public class Dank {
 
     private static void playerInteractEvent(PlayerInteractEvent e, String[] args){
         ItemStack handItem = e.getPlayer().getInventory().getItemInMainHand();
-        if (handItem == null) return;
+        assert handItem.hasItemMeta();
         if (!handItem.getItemMeta().getPersistentDataContainer().has(dankKey, CustomDataTypes.Inventory))
             handItem = newDank(args, handItem);
         e.getPlayer().openInventory(handItem.getPersistentDataContainer().get(dankKey, CustomDataTypes.Inventory));
